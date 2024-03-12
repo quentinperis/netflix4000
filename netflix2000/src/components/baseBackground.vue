@@ -1,13 +1,21 @@
+<script>
+import { RouterLink, RouterView } from 'vue-router';
+</script>
+
 
 <template>
   <div id="background">
     <img class="responsive-image" src="../../public/image/background-netflix.jpg" alt="Image background" />
+    
     <img class="logo" src="../../public/image/Logonetflix.png" alt="Image logo" />
+    
+      
     <div class="overlay">
       <!-- Contenu du calque transparent -->
     <slot></slot>
     </div>
   </div>
+
 </template>
 
 <style scoped>
@@ -24,6 +32,7 @@ html, body {
   height: 51px;
   width: 150px;
   z-index: 1;
+  cursor: pointer;
 }
 #background {
   position: relative;

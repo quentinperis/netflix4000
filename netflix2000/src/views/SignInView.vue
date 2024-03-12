@@ -1,7 +1,30 @@
 <script setup>
-import baseBackground from '@/components/baseBackground.vue';
+import baseBackground from '@/components/baseBackground.vue'; 
+import { ref, computed } from "vue";
+import { RouterLink, RouterView } from 'vue-router'
 
+const email = ref("");
+const emailTouched = ref(false);
+const password = ref("");
+const passwordTouched = ref(false);
 
+const passwordInvalid = computed(() => {
+  return password.value.trim() === "" && passwordTouched.value;
+});
+
+const emailInvalid = computed(() => {
+  const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  // const regexpEmailBis = new RegExp('^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$', 'g')
+  return emailTouched.value && !regexpEmail.test(email.value);
+});
+
+const submitDisabled = computed(
+  () =>
+    password.value === "" ||
+    !passwordTouched.value ||
+    !emailTouched.value ||
+    !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
+);
 
 </script>
 
@@ -10,7 +33,8 @@ import baseBackground from '@/components/baseBackground.vue';
 <div class="modal"> 
   <h2>Sign In</h2>
   
-  <div><label for="email"></label>
+  <div class="container">
+    <label for="email"></label>
       <input
         v-model="email" id="email" placeholder="Email Adress" @input="emailTouched = true"
         @change="emailTouched = true" 
@@ -20,7 +44,7 @@ import baseBackground from '@/components/baseBackground.vue';
       <span v-if="emailInvalid">Invalid email!</span>
 </div>
 
-<div>
+<div class="container">
     <label for="password"></label>
     <input
             v-model="password"
@@ -35,7 +59,13 @@ import baseBackground from '@/components/baseBackground.vue';
 
 
   <button type="submit">Sign In</button>
-  <div class="newto"><p>New to Netflix ? <a>sign up now</a></p></div>
+  <div class="newto"><p>New to Netflix ? 
+    
+    <RouterLink to ="/SignUp">
+      <a>sign up now</a>
+    </RouterLink></p>
+    
+    </div>
 
 </div>
 
@@ -43,12 +73,19 @@ import baseBackground from '@/components/baseBackground.vue';
 </template>
 
 <style scoped>
-  base-background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  #baseBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1; 
+ }
 
   .modal {
     height: 600px;
@@ -58,7 +95,7 @@ import baseBackground from '@/components/baseBackground.vue';
     border-radius: 15px;
     text-align: center;
     margin-top: 30rem;
-  }
+  }  
 
   h2 {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -81,7 +118,7 @@ import baseBackground from '@/components/baseBackground.vue';
   button {
     width: 100%;
     padding: 15px;
-    background-color: #e50914;
+    background-color: #DE0E10;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -91,7 +128,7 @@ import baseBackground from '@/components/baseBackground.vue';
   }
 
   button:hover {
-    background-color: #8d0b0b;
+    background-color: #C11119;
   }
 
   .newto {
@@ -105,5 +142,16 @@ import baseBackground from '@/components/baseBackground.vue';
     text-decoration: none;
     font-weight: bold;
   }
+
+
+  @media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .get-started-button {
+    margin-top: 10px;
+  }
+}
 
 </style>

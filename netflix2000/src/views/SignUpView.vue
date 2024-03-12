@@ -1,29 +1,165 @@
 <script setup>
-import baseBackground from '@/components/baseBackground.vue';
+import baseBackground from '@/components/baseBackground.vue'; 
+import { ref, computed } from "vue";
+import { RouterLink, RouterView } from 'vue-router'
+
+const email = ref("");
+const emailTouched = ref(false);
+const password = ref("");
+const passwordTouched = ref(false);
+
+const passwordInvalid = computed(() => {
+  return password.value.trim() === "" && passwordTouched.value;
+});
+
+const emailInvalid = computed(() => {
+  const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  // const regexpEmailBis = new RegExp('^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$', 'g')
+  return emailTouched.value && !regexpEmail.test(email.value);
+});
+
+const submitDisabled = computed(
+  () =>
+    password.value === "" ||
+    !passwordTouched.value ||
+    !emailTouched.value ||
+    !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
+);
+
 </script>
 
 <template>
 <baseBackground>
 <div class="modal"> 
-  <p>Sign Up</p>
-  <input type="text">
-  <input type="text">
-  <input type="text">
-  <button></button>
+  <h2>Sign Up</h2>
+  
+  <div class="container">
+    <label for="Firstname"></label>
+      <input
+        v-model="Firstname" id="Firstname" placeholder="Firstname"
+        type="Firstname"
+        required
+      />
+      
 </div>
+
+  <div class="container">
+    <label for="email"></label>
+      <input
+        v-model="email" id="email" placeholder="Email Adress" @input="emailTouched = true"
+        @change="emailTouched = true" 
+        type="email"
+        required
+      />
+      <span v-if="emailInvalid">Invalid email!</span>
+</div>
+
+<div class="container">
+    <label for="password"></label>
+    <input
+            v-model="password"
+            @input="passwordTouched = true"
+            @change="passwordTouched = true"
+            id="password" placeholder="Password"
+            type="password"
+            required
+          />
+          <span v-if="passwordInvalid">Invalid password!</span>  
+        </div>
+
+
+  <button type="submit">Sign In</button>
+  <div class="newto"><p>Already a user ? 
+    <RouterLink to ="/SignIn">
+      <a>sign in now</a>
+    </RouterLink>
+  </p></div>
+
+</div>
+
 </baseBackground>
 </template>
 
 <style scoped>
-baseBackgroud {
+  #baseBackground {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1; 
+ }
+
+  .modal {
+    height: 600px;
+    width: 500px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 30rem;
+  }  
+
+  h2 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 30px;
+    text-align:left;
+  }
+
+  input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 25px;
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+  }
+
+  button {
+    width: 100%;
+    padding: 15px;
+    background-color: #DE0E10;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #C11119;
+  }
+
+  .newto {
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 20px;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+
+  @media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .get-started-button {
+    margin-top: 10px;
+  }
 }
-.modal {
-  height: 500px;
-  width: 300px;
-  z-index: 1;
-  background-color: hsla(0, 0%, 11%, 0.767);
-}
+
 </style>
