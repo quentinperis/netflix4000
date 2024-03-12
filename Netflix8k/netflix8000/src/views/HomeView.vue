@@ -1,152 +1,202 @@
 <script setup>
-import baseBackground from '@/components/baseBackground.vue'; 
-import { RouterLink } from 'vue-router';
+import baseBackground from "@/components/baseBackground.vue";
+import { RouterLink } from "vue-router";
 </script>
 
-
 <template>
-<baseBackground>
-  <button  id="signin-button"><RouterLink to="/signin">Sign In</RouterLink></button>
-<div class="modal">
-  <h1>Unlimited movies, TV shows and more.</h1>
-  <h2>Watch anywhere. Cancel at any time.</h2>
-  <p>Ready to watch? Enter your email to create or restart your membership</p>
-  <div class="container">
-    <input type="email" placeholder="Email Address" class="email-input">
-    <button class="get-started-button"><RouterLink to="/signup">GET STARTED &gt;</RouterLink></button>
+      <baseBackground>
+    <button id="signin-button">
+      <RouterLink to="/signin">Sign In</RouterLink>
+    </button>
+    <div class="modal">
+      <h1>Unlimited movies, TV shows and more.</h1>
+      <h2>Watch anywhere. Cancel at any time.</h2>
+      <p>
+        Ready to watch? Enter your email to create or restart your membership
+      </p>
+      <div class="container">
+        <input type="email" placeholder="Email Address" class="email-input" />
+        <button class="get-started-button">
+          <RouterLink to="/signup">GET STARTED &gt;</RouterLink>
+        </button>
+      </div>
+    </div>
+  </baseBackground>  
+  <div class="faq">
+    <div class="faq-container">
+      <p class="faq-top">Frequently Asked Questions</p>
+      <ul>
+        <li><button class="button-faq"><h3>What is Netflix?</h3><p class="plus">+</p></button></li>
+        <li><button class="button-faq"><h3>How much does Netflix cost?</h3><p class="plus">+</p></button></li>
+        <li><button class="button-faq"><h3>Where can I watch?</h3><p class="plus">+</p></button></li>
+        <li><button class="button-faq"><h3>How do I cancel?</h3><p class="plus">+</p></button></li>
+        <li><button class="button-faq"><h3>What can I watch on Netflix?</h3><p class="plus">+</p></button></li>
+        
+      </ul>
+    </div>
   </div>
-  
-</div>
-</baseBackground>
+
+
 
 </template>
 
+<style scoped>
 
-<style>
 
-html, body {
-margin: 0;
-padding: 0;
-left: 0;
-height: 100%;
-}
-.logo {
-  position: fixed;
-  top: 20px; 
-  left: 20px; 
-  height: 51px;
-  width: 150px;
-  z-index: 1;
-  cursor: pointer;
-}
-#app {
-position: relative;
-min-height: 100vh;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.responsive-image {
-position: fixed;
-top: 0;
-left: 0;
-width: 100vw;
-height: 100vh;
-object-fit: cover;
-z-index: -1; 
+li, ul, .button-faq {
+  width: 100%;
+}
+
+.faq-container {
+  width: 50%;
+}
+
+.faq-top {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: hsl(0, 0%, 95%);
+}
+
+.button-faq {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 15px;
+  background-color: hsl(0, 0%, 20%);
+  color: hsl(0, 0%, 95%);
+  border: none;
+}
+
+li {
+  margin-bottom: 10px;
+  list-style: none;
+  transition: background-color 200ms ease 200ms;
+}
+
+li :hover {
+  background-color: hsl(0, 0%, 30%);
+}
+
+h3 {
+  font-size: 2rem;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.plus {
+    font-size: 3rem;
+    display: inline-block;
+  }
+.faq {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  background-color: hsl(0, 0%, 2%);
 }
 
 .modal {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
+  position: absolute;
+  top: -10%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .modal h1 {
-color: white; 
-font-size: 2.5rem;
-font-weight: 900;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-line-height: 125%;
-width: 50%;
-max-width: 90%;
-padding-top: 200px;
-margin: 0 auto; 
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 900;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  line-height: 125%;
+  width: 50%;
+  max-width: 90%;
+  padding-top: 200px;
+  margin: 0 auto;
 }
-
 
 .modal h2 {
-color: white;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: white;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .modal p {
-color: white;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: white;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .modal button {
-background-color: #DE0510;
-color: white; 
-padding: 10px 20px;
-border: none;
-cursor: pointer;
+  background-color: #de0510;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
 }
 
 .container {
   display: flex;
   align-items: center;
-  margin-top: 1vh; 
-  width: 80vw; 
-  max-width: 600px; 
-  height: 8vh; 
+  margin-top: 1vh;
+  width: 80vw;
+  max-width: 600px;
+  height: 8vh;
 }
-
 
 .email-input {
-flex: 1;
-padding: 10px;
-border: none;
-background-color: white;
-height: 50px;
-font-size: 1.1rem;
-caret-color: #DE0510;
-outline: none;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background-color: white;
+  height: 50px;
+  font-size: 1.1rem;
+  caret-color: #de0510;
+  outline: none;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 input::placeholder {
-font-weight: bold;
-opacity: 0.5;
-color: gray;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  opacity: 0.5;
+  color: gray;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .get-started-button {
-padding: 10px 20px;
-border: none;
-background-color: #DE0E10;
-color: white;
-cursor: pointer;
-width: 250px;
-height: 50px;
-font-size: 1.1rem ;
-cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  background-color: #de0e10;
+  color: white;
+  cursor: pointer;
+  width: 250px;
+  height: 50px;
+  font-size: 1.1rem;
+  cursor: pointer;
 }
 
 #signin-button {
   height: 40px;
   width: 70px;
-  background-color: #DE0510;
+  background-color: #de0510;
   color: white;
   z-index: 2;
   border: none;
-  border-radius: 5px;
-  position: fixed; 
-  top: 20px; 
-  right: 20px; 
+  border-radius: 3px;
+  position: absolute;
+  top: 25px;
+  right: 75px;
   cursor: pointer;
 }
 
