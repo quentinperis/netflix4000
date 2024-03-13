@@ -12,7 +12,8 @@ const movieSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   year: { type: Number, required: true },
-  genre: { type: genreSchema, required: true } 
+  genre: { type: genreSchema, required: true },
+  imagePath: { type: String, required: true } // Champ pour le chemin de l'image
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
