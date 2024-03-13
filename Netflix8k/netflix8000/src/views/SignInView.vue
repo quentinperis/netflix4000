@@ -85,17 +85,15 @@ const submitDisabled = computed(
   height: 100vh;
   object-fit: cover;
   z-index: -1; 
- }
+}
 
-  .modal {
-    height: 600px;
-    width: 500px;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 15px;
-    text-align: center;
-    margin-top: 30rem;
-  }  
+.modal {
+  width: 500px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  text-align: center; 
+}
 
   h2 {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

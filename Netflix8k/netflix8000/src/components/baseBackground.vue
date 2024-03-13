@@ -16,7 +16,6 @@ import { RouterLink } from "vue-router";
   </div>
 
   <div class="overlay">
-    <!-- Contenu du calque transparent -->
     <slot></slot>
   </div>
 </template>
@@ -66,6 +65,16 @@ import { RouterLink } from "vue-router";
     rgba(0, 0, 0, 0) 56%,
     rgba(0, 0, 0, 0.7175245098039216) 80%
   );
+}
+
+.overlay {
+  top: 0;
+  position: absolute;
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>

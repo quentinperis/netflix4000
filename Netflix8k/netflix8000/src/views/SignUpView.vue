@@ -101,13 +101,11 @@ const submitDisabled = computed(
 }
 
 .modal {
-  height: 600px;
   width: 500px;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 15px;
-  text-align: center;
-  margin-top: 30rem;
+  text-align: center; 
 }
 
 h2 {
