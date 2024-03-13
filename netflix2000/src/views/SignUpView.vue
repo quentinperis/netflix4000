@@ -1,7 +1,7 @@
 <script setup>
 import baseBackground from '@/components/baseBackground.vue'; 
 import { ref, computed } from "vue";
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink} from 'vue-router'
 
 const email = ref("");
 const emailTouched = ref(false);

@@ -137,7 +137,7 @@ const submitDisabled = computed(
     margin-top: 20px;
   }
 
-  a {
+ a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;

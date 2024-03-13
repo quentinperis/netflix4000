@@ -10,16 +10,17 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/SignIn',
-      name: 'SignIn',
+      path: '/signin',
+      name: 'signin',
       component: () => import('../views/SignInView.vue')
     },
     {
-      path: '/SignUp',
-      name: 'SignUp',
+      path: '/signup',
+      name: 'signup',
       component: () => import('../views/SignUpView.vue')
     }
   ]
 })
 
 export default router
+

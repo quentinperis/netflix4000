@@ -1,13 +1,15 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink } from 'vue-router';
 </script>
 
 
 <template>
   <div id="background">
-    <img class="responsive-image" src="../../public/image/background-netflix.jpg" alt="Image background" />
+    <img class="responsive-image" src="/image/background-netflix.jpg" alt="Image background" />
+    <RouterLink to="/">
+      <img class="logo" src="/image/Logonetflix.png" alt="Image logo" />
+    </RouterLink>
     
-    <img class="logo" src="../../public/image/Logonetflix.png" alt="Image logo" />
     
       
     <div class="overlay">
@@ -28,7 +30,7 @@ html, body {
 .logo {
   position: fixed;
   margin-top: 25px;
-  margin-left: -47%;
+  margin-left: 25px;
   height: 51px;
   width: 150px;
   z-index: 1;
@@ -62,16 +64,6 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-
-/* .overlay slot {
-  color: white; 
-  margin-left: -500px;
-  font-size: 3.5rem;
-  font-weight: 900;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  line-height: 125%;
-  width: 700px;
-} */
 
 .overlay button {
   background-color: white; /* Fond blanc pour le bouton */
