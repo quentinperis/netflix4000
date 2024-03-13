@@ -71,14 +71,14 @@ const submitDisabled = computed(
           <span v-if="passwordInvalid">Invalid password!</span>
         </div>
 
-        <button type="submit">Sign Up</button>
+        <RouterLink to="/netflix">
+          <button type="submit">Sign Up</button>
+        </RouterLink>
       </form>
       <div class="newto">
         <p>
           Already a user ?
-          <RouterLink to="/SignIn">
-            <a>sign in now</a>
-          </RouterLink>
+          <RouterLink to="/SignIn">sign in now</RouterLink>
         </p>
       </div>
     </div>
