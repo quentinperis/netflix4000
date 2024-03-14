@@ -1,6 +1,7 @@
 const Movie = require("../models/movie");
 
 const movieController = {
+
   addMovies: async (req, res) => {
     try {
       const newMovie = new Movie(req.body);
@@ -10,7 +11,6 @@ const movieController = {
       res.status(400).json({ error: error.message });
     }
   },
-
 
   getAllMovies: async (req, res) => {
     try {
@@ -50,6 +50,5 @@ const movieController = {
     res.status(404).send("Oups, on dirait qu'il n'y a pas de films ici");
   },
 };
-
 
 module.exports = movieController;

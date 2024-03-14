@@ -51,7 +51,7 @@ onMounted(async () => {
           </div>
       </div>
     </div>
-    <infoMovies/>
+    <!-- <infoMovies/> -->
   </main>
 </template>
 
@@ -71,7 +71,7 @@ h2 {
   overflow-x: auto;
 }
 img {
-  height: 600px;
+  height: 500px;
   margin-right: 1em;
   object-fit: cover;
   cursor: pointer;

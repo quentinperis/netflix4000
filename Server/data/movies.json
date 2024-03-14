@@ -6,7 +6,7 @@
         "genre": {
             "one": "Drama",
             "two": "Story",
-            "three": "Thriller"
+            "three": "Comedy"
         }
     },
     { 
@@ -138,5 +138,150 @@
             "two": "Mystery",
             "three": "Thriller"
         }
+    },
+
+    {
+        "name": "ad astra",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Story",
+                "two": "Adventure",
+                "three": "Comedy"
+            }
+          
+    },
+
+    {
+        "name": "camp confidential",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Life",
+                "two": "Fantasy",
+                "three": "War"
+            }
+    },
+
+    {
+        "name": "the abyss",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Horror",
+                "two": "Fantasy",
+                "three": "War"
+            }
+    },
+
+    {
+        "name": "jumper",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Crime",
+                "two": "Fantasy",
+                "three": "War"
+            }
+    },
+
+    {
+        "name": "reptile",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Crime",
+                "two": "Mystery",
+                "three": "Horror"
+            }
+    },
+
+    {
+        "name": "annihilation",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Crime",
+                "two": "Mystery",
+                "three": "Horror"
+            }
+    },
+
+    {
+        "name": "evelyn",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Story",
+                "two": "Adventure",
+                "three": "Comedy"
+            }
+    },
+
+    {
+        "name": "en plein torrent",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Story",
+                "two": "Adventure",
+                "three": "Comedy"
+            }
+    },
+
+    {
+        "name": "la demoiselle et le dragon affiche",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Life",
+                "two": "Fantasy",
+                "three": "War"
+            }
+        
+    },
+
+    {
+        "name": "TylerRake",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Story",
+                "two": "Adventure",
+                "three": "Comedy"
+            }
+    },
+
+    {
+        "name": "oppenheimer",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Story",
+                "two": "Adventure",
+                "three": "Comedy"
+            }
+    },
+
+    {
+        "name": "spider-man no way home",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Life",
+                "two": "Fantasy",
+                "three": "War"
+            }     
+    },
+    {
+        "name": "The Vilain",
+            "description": "Sophie reflects on the shared joy and private melancholy of a holiday she took with her father twenty years earlier. Memories real and imagined fill the gaps between as she tries to reconcile the father she knew with the man she didn't...",
+            "year": "2022",
+            "genre": {
+                "one": "Life",
+                "two": "Fantasy",
+                "three": "War"
+            }
     }
+
 ]
