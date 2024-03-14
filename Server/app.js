@@ -23,7 +23,6 @@ mongoose.connection.once("open", async () => {
   await movieController.updateMoviesPath();
 });
 
-
 //-------------------MIDDLEWARE----------------------//
 
 // Autoriser les requêtes CORS avant l'utilisation des routes !!!
