@@ -72,12 +72,11 @@ h2 {
   overflow-x: auto;
 }
 img {
-  aspect-ratio: 16/10;
-  width: 410px;
+  height: 500px;
   margin-right: 1em;
   object-fit: cover;
   cursor: pointer;
-  
+  border-radius: 10px;
 }
 
 .movies img {
