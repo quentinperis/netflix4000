@@ -3,20 +3,46 @@ import baseBackground from "@/components/baseBackground.vue";
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
 
-// const accordionItem = document.querySelectorAll(".accordion-item")
-
-// accordionItem.forEach(item => {
-//   const question = item.querySelectorAll(".button-faq");
-//   question.addEventListener("click", () => {
-//     item.classList.toggle("active");
-//   })
-// })
-
 const toggle = ref(false);
+const fctToggle = () => {
+  toggle.value = !toggle.value;
+  toggle2.value = false;
+  toggle3.value = false;
+  toggle4.value = false;
+  toggle5.value = false;
+}
 const toggle2 = ref(false);
+const fctToggle2 = () => {
+  toggle.value = false;
+  toggle2.value = !toggle2.value;
+  toggle3.value = false;
+  toggle4.value = false;
+  toggle5.value = false;
+}
 const toggle3 = ref(false);
+const fctToggle3 = () => {
+  toggle.value = false;
+  toggle2.value = false;
+  toggle3.value = !toggle3.value;
+  toggle4.value = false;
+  toggle5.value = false;
+}
 const toggle4 = ref(false);
+const fctToggle4 = () => {
+  toggle.value = false;
+  toggle2.value = false;
+  toggle3.value = false;
+  toggle4.value = !toggle4.value;
+  toggle5.value = false;
+}
 const toggle5 = ref(false);
+const fctToggle5 = () => {
+  toggle.value = false;
+  toggle2.value = false;
+  toggle3.value = false;
+  toggle4.value = false;
+  toggle5.value = !toggle5.value;
+}
 </script>
 
 <template>
@@ -43,7 +69,7 @@ const toggle5 = ref(false);
       <p class="faq-top">Frequently Asked Questions</p>
       <ul>
         <li>
-          <div @click="toggle = !toggle" class="li-div">
+          <div @click="fctToggle" class="li-div">
             <button class="button-faq">
               <h3>What is Netflix?</h3>
               <p class="plus">+</p>
@@ -64,7 +90,7 @@ const toggle5 = ref(false);
         </li>
 
         <li>
-          <div @click="toggle2 = !toggle2" class="li-div">
+          <div @click="fctToggle2" class="li-div">
             <button class="button-faq">
               <h3>How much does Netflix cost?</h3>
               <p class="plus">+</p>
@@ -81,7 +107,7 @@ const toggle5 = ref(false);
         </li>
 
         <li>
-          <div @click="toggle3 = !toggle3" class="li-div">
+          <div @click="fctToggle3" class="li-div">
             <button class="button-faq">
               <h3>Where can I watch?</h3>
               <p class="plus">+</p>
@@ -105,7 +131,7 @@ const toggle5 = ref(false);
         </li>
 
         <li>
-          <div @click="toggle4 = !toggle4" class="li-div">
+          <div @click="fctToggle4" class="li-div">
             <button class="button-faq">
               <h3>How do I cancel?</h3>
               <p class="plus">+</p>
@@ -122,7 +148,7 @@ const toggle5 = ref(false);
         </li>
 
         <li id="li-bot">
-          <div @click="toggle5 = !toggle5" class="li-div">
+          <div @click="fctToggle5" class="li-div">
             <button class="button-faq">
               <h3>What can I watch on Netflix?</h3>
               <p class="plus">+</p>
@@ -160,10 +186,19 @@ const toggle5 = ref(false);
   box-sizing: border-box;
 }
 
+.plus {
+  transition: transform 500ms ease ;
+}
+
+.plus:hover {
+    transform: rotate(45deg);
+}
+
 .li-div {
   height: 100%;
   width: 100%;
   background-color: hsl(0, 0%, 20%);
+  transition: background-color 400ms ease;
 }
 
 .li-div:hover {

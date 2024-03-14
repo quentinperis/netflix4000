@@ -3,7 +3,7 @@
     <img id="jokerimage" src="../../public/image/4317036.webp" alt="imgjoker">
     <div class="content-wrapper">
       <router-link to="/"><img class="logo" src="../../public/image/Logonetflix.png" alt="Votre logo" /></router-link>
-      <RouterLink to="/" id="film">Films</RouterLink>
+      <a  ><RouterLink to="/" id="film">Films</RouterLink></a>
       <div class="text-wrapper">
         <h1 id="jokertitle" class="responsive-title"> Watch Joker Now</h1>
         <p id="joker-synopsis" class="responsive-paragraph">Forever alone in a crowd, failed comedian Arthur Fleck seeks connection as he walks the streets of Gotham City. Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a futile attempt to feel like he's part of the world around him. </p>
@@ -13,19 +13,24 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .jokerbackground {
-  position: relative;
+  width: 100dvw; /* Permet à l'image de s'adapter à la taille du conteneur */
+  height: 80dvh; /* Permet de conserver le ratio hauteur/largeur */
+  overflow: hidden;
 }
 #jokerimage {
   width: 100%;
   height: 70vh;
 }
 .logo {
-    position: fixed;
-    top: -100px; /* Ajustez la position verticale selon vos besoins */
-    left: -3px; /* Ajustez la position horizontale selon vos besoins */
-    z-index: 1000; /* Assure que le logo est placé au-dessus du contenu */
+  position: absolute;
+  margin-top: 25px;
+  margin-left: 75px;
+  height: 51px;
+  width: 150px;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .logo img {
