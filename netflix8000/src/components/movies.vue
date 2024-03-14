@@ -1,4 +1,5 @@
 <script setup>
+import infoMovies from "./infoMovies.vue";
 import { onMounted, ref, computed } from "vue";
 import axios from "axios";
 
@@ -40,7 +41,6 @@ onMounted(async () => {
 
 <template>
   <main>
-    
     <div class="container" v-for="category in categories" :key="category">
       <h2>{{ category }}</h2>
 
@@ -50,9 +50,8 @@ onMounted(async () => {
               :src="m.imagePath" :alt="m.name" />
           </div>
       </div>
-   
     </div>
-
+    <infoMovies/>
   </main>
 </template>
 
@@ -72,10 +71,10 @@ h2 {
   overflow-x: auto;
 }
 img {
-  aspect-ratio: 16/10;
-  width: 410px;
+  height: 600px;
   margin-right: 1em;
   object-fit: cover;
   cursor: pointer;
+  border-radius: 10px;
 }
 </style>

@@ -6,6 +6,7 @@ const movieController = require("../controller/movieController");
 // Définition le répertoire des fichiers statiques avant les routes !!
 router.use(express.static("data"));
 
+router.post("/add-movies", movieController.addMovies);
 router.get("/movies", movieController.getAllMovies);
 router.get("/:name", movieController.getMovie);
 router.get("*", movieController.parDefautPage);

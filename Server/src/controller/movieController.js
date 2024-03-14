@@ -1,6 +1,17 @@
 const Movie = require("../models/movie");
 
 const movieController = {
+  addMovies: async (req, res) => {
+    try {
+      const newMovie = new Movie(req.body);
+      await newMovie.save();
+      res.status(201).json(newMovie);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+
   getAllMovies: async (req, res) => {
     try {
       const movies = await Movie.find();

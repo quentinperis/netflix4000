@@ -8,11 +8,6 @@ import movies from '../components/movies.vue'
       <div class="logo">
         <router-link to="/"><img src="/image/Logonetflix.png" alt="Votre logo Netflix"></router-link>
       </div>
-      <nav>
-        <ul>
-          <li class="films-link"><router-link to="/">Films</router-link></li>
-        </ul>
-      </nav>
     </header>
     <div class="jokerbackground">
       <div class="content-wrapper">
@@ -29,6 +24,9 @@ import movies from '../components/movies.vue'
 </template>
 
 <style scoped>
+body::-webkit-scrollbar { width: 0 !important }
+
+
 .container {
   height: 70vh;
   width: 100%;
