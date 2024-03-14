@@ -1,23 +1,12 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import MoviesView from './views/MoviesView.vue';
 
 </script>
 
 <template>
-  <header>
-   
+ 
+<MoviesView/>
 
-    <div >
-
-
-      <nav>
-        <RouterLink to="/"></RouterLink>
-       
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
 </template>
 
 <style scoped>
