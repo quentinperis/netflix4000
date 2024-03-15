@@ -1,7 +1,6 @@
 const Movie = require("../models/movie");
 
 const movieController = {
-
   addMovies: async (req, res) => {
     try {
       const newMovie = new Movie(req.body);
@@ -29,9 +28,33 @@ const movieController = {
         await movie.save();
         console.log(`Chemin de l'image mis à jour pour ${movie.name}`);
       }
-      console.log("Tous les chemins d'images ont été mis à jour avec succès :)");
+      console.log(
+        "Tous les chemins d'images ont été mis à jour avec succès :)"
+      );
     } catch (error) {
-      console.error("Erreur lors de la mise à jour des chemins d'images :", error);
+      console.error(
+        "Erreur lors de la mise à jour des chemins d'images :",
+        error
+      );
+    }
+  },
+
+  updateVideoPath: async () => {
+    try {
+      const videos = await Movie.find();
+      for (const video of videos) {
+        video.videoPath = `http://localhost:3000/videos/${video.name}.mp4`;
+        await video.save();
+        console.log(`Chemin de la video mis à jour pour ${video.name}`);
+      }
+      console.log(
+        "Tous les chemins d'a video ont été mis à jour avec succès :)"
+      );
+    } catch (error) {
+      console.error(
+        "Erreur lors de la mise à jour des chemins dla video :",
+        error
+      );
     }
   },
 

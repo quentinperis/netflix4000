@@ -23,6 +23,13 @@ mongoose.connection.once("open", async () => {
   await movieController.updateMoviesPath();
 });
 
+// Mise à jour les chemins d'images après la connexion à MongoDB
+mongoose.connection.once("open", async () => {
+  console.log("Connecté à MongoBD avec succès.");
+  await movieController.updateVideoPath();
+});
+
+
 //-------------------MIDDLEWARE----------------------//
 
 // Autoriser les requêtes CORS avant l'utilisation des routes !!!
