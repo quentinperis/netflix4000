@@ -44,6 +44,7 @@ onMounted(async () => {
     res.data.forEach((m) => {
       movies.value.push({
         name: m.name,
+        year: m.year,
         description: m.description,
         imagePath: m.imagePath,
         genre: m.genre,
@@ -81,9 +82,9 @@ onMounted(async () => {
       <div id="left">
         <div id="name-year">
           <h2>{{ selectedMovie.name }}</h2>
-          <h3>{{ selectedMovie.year }}</h3>
         </div>
-        <div>
+        <div> 
+        <h3>{{ selectedMovie.year }}</h3>
           <p>{{ selectedMovie.description }}</p>
         </div>
       </div>
@@ -184,6 +185,10 @@ main {
 }
 .container {
   padding-bottom: 2em;
+}
+
+h2 {
+  margin-top: 1em;
 }
 h2,
 h3 {

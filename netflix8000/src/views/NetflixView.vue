@@ -14,54 +14,45 @@ const closeVideo = () => {
 </script>
 
 <template>
-
-    <div class="jokerbackground">
-      <header>
-        <div class="logo">
-          <router-link to="/"
-            ><img src="/image/Logonetflix.png" alt="Votre logo Netflix"
-          /></router-link>
-        </div>
-      </header>
-      <div class="content-wrapper">
-        <div>
-          <h1 class="jokertitle">Watch Joker Now</h1>
-          <p class="joker-synopsis">
-            Forever alone in a crowd, failed comedian Arthur Fleck seeks
-            connection as he walks the streets of Gotham City. Arthur wears two
-            masks -- the one he paints for his day job as a clown, and the guise
-            he projects in a futile attempt to feel like he's part of the world
-            around him.
-          </p>
-          <button
-            type="button"
-            @click="playVideo"
-            style="cursor: pointer"
-            class="watch-button"
-          >
-            Play
-          </button>
-        </div>
-        <div class="show-video">
-          <button v-if="showVideo" @click="closeVideo" class="video-close">
-            +
-          </button>
-          <video v-if="showVideo" controls autoplay>
-            <source :src="videoPath" type="video/mp4" />
-          </video>
-        </div>
+  <div class="jokerbackground">
+    <header>
+      <div class="logo">
+        <router-link to="/"
+          ><img src="/image/Logonetflix.png" alt="Votre logo Netflix"
+        /></router-link>
       </div>
-
-       
+    </header>
+    <div class="content-wrapper">
+      <div>
+        <h1 class="jokertitle">Watch Joker Now</h1>
+        <p class="joker-synopsis">
+          Forever alone in a crowd, failed comedian Arthur Fleck seeks
+          connection as he walks the streets of Gotham City. Arthur wears two
+          masks -- the one he paints for his day job as a clown, and the guise
+          he projects in a futile attempt to feel like he's part of the world
+          around him.
+        </p>
+        <button
+          type="button"
+          @click="playVideo"
+          style="cursor: pointer"
+          class="watch-button"
+        >
+          Play
+        </button>
+      </div>
+      <div class="show-video">
+        <button v-if="showVideo" @click="closeVideo" class="video-close">
+          +
+        </button>
+        <video v-if="showVideo" controls autoplay>
+          <source :src="videoPath" type="video/mp4" />
+        </video>
+      </div>
+    </div>
     <hr />
     <movies />
- 
-    </div>
-  
-
-
-
-
+  </div>
 </template>
 
 <style scoped>
@@ -79,7 +70,7 @@ body::-webkit-scrollbar {
 
 h1,
 p {
-  text-shadow: 1px 1px  black;
+  text-shadow: 1px 1px black;
 }
 
 .header {
