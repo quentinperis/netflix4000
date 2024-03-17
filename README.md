@@ -1,23 +1,23 @@
-# netflix8000
+# netflix4000
 
-1. Créer une BDD NoSQL sur MongoDB
-  name : movies_db
-  collection : movies
-  ADD DATA + : aller chercher le dossier json des movies dans server/data/movies.json
+1. **Créer une BDD NoSQL sur MongoDB**
 
-2. Ouvir le terminal depuis netflix4000
+- name : movies_db
+- collection : movies
+- ADD DATA + : aller chercher le dossier json des movies dans server/data/movies.json
 
-  cd server
-  npm i express
-  npm i mongoose
-  npm i cors
-  npm i body-parser
-  nodemon app.js
+2. **Ouvir le terminal depuis netflix4000**
 
-3. Ouvrir le terminal depuis netflix4000
+- cd server
+- npm i express
+- npm i mongoose
+- npm i cors
+- npm i body-parser
+- nodemon app.js
 
-  cd netflix8000
-  npm i
-  npm i axios
-  npm run dev
+3. **Ouvrir le terminal depuis netflix4000**
 
+- cd netflix8000
+- npm i
+- npm i axios
+- npm run dev

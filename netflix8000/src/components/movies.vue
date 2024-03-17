@@ -1,5 +1,4 @@
 <script setup>
-import infoMovies from "./infoMovies.vue";
 import { onMounted, ref, computed } from "vue";
 import axios from "axios";
 
@@ -43,7 +42,13 @@ onMounted(async () => {
     if (res.status !== 200) return;
 
     res.data.forEach((m) => {
-      movies.value.push({ name: m.name, description: m.description, imagePath: m.imagePath, genre: m.genre, videoPath: m.videoPath });
+      movies.value.push({
+        name: m.name,
+        description: m.description,
+        imagePath: m.imagePath,
+        genre: m.genre,
+        videoPath: m.videoPath,
+      });
     });
   } catch (error) {
     console.error(error);
@@ -72,20 +77,106 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <div class="modal-overlay" v-if="selectedMovie">
-      <div class="modal">
-        <button class="modal-close" @click="closeModal">+</button>
-        <!-- <infoMovies /> -->
-        <h2>{{ selectedMovie.name }}</h2>
+    <div class="modal" v-if="selectedMovie">
+      <div id="left">
+        <div id="name-year">
+          <h2>{{ selectedMovie.name }}</h2>
           <h3>{{ selectedMovie.year }}</h3>
+        </div>
+        <div>
           <p>{{ selectedMovie.description }}</p>
-          <video controls :src="selectedMovie.videoPath"></video>
+        </div>
+      </div>
+      <div id="right">
+        <video controls :src="selectedMovie.videoPath"></video>
+        <button id="modal-close" @click="closeModal">+</button>
       </div>
     </div>
   </main>
 </template>
 
 <style scoped>
+/* style pour le modal */
+.modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 30dvh;
+  width: 100dvw;
+  background-color: hsla(0, 0%, 5%);
+  display: flex;
+  overflow: hidden;
+}
+
+#right,
+#left {
+  height: 100%;
+  width: 50%;
+  padding: 5px;
+}
+
+#left {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-left: 100px;
+}
+
+#name {
+  margin-right: 30px;
+}
+
+#name-year,
+p {
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: start;
+}
+
+#name-year {
+  align-items: center;
+}
+
+p {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+#right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+video {
+  width: 75%;
+  height: 90%;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+#modal-close {
+  rotate: 45deg;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 2px solid hsl(0, 0%, 35%);
+  font-size: 2rem;
+  background-color: transparent;
+  color: hsl(0, 0%, 35%);
+  position: absolute;
+  right: 45px;
+  top: 20px;
+  cursor: pointer;
+  transition: transform 200ms ease;
+}
+#modal-close:active {
+  transform: translateY(3px);
+}
 main {
   /* margin-top: 45rem; */
   background-color: hsl(0, 0%, 5%);
@@ -94,7 +185,8 @@ main {
 .container {
   padding-bottom: 2em;
 }
-h2,h3 {
+h2,
+h3 {
   color: white;
   padding-bottom: 0.5em;
 }
@@ -111,46 +203,5 @@ img {
   object-fit: cover;
   cursor: pointer;
   border-radius: 10px;
-}
-
-/* Styles pour la modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  border-radius: 10px;
-  height: 95dvh;
-  width: 95dvw;
-}
-
-.modal-close {
-  rotate: 45deg;
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: 2px solid hsl(0, 0%, 35%);
-  font-size: 2rem;
-  background-color: transparent;
-  color: hsl(0, 0%, 35%);
-  position: absolute;
-  right: 45px;
-  top: 50px;
-  cursor: pointer;
-  transition: transform 200ms ease;
-}
-.modal-close:active {
-  transform: translateY(3px);
 }
 </style>
