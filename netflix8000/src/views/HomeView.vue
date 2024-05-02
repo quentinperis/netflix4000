@@ -6,7 +6,6 @@ import { RouterLink } from "vue-router";
 </script>
 
 <template>
-  <div class="main">
   <baseBackground>
     <RouterLink class="RL" to="/signin">
       <button id="signin-button">Sign In</button>
@@ -14,22 +13,51 @@ import { RouterLink } from "vue-router";
     <div class="modal">
       <h1>Unlimited movies, TV shows and more.</h1>
       <h2>Watch anywhere. Cancel at any time.</h2>
-      <inputEmail/>
+      <inputEmail />
     </div>
   </baseBackground>
-  <faq/>
-</div>
+  <div class="mid"></div>
+  <faq />
 </template>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
+.mid {
   box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  margin: auto;
+  align-items: center;
+  border: solid 0.25rem transparent;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  border-bottom: none;
+  background: radial-gradient(
+      50% 500% at 50% -420%,
+      rgba(64, 97, 231, 0.4) 80%,
+      rgba(0, 0, 0, 0.1) 100%
+    ),
+    black;
 }
 
-.main {
-  width: 100dvw;
+.mid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin-top: -0.25rem;
+  border-radius: inherit;
+  background: linear-gradient(
+    to right,
+    rgba(33, 13, 22, 1) 16%,
+    rgba(184, 40, 105, 1),
+    rgba(229, 9, 20, 1),
+    rgba(184, 40, 105, 1),
+    rgba(33, 13, 22, 1) 84%
+  );
 }
 
 .RL {
@@ -38,7 +66,6 @@ import { RouterLink } from "vue-router";
 }
 
 .modal {
-  position: absolute;
   top: -10%;
   width: 100%;
   height: 100%;
@@ -95,7 +122,7 @@ import { RouterLink } from "vue-router";
   cursor: pointer;
 }
 
-@media only screen and (max-width: 768px) {
+/* @media only screen and (max-width: 768px) {
   .container {
     flex-direction: column;
   }
@@ -103,5 +130,5 @@ import { RouterLink } from "vue-router";
   .get-started-button {
     margin-top: 10px;
   }
-}
+} */
 </style>

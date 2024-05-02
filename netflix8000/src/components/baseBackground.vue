@@ -3,16 +3,17 @@ import { RouterLink } from "vue-router";
 </script>
 
 <template>
-  <div id="background">
+  <div class="back">
     <img
       class="background-image"
       src="/image/background-netflix.jpg"
       alt="Image background"
     />
-    <RouterLink to="/">
-      <img class="logo" src="/image/Logonetflix.png" alt="Image logo" />
-    </RouterLink>  
-    <div class="shadow"></div>
+    <div class="shadow">
+      <RouterLink to="/">
+        <img class="logo" src="/image/Logonetflix.png" alt="Image logo" />
+      </RouterLink>
+    </div>
   </div>
 
   <div class="overlay">
@@ -21,41 +22,31 @@ import { RouterLink } from "vue-router";
 </template>
 
 <style scoped>
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+.back {
+  background-color: aqua;
+  width: 100%;
+  height: 100dvh;
 }
 
 .logo {
   position: absolute;
-  margin-top: 25px;
-  margin-left: 75px;
+  top: 25px;
+  left: 75px;
   height: 51px;
   width: 150px;
-  z-index: 1;
   cursor: pointer;
+  z-index: 2;
 }
-#background {
-  z-index: -1;
-  width: 100dvw;
-  height: 100dvh;
-}
+
 .background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
 }
 
 .shadow {
-  position: absolute;
   top: 0;
-  left: 0;
+  position: absolute;
   width: 100%;
   height: 100%;
   background: rgb(0, 0, 0);
@@ -70,11 +61,10 @@ import { RouterLink } from "vue-router";
 .overlay {
   top: 0;
   position: absolute;
-  height: 100dvh;
-  width: 100dvw;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 </style>
