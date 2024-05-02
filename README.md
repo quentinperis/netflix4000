@@ -6,7 +6,7 @@
 - collection : movies
 - ADD DATA + : aller chercher le dossier json des movies dans server/data/movies.json
 
-2. **Ouvir le terminal depuis netflix4000**
+2. **Ouvrir le terminal depuis netflix4000**
 
 - cd server
 - npm i express
@@ -21,3 +21,8 @@
 - npm i
 - npm i axios
 - npm run dev
+
+4. **Authentication**
+
+- npm install jsonwebtoken
+
