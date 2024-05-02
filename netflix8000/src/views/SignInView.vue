@@ -61,7 +61,7 @@ const submitDisabled = computed(
       </div>
 
       <RouterLink to="/netflix">
-        <button type="submit">Sign In</button>
+        <button :disabled="submitDisabled">Submit</button>
       </RouterLink>
       <div class="newto">
         <p>
@@ -154,4 +154,16 @@ a {
     margin-top: 10px;
   }
 }
+
+form > button:is([disabled]) {
+  background-color: gray;
+}
+
+form > button:not([disabled]):hover {
+  scale: 1.05;
+  cursor: pointer;
+  background-color: hsl(0, 0%, 22%);
+}
+
+
 </style>

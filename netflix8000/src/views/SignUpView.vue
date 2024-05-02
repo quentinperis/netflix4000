@@ -72,7 +72,7 @@ const submitDisabled = computed(
         </div>
 
         <RouterLink to="/netflix">
-          <button type="submit">Sign Up</button>
+          <button :disabled="submitDisabled">Submit</button>
         </RouterLink>
       </form>
       <div class="newto">
