@@ -1,18 +1,21 @@
 const jwt = require("jsonwebtoken");
+
+// Définir votre clé secrète commune front back 1234567nat_00
+const secretKey = "vivment_ca_marche";
+
 const isAuthenticated = (req, res, next) => {
-    try {
-        const token = req.headers.authorization.split(" ")[1];
-        const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-        const userId = decodedToken.userId;
-        req.auth = {
-            userId: userId,
-        };
-        return next();
-    } catch (error) {
-        res.status(401).json({ message: "Merci de vous connecter !" });
-    }
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    // Vérifier un jeton JWT
+    const decodedToken = jwt.verify(token, secretKey);
+    const userId = decodedToken.userId;
+    req.auth = {
+      userId: userId,
+    };
+    return next();
+  } catch (error) {
+    res.status(401).json({ message: error.toString() });
+  }
 };
 
 module.exports = isAuthenticated;
-
-

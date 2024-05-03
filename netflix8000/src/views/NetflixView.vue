@@ -92,7 +92,7 @@ p {
   height: 40px;
 }
 .jokerbackground {
-  background-image: url("../../public/image/4317036.webp");
+  background-image: url("/image/4317036.webp");
   background-size: cover;
   position: absolute;
   top: 0;

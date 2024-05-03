@@ -1,20 +1,25 @@
 <script setup>
 import baseBackground from "@/components/baseBackground.vue";
 import { ref, computed } from "vue";
+import axios from 'axios';
 import { RouterLink } from "vue-router";
+import router from '@/router';
 
+
+// Déclaration des références
+const username = ref(""); 
 const email = ref("");
 const emailTouched = ref(false);
 const password = ref("");
 const passwordTouched = ref(false);
 
+// Calcul des états d'invalidité des champs
 const passwordInvalid = computed(() => {
   return password.value.trim() === "" && passwordTouched.value;
 });
 
 const emailInvalid = computed(() => {
   const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  // const regexpEmailBis = new RegExp('^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$', 'g')
   return emailTouched.value && !regexpEmail.test(email.value);
 });
 
@@ -25,20 +30,54 @@ const submitDisabled = computed(
     !emailTouched.value ||
     !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
 );
+
+// Méthode de soumission du formulaire
+const signUp = async () => {
+   try {
+    const response = await axios.post('http://localhost:3000/auth/signup', {
+      username: username.value,
+      email: email.value,
+      password: password.value
+    });
+
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+
+      // Ajouter le token JWT à l'en-tête Authorization de chaque requête axios
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+
+      // Supprimer le contenu sensible de la requête
+      axios.interceptors.request.use((config) => {
+        if (config.data) {
+          delete config.data.password; // Supprimer le mot de passe de la requête
+          delete config.data.username; // Supprimer le nom d'utilisateur de la requête
+        }
+        return config;
+      });
+
+      router.push('/netflix'); // Redirection vers la page Netflix après l'inscription
+    }
+  } catch (error) {
+    console.error('Erreur lors de l\'inscription :', error);
+  }
+};
+
+
 </script>
+
 
 <template>
   <baseBackground>
     <div class="modal">
       <h2>Sign Up</h2>
-      <form action="#">
+      <form @submit.prevent="signUp">
         <div class="container">
-          <label for="Firstname"></label>
+          <label for="username"></label>
           <input
-            v-model="Firstname"
-            id="Firstname"
+            v-model="username"
+            id="username"
             placeholder="Firstname"
-            type="Firstname"
+            type="text"
             required
           />
         </div>
@@ -71,9 +110,7 @@ const submitDisabled = computed(
           <span v-if="passwordInvalid">Invalid password!</span>
         </div>
 
-        <RouterLink to="/netflix">
-          <button :disabled="submitDisabled">Submit</button>
-        </RouterLink>
+        <button type="submit" :disabled="submitDisabled">Submit</button>
       </form>
       <div class="newto">
         <p>
@@ -164,3 +201,4 @@ a {
   }
 }
 </style>
+@/service/axios
