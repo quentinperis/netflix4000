@@ -30,24 +30,8 @@
 5. **Création de la collection users via mongosh**
 
 - `use movies_db`
-- ```php
-        db.createCollection("users", {
-            validator: {
-                $jsonSchema: {
-                    bsonType: "object",
-                    required: ["email"],
-                    properties: {
-                        email: {npm 
-                            bsonType: "string",
-                            description: "must be a string and is required"
-                        }
-                    }
-                }
-            },
-            validationLevel: "strict",
-            validationAction: "error"
-        })
-```
+- `db.createCollection("users")`
+
 
 
 

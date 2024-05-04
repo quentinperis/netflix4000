@@ -15,6 +15,7 @@ const authController = {
         username: username,
         email: email,
         password: hashedPassword,
+        role: "user", // Définit le rôle par défaut comme "user"
       });
 
       // Enregistre le nouvel utilisateur dans la base de données
@@ -23,16 +24,71 @@ const authController = {
 
       // Générer un token JWT
       const token = jwt.sign({ userId: newUser._id }, "vivment_ca_marche");
+
       // Renvoyer le token dans la réponse
       res.status(201).json({ token: token });
-
-      //   res.status(201).json({ message: "Utilisateur ajouté !" });
     } catch (error) {
-   
-      console.error("Erreur lors de l'inscription :", { error: error.message });
-      res.status(500).json({ error: error.message });
+      if (error.code === 11000 && error.keyPattern.username) {
+        // Gérer l'erreur de contrainte d'unicité du nom d'utilisateur
+        res.status(400).json({ error: "Ce nom d'utilisateur est déjà pris" });
+      } else {
+        // Autres erreurs
+        console.error("Erreur lors de l'inscription :", {
+          error: error.message,
+        });
+        res.status(500).json({ error: error.message });
+      }
     }
   },
+
+  checkUsername: async (req, res) => {
+    try {
+      const user = await User.findOne({ username: req.params.username });
+      if (user) {
+        console.log("Ce nom d'utilisateur est déjà pris");
+        return res
+          .status(400)
+          .json({ error: "Ce nom d'utilisateur est déjà pris" });
+      }
+      res.json({ available: true });
+    } catch (error) {
+      res
+      .status(500)
+      .json({
+        error: 
+        "Une erreur s'est produite lors de la vérification de username.",
+      });
+    }
+  },
+
+  checkEmail: async (req, res) => {
+    try {
+      const user = await User.findOne({ email: req.params.email });
+      if (user) {
+        console.log("Cet email est déjà pris");
+        return res
+        .status(400)
+        .json({ error: "Cet email est déjà pris" });
+      }
+      res.json({ available: true });
+
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la vérification de l'email :",
+        error
+      );
+      res
+        .status(500)
+        .json({
+          error:
+            "Une erreur s'est produite lors de la vérification de l'email.",
+        });
+    }
+  }
+
 };
+
+
+
 
 module.exports = authController;

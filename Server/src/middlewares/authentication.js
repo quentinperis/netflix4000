@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-// Définir votre clé secrète commune front back 1234567nat_00
+// Définir votre clé secrète commune pour front et back 
 const secretKey = "vivment_ca_marche";
 
 const isAuthenticated = (req, res, next) => {
