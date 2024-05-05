@@ -9,7 +9,7 @@ const fctToggle = () => {
   toggle3.value = false;
   toggle4.value = false;
   toggle5.value = false;
-}
+};
 const toggle2 = ref(false);
 const fctToggle2 = () => {
   toggle.value = false;
@@ -17,7 +17,7 @@ const fctToggle2 = () => {
   toggle3.value = false;
   toggle4.value = false;
   toggle5.value = false;
-}
+};
 const toggle3 = ref(false);
 const fctToggle3 = () => {
   toggle.value = false;
@@ -25,7 +25,7 @@ const fctToggle3 = () => {
   toggle3.value = !toggle3.value;
   toggle4.value = false;
   toggle5.value = false;
-}
+};
 const toggle4 = ref(false);
 const fctToggle4 = () => {
   toggle.value = false;
@@ -33,7 +33,7 @@ const fctToggle4 = () => {
   toggle3.value = false;
   toggle4.value = !toggle4.value;
   toggle5.value = false;
-}
+};
 const toggle5 = ref(false);
 const fctToggle5 = () => {
   toggle.value = false;
@@ -41,7 +41,7 @@ const fctToggle5 = () => {
   toggle3.value = false;
   toggle4.value = false;
   toggle5.value = !toggle5.value;
-}
+};
 </script>
 
 <template>
@@ -151,12 +151,11 @@ const fctToggle5 = () => {
       </ul>
     </div>
 
-    <inputEmail/>
+    <inputEmail />
   </div>
 </template>
 
 <style scoped>
-
 .croix {
   rotate: 45deg;
 }
@@ -220,14 +219,14 @@ li {
   margin-bottom: 55px;
 }
 
-
 h3 {
   font-size: 2rem;
   display: inline-block;
   font-weight: bold;
 }
 
-.plus, .croix {
+.plus,
+.croix {
   font-size: 3rem;
   display: inline-block;
   cursor: pointer;
@@ -237,7 +236,6 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: hsl(0, 0%, 2%);
+  background-color: black;
 }
-
 </style>

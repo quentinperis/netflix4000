@@ -24,21 +24,23 @@ import { RouterLink } from "vue-router";
 .mid {
   box-sizing: border-box;
   position: absolute;
-  height: 100%;
+  height: 10%;
   width: 100%;
-  top: 0;
+  bottom: 0;
   margin: auto;
   align-items: center;
   border: solid 0.25rem transparent;
   border-top-left-radius: 50% 100%;
   border-top-right-radius: 50% 100%;
   border-bottom: none;
-  background: radial-gradient(
-      50% 500% at 50% -420%,
-      rgba(64, 97, 231, 0.4) 80%,
-      rgba(0, 0, 0, 0.1) 100%
-    ),
-    black;
+  background: linear-gradient(
+    to right,
+    rgba(33, 13, 22, 1) 16%,
+    rgba(184, 40, 105, 1),
+    rgba(229, 9, 20, 1),
+    rgba(184, 40, 105, 1),
+    rgba(33, 13, 22, 1) 84%
+  );
 }
 
 .mid::before {
@@ -48,16 +50,14 @@ import { RouterLink } from "vue-router";
   right: 0;
   bottom: 0;
   left: 0;
-  margin-top: -0.25rem;
+  /* margin-top: -0.10rem; */
   border-radius: inherit;
-  background: linear-gradient(
-    to right,
-    rgba(33, 13, 22, 1) 16%,
-    rgba(184, 40, 105, 1),
-    rgba(229, 9, 20, 1),
-    rgba(184, 40, 105, 1),
-    rgba(33, 13, 22, 1) 84%
-  );
+  background: radial-gradient(
+      50% 500% at 50% -420%,
+      rgba(64, 97, 231, 0.4) 80%,
+      rgba(0, 0, 0, 0.1) 100%
+    ),
+    black;
 }
 
 .RL {
