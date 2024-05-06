@@ -7,12 +7,13 @@ import { RouterLink } from "vue-router";
 
 <template>
   <baseBackground>
-    <RouterLink class="RL" to="/signin">
+    <RouterLink to="/signin">
       <button id="signin-button">Sign In</button>
     </RouterLink>
     <div class="modal">
       <h1>Unlimited movies, TV shows and more.</h1>
       <h2>Watch anywhere. Cancel at any time.</h2>
+      <p>Ready to watch? Enter your email to create or restart your membership.</p>
       <inputEmail />
     </div>
     <div class="mid"></div>
@@ -699,39 +700,33 @@ import { RouterLink } from "vue-router";
     black;
 }
 
-.RL {
-  color: hsl(0, 0%, 95%);
-  text-decoration: none;
-}
-
 .modal {
-  top: -10%;
   width: 100%;
   height: 100%;
+  padding: 150px 550px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   text-align: center;
+  align-items: center;
+  > p {
+    color: hsl(0, 0%, 98%);
+  }
 }
 
 .modal h1 {
   color: white;
-  font-size: 2.5rem;
+  font-size: 4rem;
   font-weight: 900;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  line-height: 125%;
-  width: 50%;
-  max-width: 90%;
-  padding-top: 200px;
-  margin: 0 auto;
 }
 
 .modal h2 {
   color: white;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  margin-bottom: 20px;
 }
 .modal p {
   color: white;
@@ -807,6 +802,18 @@ import { RouterLink } from "vue-router";
   }
 }
 
+@media screen and (max-width: 1780px) {
+  .modal {
+    padding: 150px 400px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .modal {
+    padding: 150px 350px;
+  }
+}
+
+
 @media screen and (max-width: 1280px) {
   #more {
     padding: 20px 70px;
@@ -822,6 +829,12 @@ import { RouterLink } from "vue-router";
     }
     > h2 {
       font-size: 1.4rem;
+    }
+  }
+  .modal {
+    padding: 150px 300px;
+    > h1 {
+      font-size: 2.5rem;
     }
   }
 }
@@ -840,6 +853,12 @@ import { RouterLink } from "vue-router";
     }
     > p {
       margin-bottom: 70px;
+    }
+  }
+  .modal {
+    padding: 150px 200px;
+    > h1 {
+      font-size: 2rem;
     }
   }
 }

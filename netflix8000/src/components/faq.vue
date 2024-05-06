@@ -57,7 +57,7 @@ const togglePanel = (index) => {
         </li>
       </ul>
     </div>
-
+    <p>Ready to watch? Enter your email to create or restart your membership.</p>
     <inputEmail />
   </div>
 </template>
@@ -88,6 +88,7 @@ ul,
 .faq-container {
   width: 80%;
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 h2 {
@@ -143,6 +144,10 @@ li {
   justify-content: center;
   align-items: start;
   background-color: black;
+  padding-bottom: 100px;
+  > p {
+    color: hsl(0, 0%, 98%);
+  }
 }
 @media screen and (max-width: 1280px) {
   .faq {
