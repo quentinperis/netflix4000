@@ -1,6 +1,8 @@
 <script setup>
-import movies from "../components/movies.vue";
 import { ref } from "vue";
+import movies from "../components/movies.vue";
+
+const username = ref("");
 
 const showVideo = ref(false);
 const videoPath = "/image/joker.mp4"; // dossier publuc sur front
@@ -11,15 +13,27 @@ const playVideo = () => {
 const closeVideo = () => {
   showVideo.value = false;
 };
+
+// Fonction pour mettre à jour le nom d'utilisateur après la connexion réussie
+const updateUsername = (newUsername) => {
+  username.value = newUsername;
+};
+
+// Mise à jour du nom d'utilisateur lors de la connexion réussie
+updateUsername(localStorage.getItem("username"));
 </script>
 
 <template>
   <div class="jokerbackground">
     <header>
       <div class="logo">
-        <router-link to="/"
-          ><img src="/image/Logonetflix.png" alt="Votre logo Netflix"
-        /></router-link>
+        <router-link to="/"><img src="/image/Logonetflix.png" alt="Votre logo Netflix" /></router-link>
+
+        <RouterLink to="#">
+          <button class="btn" id="logout-button">Logout</button>
+        </RouterLink>
+        <router-view :username="username" />
+        <span>{{ username }}</span>
       </div>
     </header>
     <div class="content-wrapper">
@@ -32,12 +46,7 @@ const closeVideo = () => {
           he projects in a futile attempt to feel like he's part of the world
           around him.
         </p>
-        <button
-          type="button"
-          @click="playVideo"
-          style="cursor: pointer"
-          class="watch-button"
-        >
+        <button type="button" @click="playVideo" style="cursor: pointer" class="watch-button">
           Play
         </button>
       </div>
@@ -56,9 +65,28 @@ const closeVideo = () => {
 </template>
 
 <style scoped>
+.btn {
+  height: 40px;
+  width: 70px;
+  background-color: #de0510;
+  color: white;
+  z-index: 2;
+  border: none;
+  border-radius: 3px;
+  position: absolute;
+  top: 25px;
+  right: 75px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #c11119;
+}
+
 body::-webkit-scrollbar {
   width: 0 !important;
 }
+
 .watch-button {
   background-color: red;
   color: white;
@@ -84,13 +112,16 @@ p {
   align-items: center;
   /* z-index: 999;  */
 }
+
 .logo {
   margin-left: 60px;
   margin-top: 30px;
 }
+
 .logo img {
   height: 40px;
 }
+
 .jokerbackground {
   background-image: url("/image/4317036.webp");
   background-size: cover;
@@ -114,9 +145,11 @@ p {
   margin-left: 7%;
   padding-top: auto;
 }
+
 .show-video {
   text-align: start;
 }
+
 video {
   width: 100%;
   height: 100%;
@@ -149,6 +182,7 @@ video {
   cursor: pointer;
   transition: transform 200ms ease;
 }
+
 .video-close:active {
   transform: translateY(3px);
 }

@@ -8,8 +8,8 @@ import { RouterLink } from "vue-router";
 <template>
   <div class="main">
   <baseBackground>
-    <RouterLink class="RL" to="/signin">
-      <button id="signin-button">Sign In</button>
+    <RouterLink to="/signin">
+      <button id="signin-button" class="btn">Sign In</button>
     </RouterLink>
     <div class="modal">
       <h1>Unlimited movies, TV shows and more.</h1>
@@ -30,11 +30,6 @@ import { RouterLink } from "vue-router";
 
 .main {
   width: 100dvw;
-}
-
-.RL {
-  color: hsl(0, 0%, 95%);
-  text-decoration: none;
 }
 
 .modal {
@@ -81,7 +76,7 @@ import { RouterLink } from "vue-router";
   cursor: pointer;
 }
 
-#signin-button {
+.btn {
   height: 40px;
   width: 70px;
   background-color: #de0510;
@@ -93,6 +88,10 @@ import { RouterLink } from "vue-router";
   top: 25px;
   right: 75px;
   cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #c11119;
 }
 
 @media only screen and (max-width: 768px) {

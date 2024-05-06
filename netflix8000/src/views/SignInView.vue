@@ -1,7 +1,9 @@
 <script setup>
 import baseBackground from "@/components/baseBackground.vue";
 import { ref, computed } from "vue";
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink } from "vue-router";
+import router from "@/router";
+import axios from "axios";
 
 const email = ref("");
 const emailTouched = ref(false);
@@ -25,44 +27,80 @@ const submitDisabled = computed(
     !emailTouched.value ||
     !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
 );
+
+// Méthode de soumission du formulaire
+const logIn = async () => {
+  try {
+    const response = await axios.post("http://localhost:3000/auth/login", {
+      email: email.value,
+      password: password.value,
+    });
+
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
+
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+
+     
+      router.push("/netflix");
+    }
+  } catch (error) {
+    console.error("Erreur lors de la connexion :", error);
+  }
+};
 </script>
 
 <template>
   <baseBackground>
     <div class="modal">
       <h2>Sign In</h2>
+      <form @submit.prevent="logIn">
+        <div class="container">
+          <label for="email"></label>
+          <span
+            :class="{
+              invalid: emailInvalid,
+            }"
+            v-if="emailInvalid"
+          >
+            Invalid email!
+          </span>
+          <input
+            v-model="email"
+            id="email"
+            placeholder="Email Adress"
+            @input="emailTouched = true"
+            @change="emailTouched = true"
+            type="email"
+            required
+          />
+        </div>
 
-      <div class="container">
-        <label for="email"></label>
-        <input
-          v-model="email"
-          id="email"
-          placeholder="Email Adress"
-          @input="emailTouched = true"
-          @change="emailTouched = true"
-          type="email"
-          required
-        />
-        <span v-if="emailInvalid">Invalid email!</span>
-      </div>
+        <div class="container">
+          <label for="password"></label>
+          <span
+            :class="{
+              invalid: passwordInvalid,
+            }"
+            v-if="passwordInvalid"
+          >
+            Invalid password!
+          </span>
+          <input
+            v-model="password"
+            @input="passwordTouched = true"
+            @change="passwordTouched = true"
+            id="password"
+            placeholder="Password"
+            type="password"
+            required
+          />
+        </div>
 
-      <div class="container">
-        <label for="password"></label>
-        <input
-          v-model="password"
-          @input="passwordTouched = true"
-          @change="passwordTouched = true"
-          id="password"
-          placeholder="Password"
-          type="password"
-          required
-        />
-        <span v-if="passwordInvalid">Invalid password!</span>
-      </div>
-
-      <RouterLink to="/netflix">
-        <button :disabled="submitDisabled">Submit</button>
-      </RouterLink>
+        <button type="submit" :disabled="submitDisabled">Submit</button>
+      </form>
       <div class="newto">
         <p>
           New to Netflix ?
@@ -133,6 +171,23 @@ button:hover {
   background-color: #c11119;
 }
 
+button:disabled {
+  background-color: #636363;
+  cursor: not-allowed;
+}
+
+.available {
+  color: green;
+}
+
+.unavailable {
+  color: red;
+}
+
+.invalid {
+  color: red;
+}
+
 .newto {
   color: #fff;
   font-size: 0.9rem;
@@ -164,6 +219,4 @@ form > button:not([disabled]):hover {
   cursor: pointer;
   background-color: hsl(0, 0%, 22%);
 }
-
-
 </style>

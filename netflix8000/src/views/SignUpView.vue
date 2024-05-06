@@ -1,20 +1,20 @@
 <script setup>
 import baseBackground from "@/components/baseBackground.vue";
 import { ref, computed } from "vue";
-import axios from 'axios';
+import axios from "axios";
 import { RouterLink } from "vue-router";
-import router from '@/router';
+import router from "@/router";
 
 // Déclaration des références
-const username = ref(""); 
+const username = ref("");
 const email = ref("");
 const password = ref("");
 
 const emailTouched = ref(false);
-const usernameTouched = ref(false); 
+const usernameTouched = ref(false);
 const passwordTouched = ref(false);
 
-const emailUnavailable = ref(false); 
+const emailUnavailable = ref(false);
 const usernameAvailable = ref(false);
 
 const responseMessageUsername = ref("");
@@ -49,14 +49,14 @@ const handleUsernameInput = async () => {
         `http://localhost:3000/auth/check-username/${username.value}`
       );
       usernameAvailable.value = response.data.available;
-      
-      responseMessageUsername.value = "Disponible" 
- 
+
+      responseMessageUsername.value = "Disponible";
     } catch (error) {
-      // Vérifiez si l'erreur est une erreur réseau ou une erreur 400 
-      responseMessageUsername.value = error.response && error.response.status === 400 
-      ? "Ce nom d'utilisateur est déjà pris" 
-      : "Une erreur s'est produite lors de la vérification du nom d'utilisateur.";
+      // Vérifiez si l'erreur est une erreur réseau ou une erreur 400
+      responseMessageUsername.value =
+        error.response && error.response.status === 400
+          ? "Ce nom d'utilisateur est déjà pris"
+          : "Une erreur s'est produite lors de la vérification du nom d'utilisateur.";
     }
   } else {
     responseMessageUsername.value = "";
@@ -76,14 +76,15 @@ const handleEmailInput = async () => {
       emailUnavailable.value = !response.data.available;
 
       responseMessageEmail.value = ""; // Effacez le message avant de vérifier la disponibilité
-      if (!emailInvalid.value) { // Vérifiez si l'email est valide avant d'afficher "Disponible"
+      if (!emailInvalid.value) {
+        // Vérifiez si l'email est valide avant d'afficher "Disponible"
         responseMessageEmail.value = "Disponible";
       }
-
     } catch (error) {
-      responseMessageEmail.value = error.response && error.response.status === 400
-      ? "Cet email est déjà pris"
-      : "Une erreur s'est produite lors de la vérification de l'emai.";
+      responseMessageEmail.value =
+        error.response && error.response.status === 400
+          ? "Cet email est déjà pris"
+          : "Une erreur s'est produite lors de la vérification de l'emai.";
     }
   } else {
     responseMessageEmail.value = "";
@@ -92,23 +93,26 @@ const handleEmailInput = async () => {
 
 // Méthode de soumission du formulaire
 const signUp = async () => {
-   try {
-    const response = await axios.post('http://localhost:3000/auth/signup', {
+  try {
+    const response = await axios.post("http://localhost:3000/auth/signup", {
       username: username.value,
       email: email.value,
-      password: password.value
+      password: password.value,
     });
 
     if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      router.push('/netflix');
+      localStorage.setItem("token", response.data.token);
+      
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+
+      router.push("/netflix");
     }
   } catch (error) {
-    console.error('Erreur lors de l\'inscription :', error);
+    console.error("Erreur lors de l'inscription :", error);
   }
 };
-
 </script>
 
 <template>
@@ -116,11 +120,25 @@ const signUp = async () => {
     <div class="modal">
       <h2>Sign Up</h2>
       <form @submit.prevent="signUp">
-
         <div class="container">
           <label for="username"></label>
-          <span>{{ responseMessageUsername }}</span>
-          <span v-if="usernameInvalid">Invalid username!</span>
+          <span
+            :class="{
+              available: responseMessageUsername === 'Disponible',
+              unavailable: responseMessageUsername !== 'Disponible',
+            }"
+          >
+            {{ responseMessageUsername }}
+          </span>
+
+          <span
+            :class="{
+              invalid: usernameInvalid,
+            }"
+            v-if="usernameInvalid"
+          >
+            Invalid username!
+          </span>
           <input
             v-model="username"
             id="username"
@@ -130,13 +148,29 @@ const signUp = async () => {
             type="text"
             required
           />
-          
         </div>
 
-         <div class="container">
+        <div class="container">
           <label for="email"></label>
-          <span v-if="emailInvalid">Invalid email!</span>
-          <span>{{ responseMessageEmail }}</span>
+
+          <span
+            :class="{
+              invalid: emailInvalid,
+            }"
+            v-if="emailInvalid"
+          >
+          Invalid email!
+          </span>
+
+          <span
+            :class="{
+              available: responseMessageEmail === 'Disponible',
+              unavailable: responseMessageEmail !== 'Disponible',
+            }"
+          >
+            {{ responseMessageEmail }}
+          </span>
+
           <input
             v-model="email"
             id="email"
@@ -150,7 +184,14 @@ const signUp = async () => {
 
         <div class="container">
           <label for="password"></label>
-          <span v-if="passwordInvalid">Invalid password!</span>
+          <span
+            :class="{
+              invalid: passwordInvalid,
+            }"
+            v-if="passwordInvalid"
+          >
+            Invalid password!
+          </span>
           <input
             v-model="password"
             @input="passwordTouched = true"
@@ -175,7 +216,6 @@ const signUp = async () => {
 </template>
 
 <style scoped>
-
 #baseBackground {
   display: flex;
   justify-content: center;
@@ -191,39 +231,53 @@ const signUp = async () => {
 }
 
 .modal {
-  width: 31.25rem; /* 500px / 16px (taille de police de base) = 31.25rem */
-  padding: 1.25rem; /* 20px / 16px = 1.25rem */
+  width: 31.25rem;
+  /* 500px / 16px (taille de police de base) = 31.25rem */
+  padding: 1.25rem;
+  /* 20px / 16px = 1.25rem */
   background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 0.9375rem; 
-  text-align: center; 
+  border-radius: 0.9375rem;
+  text-align: center;
 }
 
 h2 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
   color: #fff;
-  margin-bottom: 1.875rem; 
+  margin-bottom: 1.875rem;
   text-align: left;
 }
 
 input {
   width: 100%;
-  padding: 0.95rem; 
+  padding: 0.95rem;
   margin-bottom: 1.56rem;
-  margin-top: 0.5rem; 
+  margin-top: 0.5rem;
   background-color: #333;
   border: none;
-  border-radius: 0.25rem; 
+  border-radius: 0.25rem;
   color: #fff;
+}
+
+.available {
+  color: green;
+}
+
+.unavailable {
+  color: red;
+}
+
+.invalid {
+  color: red;
 }
 
 button {
   width: 100%;
-  padding: 0.9375rem; 
+  padding: 0.9375rem;
   background-color: #de0e10;
   color: #fff;
   border: none;
-  border-radius: 0.25rem; 
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 1.2rem;
   transition: background-color 0.3s ease;
@@ -234,14 +288,14 @@ button:hover {
 }
 
 button:disabled {
-  background-color: #bd3a41; 
+  background-color: #636363;
   cursor: not-allowed;
 }
 
 .newto {
   color: #fff;
   font-size: 0.9rem;
-  margin-top: 1.25rem; 
+  margin-top: 1.25rem;
 }
 
 a {
@@ -250,18 +304,13 @@ a {
   font-weight: bold;
 }
 
-span {
-  color: #de0e10;
-}
-
-@media only screen and (max-width: 48em) { 
+@media only screen and (max-width: 48em) {
   .container {
     flex-direction: column;
   }
 
   .get-started-button {
-    margin-top: 0.625rem; 
+    margin-top: 0.625rem;
   }
 }
-
 </style>

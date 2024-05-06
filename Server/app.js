@@ -34,8 +34,6 @@ mongoose.connection.once("open", async () => {
 
 //-------------------CONNECTION BDD----------------------//
 
-
-
 //-------------------MIDDLEWARE----------------------//
 
 // Autoriser les requêtes CORS avant l'utilisation des routes !!!

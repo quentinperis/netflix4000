@@ -1,6 +1,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { secretKey } = require("../middlewares/authentication");
+require('dotenv').config(); 
+
 
 const authController = {
   signup: async (req, res) => {
@@ -23,10 +26,11 @@ const authController = {
       console.log("Utilisateur ajouté avec succès !");
 
       // Générer un token JWT
-      const token = jwt.sign({ userId: newUser._id }, "vivment_ca_marche");
+      const token = jwt.sign({ userId: newUser._id }, secretKey);
 
       // Renvoyer le token dans la réponse
       res.status(201).json({ token: token });
+
     } catch (error) {
       if (error.code === 11000 && error.keyPattern.username) {
         // Gérer l'erreur de contrainte d'unicité du nom d'utilisateur
@@ -84,11 +88,39 @@ const authController = {
             "Une erreur s'est produite lors de la vérification de l'email.",
         });
     }
+  },
+
+
+  login: async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      console.log("Données reçues pour connexion :", req.body);
+
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res
+          .status(401)
+          .json({error: error.message, message: "Utilisateur ou mot de passe incorrect" });
+      }
+  
+      const isValid = bcrypt.compare(password, user.password);
+  
+      if (!isValid) {
+        return res
+          .status(401)
+          .json({ message: "Utilisateur ou mot de passe incorrect" });
+      }
+  
+      const token = jwt.sign({ userId: user.id }, secretKey, {
+        expiresIn: "1800s",
+      });
+      res.status(200).json({ token });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 
 };
-
-
-
 
 module.exports = authController;

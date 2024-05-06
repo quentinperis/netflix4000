@@ -27,10 +27,16 @@
 - `npm i jsonwebtoken`
 - `npm i bcrypt`
 
-5. **Création de la collection users via mongosh**
+5. **Configuration .env**
 
-- `use movies_db`
-- `db.createCollection("users")`
+- `npm i dotenv`
+- Créer ficher .env et placer la dans .gitignore
+
+5. **Générer une clé secrète en NodeJS**
+
+- exécuter en bash : `node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"`
+- `ACCESS_TOKEN_SECRET = PLACER SECRET_KEY_ICI`
+
 
 
 
