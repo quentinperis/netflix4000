@@ -21,3 +21,10 @@
 - npm i
 - npm i axios
 - npm run dev
+
+Objectif -> 02.05.2024
+Page home a refaire
+auth admin user 
+carroussel
+background page movies
+responsive page par page 
