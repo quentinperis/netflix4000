@@ -2,150 +2,57 @@
 import inputEmail from "./inputEmail.vue";
 import { ref } from "vue";
 
-const toggle = ref(false);
-const fctToggle = () => {
-  toggle.value = !toggle.value;
-  toggle2.value = false;
-  toggle3.value = false;
-  toggle4.value = false;
-  toggle5.value = false;
-};
-const toggle2 = ref(false);
-const fctToggle2 = () => {
-  toggle.value = false;
-  toggle2.value = !toggle2.value;
-  toggle3.value = false;
-  toggle4.value = false;
-  toggle5.value = false;
-};
-const toggle3 = ref(false);
-const fctToggle3 = () => {
-  toggle.value = false;
-  toggle2.value = false;
-  toggle3.value = !toggle3.value;
-  toggle4.value = false;
-  toggle5.value = false;
-};
-const toggle4 = ref(false);
-const fctToggle4 = () => {
-  toggle.value = false;
-  toggle2.value = false;
-  toggle3.value = false;
-  toggle4.value = !toggle4.value;
-  toggle5.value = false;
-};
-const toggle5 = ref(false);
-const fctToggle5 = () => {
-  toggle.value = false;
-  toggle2.value = false;
-  toggle3.value = false;
-  toggle4.value = false;
-  toggle5.value = !toggle5.value;
+const faqs = ref([
+  {
+    question: "What is Netflix?",
+    answer: "Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices. \nYou can watch as much as you want, whenever you want – all for one low monthly price. There's always something new to discover and new TV shows and movies are added every week!"
+  },
+  {
+    question: "How much does Netflix cost?",
+    answer: "Watch Netflix on your smartphone, tablet, Smart TV, laptop, or streaming device, all for one fixed monthly fee. Plans range from EUR 19.99 to EUR 5.99 a month. No extra costs, no contracts."
+  },
+  {
+    question: "Where can I watch?",
+    answer: "Watch anywhere, anytime. Sign in with your Netflix account to watch instantly on the web at netflix.com from your personal computer or on any internet-connected device that offers the Netflix app, including smart TVs, smartphones, tablets, streaming media players and game consoles. \nYou can also download your favorite shows with the iOS, Android, or Windows 10 app. Use downloads to watch while you're on the go and without an internet connection. Take Netflix with you anywhere."
+  },
+  {
+    question: "How do I cancel?",
+    answer: "Netflix is flexible. There are no pesky contracts and no commitments. You can easily cancel your account online in two clicks. There are no cancellation fees – start or stop your account anytime."
+  },
+  {
+    question: "What can I watch on Netflix?",
+    answer: "Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want."
+  }
+]);
+
+// Gestion de l'état des panneaux
+const toggle = ref(null);
+
+const togglePanel = (index) => {
+  toggle.value = toggle.value === index ? null : index;
 };
 </script>
 
 <template>
   <div class="faq">
     <div class="faq-container">
-      <p class="faq-top">Frequently Asked Questions</p>
+      <h2 id="title-faq">Frequently Asked Questions</h2>
       <ul>
-        <li>
-          <div @click="fctToggle" class="li-div">
+        <!-- Boucle sur les questions et réponses -->
+        <li v-for="(faq, index) in faqs" :key="index">
+          <div @click="togglePanel(index)" class="li-div">
             <button class="button-faq">
-              <h3>What is Netflix?</h3>
-              <p v-if="toggle" class="croix">+</p>
+              <!-- Titre de la question -->
+              <h2>{{ faq.question }}</h2>
+              <!-- Symbole "+" ou "x" pour indiquer l'état du panneau -->
+              <p v-if="toggle === index" class="croix">+</p>
               <p v-else class="plus">+</p>
             </button>
           </div>
-          <div v-if="toggle" class="panel">
-            <p>
-              Netflix is a streaming service that offers a wide variety of
-              award-winning TV shows, movies, anime, documentaries, and more on
-              thousands of internet-connected devices.
-              <br />
-              <br />
-              You can watch as much as you want, whenever you want – all for one
-              low monthly price. There's always something new to discover and
-              new TV shows and movies are added every week!
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div @click="fctToggle2" class="li-div">
-            <button class="button-faq">
-              <h3>How much does Netflix cost?</h3>
-              <p v-if="toggle2" class="croix">+</p>
-              <p v-else class="plus">+</p>
-            </button>
-          </div>
-          <div v-if="toggle2" class="panel">
-            <p>
-              Watch Netflix on your smartphone, tablet, Smart TV, laptop, or
-              streaming device, all for one fixed monthly fee. Plans range from
-              EUR&nbsp;19.99 to EUR&nbsp;5.99 a month. No extra costs, no
-              contracts.
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div @click="fctToggle3" class="li-div">
-            <button class="button-faq">
-              <h3>Where can I watch?</h3>
-              <p v-if="toggle3" class="croix">+</p>
-              <p v-else class="plus">+</p>
-            </button>
-          </div>
-          <div v-if="toggle3" class="panel">
-            <p>
-              Watch anywhere, anytime. Sign in with your Netflix account to
-              watch instantly on the web at netflix.com from your personal
-              computer or on any internet-connected device that offers the
-              Netflix app, including smart TVs, smartphones, tablets, streaming
-              media players and game.
-              <br />
-              <br />
-              You can also download your favorite shows with the iOS, Android,
-              or Windows 10 app. Use downloads to watch while you're on the go
-              and without an internet connection. Take Netflix with you
-              anywhere.
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div @click="fctToggle4" class="li-div">
-            <button class="button-faq">
-              <h3>How do I cancel?</h3>
-              <p v-if="toggle4" class="croix">+</p>
-              <p v-else class="plus">+</p>
-            </button>
-          </div>
-          <div v-if="toggle4" class="panel">
-            <p>
-              Netflix is flexible. There are no pesky contracts and no
-              commitments. You can easily cancel your account online in two
-              clicks. There are no cancellation fees – start or stop your
-              account anytime.
-            </p>
-          </div>
-        </li>
-
-        <li id="li-bot">
-          <div @click="fctToggle5" class="li-div">
-            <button class="button-faq">
-              <h3>What can I watch on Netflix?</h3>
-              <p v-if="toggle5" class="croix">+</p>
-              <p v-else class="plus">+</p>
-            </button>
-          </div>
-          <div v-if="toggle5" class="panel">
-            <p>
-              Netflix has an extensive library of feature films, documentaries,
-              TV shows, anime, award-winning Netflix originals, and more. Watch
-              as much as you want, anytime you want.
-            </p>
+          
+          <!-- Affichage de la réponse correspondante si le panneau est ouvert -->
+          <div v-if="toggle === index" class="panel">
+            <p>{{ faq.answer }}</p>
           </div>
         </li>
       </ul>
@@ -175,25 +82,29 @@ li,
 ul,
 .button-faq {
   width: 100%;
+  padding: 0;
 }
 
 .faq-container {
-  width: 50%;
-  margin-top: 70px;
+  width: 80%;
+  margin-top: 50px;
 }
 
-.faq-top {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 5px;
+h2 {
+  font-size: 1.6rem;
+  font-weight: 500;
   color: hsl(0, 0%, 95%);
+}
+
+#title-faq {
+  margin-bottom: 10px;
 }
 
 .button-faq {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 25px;
+  padding: 10px 20px;
   background-color: transparent;
   color: hsl(0, 0%, 95%);
   border: none;
@@ -202,7 +113,7 @@ ul,
   background-color: hsl(0, 0%, 20%);
   overflow: hidden;
   margin-bottom: 5px;
-  margin-top: 0.5px;
+  margin-top: 1px;
   > p {
     padding: 25px;
     font-size: 1.2rem;
@@ -213,16 +124,10 @@ ul,
 li {
   list-style: none;
   transition: background-color 200ms ease 200ms;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 #li-bot {
   margin-bottom: 55px;
-}
-
-h3 {
-  font-size: 2rem;
-  display: inline-block;
-  font-weight: bold;
 }
 
 .plus,
@@ -233,9 +138,24 @@ h3 {
 }
 .faq {
   display: flex;
+  padding: 0 120px;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   background-color: black;
 }
+@media screen and (max-width: 1280px) {
+  .faq {
+    padding: 0 75px;
+  }
+}
+@media screen and (max-width: 960px) {
+  .faq {
+    padding: 0px 30px;
+  }
+  .faq-container {
+  width: 100%;
+}
+}
+
 </style>
