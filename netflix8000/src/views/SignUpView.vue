@@ -107,7 +107,9 @@ const signUp = async () => {
         "Authorization"
       ] = `Bearer ${response.data.token}`;
 
-      router.push("/netflix");
+      router.push({ name: 'netflix', query: { username: username.value } });
+
+      // router.push({ name: 'netflix', params: { username: props.username } });
     }
   } catch (error) {
     console.error("Erreur lors de l'inscription :", error);

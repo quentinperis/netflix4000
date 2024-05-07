@@ -5,6 +5,7 @@ import { RouterLink } from "vue-router";
 import router from "@/router";
 import axios from "axios";
 
+const username = ref("");
 const email = ref("");
 const emailTouched = ref(false);
 const password = ref("");
@@ -39,12 +40,13 @@ const logIn = async () => {
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
 
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      
+      username.value = response.data.username; // Mettre à jour le nom d'utilisateur
 
-     
-      router.push("/netflix");
+      router.push({ name: 'netflix', query: { username: username.value } });
+
+      // router.push({ name: 'netflix', params: { username: props.username } });
     }
   } catch (error) {
     console.error("Erreur lors de la connexion :", error);
@@ -59,44 +61,24 @@ const logIn = async () => {
       <form @submit.prevent="logIn">
         <div class="container">
           <label for="email"></label>
-          <span
-            :class="{
-              invalid: emailInvalid,
-            }"
-            v-if="emailInvalid"
-          >
+          <span :class="{
+        invalid: emailInvalid,
+      }" v-if="emailInvalid">
             Invalid email!
           </span>
-          <input
-            v-model="email"
-            id="email"
-            placeholder="Email Adress"
-            @input="emailTouched = true"
-            @change="emailTouched = true"
-            type="email"
-            required
-          />
+          <input v-model="email" id="email" placeholder="Email Adress" @input="emailTouched = true"
+            @change="emailTouched = true" type="email" required />
         </div>
 
         <div class="container">
           <label for="password"></label>
-          <span
-            :class="{
-              invalid: passwordInvalid,
-            }"
-            v-if="passwordInvalid"
-          >
+          <span :class="{
+        invalid: passwordInvalid,
+      }" v-if="passwordInvalid">
             Invalid password!
           </span>
-          <input
-            v-model="password"
-            @input="passwordTouched = true"
-            @change="passwordTouched = true"
-            id="password"
-            placeholder="Password"
-            type="password"
-            required
-          />
+          <input v-model="password" @input="passwordTouched = true" @change="passwordTouched = true" id="password"
+            placeholder="Password" type="password" required />
         </div>
 
         <button type="submit" :disabled="submitDisabled">Submit</button>
@@ -210,11 +192,11 @@ a {
   }
 }
 
-form > button:is([disabled]) {
+form>button:is([disabled]) {
   background-color: gray;
 }
 
-form > button:not([disabled]):hover {
+form>button:not([disabled]):hover {
   scale: 1.05;
   cursor: pointer;
   background-color: hsl(0, 0%, 22%);

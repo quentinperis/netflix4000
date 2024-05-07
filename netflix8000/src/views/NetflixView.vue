@@ -1,26 +1,21 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
+import { useRoute } from 'vue-router';
 import movies from "../components/movies.vue";
 
-const username = ref("");
+// const props = defineProps({
+//   username: String,
+// });
+
+// AFFICHER le nom d'utilisateur
+const route = useRoute();
+const username = route.query.username;
 
 const showVideo = ref(false);
 const videoPath = "/image/joker.mp4"; // dossier publuc sur front
+const playVideo = () => { showVideo.value = true };
+const closeVideo = () => { showVideo.value = false };
 
-const playVideo = () => {
-  showVideo.value = true;
-};
-const closeVideo = () => {
-  showVideo.value = false;
-};
-
-// Fonction pour mettre à jour le nom d'utilisateur après la connexion réussie
-const updateUsername = (newUsername) => {
-  username.value = newUsername;
-};
-
-// Mise à jour du nom d'utilisateur lors de la connexion réussie
-updateUsername(localStorage.getItem("username"));
 </script>
 
 <template>
@@ -32,8 +27,7 @@ updateUsername(localStorage.getItem("username"));
         <RouterLink to="#">
           <button class="btn" id="logout-button">Logout</button>
         </RouterLink>
-        <router-view :username="username" />
-        <span>{{ username }}</span>
+        <span v-if="username">User : {{ username }}</span>
       </div>
     </header>
     <div class="content-wrapper">
@@ -60,11 +54,14 @@ updateUsername(localStorage.getItem("username"));
       </div>
     </div>
     <hr />
-    <movies />
+    <movies/>
   </div>
 </template>
 
 <style scoped>
+span {
+  color: white;
+}
 .btn {
   height: 40px;
   width: 70px;

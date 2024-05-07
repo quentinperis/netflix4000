@@ -37,7 +37,8 @@
 - exécuter en bash : `node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"`
 - `ACCESS_TOKEN_SECRET = PLACER SECRET_KEY_ICI`
 
+5. **Front recuperer les info de user**
 
-
+- `npm install jwt-decode`
 
 
