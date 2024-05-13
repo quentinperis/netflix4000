@@ -105,7 +105,7 @@ const signUp = async () => {
 
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
-      
+
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.data.token}`;
@@ -116,7 +116,7 @@ const signUp = async () => {
       authStore.signUp(response.data.username);
 
       // Rediriger vers la page /netflix 
-      router.push({ name: 'netflix'});
+      router.push({ name: 'netflix' });
 
     }
   } catch (error) {
@@ -124,113 +124,75 @@ const signUp = async () => {
   }
 };
 
-const emit = defineEmits(['close']);
-const closeSignUp = () => {
-  emit("close");
-};
+
 </script>
 
 <template>
 
-    <div class="modal">
-      <div class="modal-header">
-        <h2>Sign Up</h2>
-        <button id="modal-close" @click="closeSignUp">&#10006;</button>
-      </div>
-      
-      <form @submit.prevent="signUp">
-        <div class="container">
-          <label for="username"></label>
-          <span
-            :class="{
-              available: responseMessageUsername === 'Disponible',
-              unavailable: responseMessageUsername !== 'Disponible',
-            }"
-          >
-            {{ responseMessageUsername }}
-          </span>
-
-          <span
-            :class="{
-              invalid: usernameInvalid,
-            }"
-            v-if="usernameInvalid"
-          >
-            Invalid username!
-          </span>
-          <input
-            v-model="username"
-            id="username"
-            placeholder="Enter your username"
-            @input="handleUsernameInput"
-            @change="usernameTouched = true"
-            type="text"
-            required
-          />
-        </div>
-
-        <div class="container">
-          <label for="email"></label>
-
-          <span
-            :class="{
-              invalid: emailInvalid,
-            }"
-            v-if="emailInvalid"
-          >
-          Invalid email!
-          </span>
-
-          <span
-            :class="{
-              available: responseMessageEmail === 'Disponible',
-              unavailable: responseMessageEmail !== 'Disponible',
-            }"
-          >
-            {{ responseMessageEmail }}
-          </span>
-
-          <input
-            v-model="email"
-            id="email"
-            placeholder="Email Adress"
-            @input="handleEmailInput"
-            @change="emailTouched = true"
-            type="email"
-            required
-          />
-        </div>
-
-        <div class="container">
-          <label for="password"></label>
-          <span
-            :class="{
-              invalid: passwordInvalid,
-            }"
-            v-if="passwordInvalid"
-          >
-            Invalid password!
-          </span>
-          <input
-            v-model="password"
-            @input="passwordTouched = true"
-            @change="passwordTouched = true"
-            id="password"
-            placeholder="Password"
-            type="password"
-            required
-          />
-        </div>
-
-        <button class="btn" type="submit" :disabled="submitDisabled">Submit</button>
-      </form>
-      <div class="newto">
-        <p>
-          Already a user ?
-          <RouterLink to="/SignIn">sign in now</RouterLink>
-        </p>
-      </div>
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Sign Up</h2>
     </div>
+
+    <form @submit.prevent="signUp">
+      <div class="container">
+        <label for="username"></label>
+        <span :class="{
+      available: responseMessageUsername === 'Disponible',
+      unavailable: responseMessageUsername !== 'Disponible',
+    }">
+          {{ responseMessageUsername }}
+        </span>
+
+        <span :class="{
+      invalid: usernameInvalid,
+    }" v-if="usernameInvalid">
+          Invalid username!
+        </span>
+        <input v-model="username" id="username" placeholder="Enter your username" @input="handleUsernameInput"
+          @change="usernameTouched = true" type="text" required />
+      </div>
+
+      <div class="container">
+        <label for="email"></label>
+
+        <span :class="{
+      invalid: emailInvalid,
+    }" v-if="emailInvalid">
+          Invalid email!
+        </span>
+
+        <span :class="{
+      available: responseMessageEmail === 'Disponible',
+      unavailable: responseMessageEmail !== 'Disponible',
+    }">
+          {{ responseMessageEmail }}
+        </span>
+
+        <input v-model="email" id="email" placeholder="Email Adress" @input="handleEmailInput"
+          @change="emailTouched = true" type="email" required />
+      </div>
+
+      <div class="container">
+        <label for="password"></label>
+        <span :class="{
+      invalid: passwordInvalid,
+    }" v-if="passwordInvalid">
+          Invalid password!
+        </span>
+        <input v-model="password" @input="passwordTouched = true" @change="passwordTouched = true" id="password"
+          placeholder="Password" type="password" required />
+      </div>
+
+      <button class="btn" type="submit" :disabled="submitDisabled">Submit</button>
+    </form>
+    <div class="newto">
+      <p>
+        Already a user ?
+        <RouterLink to="/SignIn">sign in now</RouterLink>
+      </p>
+    </div>
+  </div>
 
 </template>
 
@@ -248,22 +210,6 @@ const closeSignUp = () => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.875rem;
-}
-
-#modal-close {
- 
-  height: 2.2rem;
-  width: 2.2rem;
-  border-radius: 50%;
-  border: 0.125rem solid hsl(0, 0%, 35%);
-  font-size: 1rem;
-  background-color: transparent;
-  color: hsl(0, 0%, 35%);
-  cursor: pointer;
-  transition: transform 200ms ease;
-}
-#modal-close:active {
-  transform: translateY(3px);
 }
 
 h2 {

@@ -1,11 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import movies from "../components/movies.vue";
-import { useAuthStore } from '@/stores/auth';
-import { useRouter } from 'vue-router';
-
-const authStore = useAuthStore();
-const router = useRouter();
 
 const showVideo = ref(false);
 const videoPath = "/image/joker.mp4"; // dossier publuc sur front
@@ -23,13 +18,7 @@ const closeVideo = () => { showVideo.value = false };
     />
 
     <div class="content-wrapper">
-      <router-link to="/"
-        ><img
-          class="logo"
-          src="/image/Logonetflix.png"
-          alt="Votre logo Netflix"
-        />
-      </router-link>
+   
       <div id="empty"></div>
       <div id="left">
         <h2>Watch Joker Now</h2>

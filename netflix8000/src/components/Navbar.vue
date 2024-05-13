@@ -17,34 +17,21 @@ const showInput = ref(true);
 const reconnection = ref(false);
 
 // SWITCHER ENTRE LES COMPOSANTS SignIn et SignUp
-
 const handleShowSignUp = () => {
   showSignUp.value = true;
   showSignIn.value = false;
   showInput.value = false;
 };
-
 const handleShowSignIn = () => {
   showSignIn.value = true;
   showSignUp.value = false;
   showInput.value = false;
 };
 
-// EMITS POUR FERMER MODAL
-
-const handleCloseSignUp = () => {
+const handleCloseModals = () => {
   showSignUp.value = false;
-  showInput.value = true;
-};
-
-const handleCloseSignIn = () => {
   showSignIn.value = false;
-  showInput.value = true;
-};
-
-const handleCloseReconnection = () => {
   reconnection.value = false;
-  showSignIn.value = false;
   showInput.value = true;
 };
 
@@ -66,6 +53,7 @@ axios.interceptors.response.use(
   async (error) => {
     if (error.response && error.response.status === 401) {
       reconnection.value = true;
+      
       router.push("/");
 
       authStore.logout();
@@ -79,15 +67,14 @@ axios.interceptors.response.use(
 <template>
   <div>
     <RouterLink to="/">
-      <img class="logo" src="/image/Logonetflix.png" alt="Image logo" />
+      <img class="logo" src="/image/Logonetflix.png" alt="Image logo"  @click="handleCloseModals"/>
     </RouterLink>
   </div>
 
   <div class="overlay">
     <template v-if="authStore.isLoggedIn">
-      <!-- Si l'utilisateur est connecté, afficher le bouton de déconnexion -->
+      Si l'utilisateur est connecté, afficher le bouton de déconnexion
       <div class="user-dashboard">
-        <!-- <RouterLink to="/netflix">Your films</RouterLink> -->
         <span class="username">{{ authStore.username }}</span>
         <button class="btn" @click="handleLogout">Logout</button>
       </div>
@@ -110,9 +97,9 @@ axios.interceptors.response.use(
           Sign In
         </button>
       </div>
-      <Reconnection v-if="reconnection" @close="handleCloseReconnection" />
-      <SignIn v-if="showSignIn && !reconnection" @close="handleCloseSignIn" />
-      <signUp v-if="showSignUp" @close="handleCloseSignUp" />
+      <Reconnection v-if="reconnection" @="handleCloseModals" />
+      <SignIn v-if="showSignIn && !reconnection" @="handleCloseModals" />
+      <signUp v-if="showSignUp" @="handleCloseModals" />
     </template>
 
   </div>

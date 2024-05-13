@@ -60,17 +60,12 @@ const logIn = async () => {
   }
 };
 
-const emit = defineEmits(['close']);
-const closeSignIn = () => {
-  emit("close");
-};
 </script>
 
 <template>
     <div class="modal">
       <div class="modal-header">
         <h2>Votre session est expirée.</h2>
-        <button id="modal-close" @click="closeSignIn">&#10006;</button>
       </div>
       <form @submit.prevent="logIn">
         <div class="container">
