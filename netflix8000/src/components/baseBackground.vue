@@ -20,12 +20,10 @@
 
 <style scoped>
 
-
-#background {
-  z-index: -1;
+  .back {
+  background-color: black;
   width: 100%;
-  height: 100vh; /* Utilise la hauteur de la fenêtre */
-  position: relative; /* Ajoutez position relative */
+  height: 100dvh;
 }
 
 .background-image {
