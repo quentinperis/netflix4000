@@ -1,6 +1,7 @@
 <script setup>
 import { RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
+import Footer from "./components/Footer.vue";
 import axios from "axios";
 import { useAuthStore } from "./stores/auth";
 
@@ -22,6 +23,7 @@ if (token) {
 <template>
   <Navbar />
   <RouterView />
+  <Footer />
 </template>
 
 <style scoped>
