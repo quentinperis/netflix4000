@@ -1,30 +1,37 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { useAuthStore } from '@/stores/auth'; 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: HomeView
     },
-    {
-      path: '/signin',
-      name: 'signin',
-      component: () => import('../views/SignInView.vue')
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: () => import('../views/SignUpView.vue')
-    },
+    
     {
       path: '/netflix',
       name: 'netflix',
-      component: () => import('../views/NetflixView.vue')
+      component: () => import('../views/NetflixView.vue'),
+      meta: { requiresAuth: true } 
+      // Indiquer que cette page nécessite une authentification
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!authStore.isLoggedIn) {
+      next({ name: "home" });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

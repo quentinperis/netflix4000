@@ -1,9 +1,11 @@
 <script setup>
-import baseBackground from "@/components/baseBackground.vue";
 import { ref, computed } from "vue";
 import axios from "axios";
 import { RouterLink } from "vue-router";
 import router from "@/router";
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore();
 
 // Déclaration des références
 const username = ref("");
@@ -19,6 +21,7 @@ const usernameAvailable = ref(false);
 
 const responseMessageUsername = ref("");
 const responseMessageEmail = ref("");
+
 
 // Calcul des états d'invalidité des champs
 const passwordInvalid = computed(() => {
@@ -107,20 +110,34 @@ const signUp = async () => {
         "Authorization"
       ] = `Bearer ${response.data.token}`;
 
-      router.push({ name: 'netflix', query: { username: username.value } });
+      username.value = response.data.username; // Mettre à jour le nom d'utilisateur
 
-      // router.push({ name: 'netflix', params: { username: props.username } });
+      // Appeler l'action signUp de votre magasin authStore avec le nom d'utilisateur
+      authStore.signUp(response.data.username);
+
+      // Rediriger vers la page /netflix 
+      router.push({ name: 'netflix'});
+
     }
   } catch (error) {
     console.error("Erreur lors de l'inscription :", error);
   }
 };
+
+const emit = defineEmits(['close']);
+const closeSignUp = () => {
+  emit("close");
+};
 </script>
 
 <template>
-  <baseBackground>
+
     <div class="modal">
-      <h2>Sign Up</h2>
+      <div class="modal-header">
+        <h2>Sign Up</h2>
+        <button id="modal-close" @click="closeSignUp">&#10006;</button>
+      </div>
+      
       <form @submit.prevent="signUp">
         <div class="container">
           <label for="username"></label>
@@ -205,7 +222,7 @@ const signUp = async () => {
           />
         </div>
 
-        <button type="submit" :disabled="submitDisabled">Submit</button>
+        <button class="btn" type="submit" :disabled="submitDisabled">Submit</button>
       </form>
       <div class="newto">
         <p>
@@ -214,39 +231,45 @@ const signUp = async () => {
         </p>
       </div>
     </div>
-  </baseBackground>
+
 </template>
 
 <style scoped>
-#baseBackground {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-}
-
 .modal {
   width: 31.25rem;
-  /* 500px / 16px (taille de police de base) = 31.25rem */
   padding: 1.25rem;
-  /* 20px / 16px = 1.25rem */
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 0.9375rem;
   text-align: center;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.875rem;
+}
+
+#modal-close {
+ 
+  height: 2.2rem;
+  width: 2.2rem;
+  border-radius: 50%;
+  border: 0.125rem solid hsl(0, 0%, 35%);
+  font-size: 1rem;
+  background-color: transparent;
+  color: hsl(0, 0%, 35%);
+  cursor: pointer;
+  transition: transform 200ms ease;
+}
+#modal-close:active {
+  transform: translateY(3px);
 }
 
 h2 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
   color: #fff;
-  margin-bottom: 1.875rem;
   text-align: left;
 }
 
@@ -273,7 +296,7 @@ input {
   color: red;
 }
 
-button {
+.btn {
   width: 100%;
   padding: 0.9375rem;
   background-color: #de0e10;
@@ -285,11 +308,11 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.btn:hover {
   background-color: #c11119;
 }
 
-button:disabled {
+.btn:disabled {
   background-color: #636363;
   cursor: not-allowed;
 }

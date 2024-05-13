@@ -1,4 +1,4 @@
-const Movie = require("../models/movie");
+const Movie = require("../models/Movie");
 
 const movieController = {
   addMovies: async (req, res) => {
@@ -26,7 +26,7 @@ const movieController = {
       for (const movie of movies) {
         movie.imagePath = `http://localhost:3000/images/${movie.name}.png`;
         await movie.save();
-        console.log(`Chemin de l'image mis à jour pour ${movie.name}`);
+        // console.log(`Chemin de l'image mis à jour pour ${movie.name}`);
       }
       console.log(
         "Tous les chemins d'images ont été mis à jour avec succès :)"
@@ -45,7 +45,7 @@ const movieController = {
       for (const video of videos) {
         video.videoPath = `http://localhost:3000/videos/${video.name}.mp4`;
         await video.save();
-        console.log(`Chemin de la video mis à jour pour ${video.name}`);
+        // console.log(`Chemin de la video mis à jour pour ${video.name}`);
       }
       console.log(
         "Tous les chemins d'a video ont été mis à jour avec succès :)"

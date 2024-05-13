@@ -1,9 +1,11 @@
 <script setup>
-import baseBackground from "@/components/baseBackground.vue";
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 import router from "@/router";
 import axios from "axios";
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore();
 
 const username = ref("");
 const email = ref("");
@@ -11,13 +13,15 @@ const emailTouched = ref(false);
 const password = ref("");
 const passwordTouched = ref(false);
 
+
+
 const passwordInvalid = computed(() => {
   return password.value.trim() === "" && passwordTouched.value;
 });
 
+
 const emailInvalid = computed(() => {
   const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  // const regexpEmailBis = new RegExp('^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$', 'g')
   return emailTouched.value && !regexpEmail.test(email.value);
 });
 
@@ -44,20 +48,30 @@ const logIn = async () => {
       
       username.value = response.data.username; // Mettre à jour le nom d'utilisateur
 
-      router.push({ name: 'netflix', query: { username: username.value } });
+      // Appeler la méthode logIn de votre magasin authStore avec le nom d'utilisateur récupéré
+      authStore.logIn(response.data.username);
 
-      // router.push({ name: 'netflix', params: { username: props.username } });
+     // Rediriger vers la page /netflix 
+      router.push({ name: 'netflix'});
+
     }
   } catch (error) {
     console.error("Erreur lors de la connexion :", error);
   }
 };
+
+const emit = defineEmits(['close']);
+const closeSignIn = () => {
+  emit("close");
+};
 </script>
 
 <template>
-  <baseBackground>
     <div class="modal">
-      <h2>Sign In</h2>
+      <div class="modal-header">
+        <h2>Votre session est expirée.</h2>
+        <button id="modal-close" @click="closeSignIn">&#10006;</button>
+      </div>
       <form @submit.prevent="logIn">
         <div class="container">
           <label for="email"></label>
@@ -81,7 +95,7 @@ const logIn = async () => {
             placeholder="Password" type="password" required />
         </div>
 
-        <button type="submit" :disabled="submitDisabled">Submit</button>
+        <button class="btn" type="submit" :disabled="submitDisabled">Submit</button>
       </form>
       <div class="newto">
         <p>
@@ -93,24 +107,9 @@ const logIn = async () => {
         </p>
       </div>
     </div>
-  </baseBackground>
 </template>
 
 <style scoped>
-#baseBackground {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-}
-
 .modal {
   width: 500px;
   padding: 20px;
@@ -119,11 +118,32 @@ const logIn = async () => {
   text-align: center;
 }
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.875rem;
+}
+
+#modal-close {
+  height: 2.2rem;
+  width: 2.2rem;
+  border-radius: 50%;
+  border: 0.125rem solid hsl(0, 0%, 35%);
+  font-size: 1rem;
+  background-color: transparent;
+  color: hsl(0, 0%, 35%);
+  cursor: pointer;
+  transition: transform 200ms ease;
+}
+#modal-close:active {
+  transform: translateY(3px);
+}
+
 h2 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
   color: #fff;
-  margin-bottom: 30px;
   text-align: left;
 }
 
@@ -137,7 +157,7 @@ input {
   color: #fff;
 }
 
-button {
+.btn {
   width: 100%;
   padding: 15px;
   background-color: #de0e10;
@@ -149,11 +169,11 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.btn:hover {
   background-color: #c11119;
 }
 
-button:disabled {
+.btn:disabled {
   background-color: #636363;
   cursor: not-allowed;
 }
@@ -197,7 +217,6 @@ form>button:is([disabled]) {
 }
 
 form>button:not([disabled]):hover {
-  scale: 1.05;
   cursor: pointer;
   background-color: hsl(0, 0%, 22%);
 }

@@ -1,5 +1,4 @@
-<script>
-import { RouterLink } from "vue-router";
+<script setup>
 </script>
 
 <template>
@@ -9,33 +8,24 @@ import { RouterLink } from "vue-router";
       src="/image/background-netflix.jpg"
       alt="Image background"
     />
-    <div class="shadow">
-      <RouterLink to="/">
-        <img class="logo" src="/image/Logonetflix.png" alt="Image logo" />
-      </RouterLink>
-    </div>
+    <div class="shadow"></div>
   </div>
 
   <div class="overlay">
-    <slot></slot>
-  </div>
+    
+      <slot></slot>
+    </div>
+
 </template>
 
 <style scoped>
-.back {
-  background-color: aqua;
-  width: 100%;
-  height: 100dvh;
-}
 
-.logo {
-  position: absolute;
-  top: 25px;
-  left: 75px;
-  height: 51px;
-  width: 150px;
-  cursor: pointer;
-  z-index: 2;
+
+#background {
+  z-index: -1;
+  width: 100%;
+  height: 100vh; /* Utilise la hauteur de la fenêtre */
+  position: relative; /* Ajoutez position relative */
 }
 
 .background-image {
@@ -61,11 +51,12 @@ import { RouterLink } from "vue-router";
 .overlay {
   top: 0;
   position: absolute;
+  height: 100vh; /* Utilise la hauteur de la fenêtre */
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden ;
 }
 </style>
+
