@@ -14,11 +14,7 @@ if (token) {
  
   // Vérifier l'état de connexion de l'utilisateur
   authStore.checkAuthStatus();
-} else {
-  // Si le token n'existe pas, nettoyer le stockage local pour éviter les conflits
-  localStorage.clear();
-}
-
+} 
 
 
 </script>

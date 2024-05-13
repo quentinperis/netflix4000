@@ -87,7 +87,7 @@ axios.interceptors.response.use(
     <template v-if="authStore.isLoggedIn">
       <!-- Si l'utilisateur est connecté, afficher le bouton de déconnexion -->
       <div class="user-dashboard">
-        <RouterLink to="/netflix">Your films</RouterLink>
+        <!-- <RouterLink to="/netflix">Your films</RouterLink> -->
         <span class="username">{{ authStore.username }}</span>
         <button class="btn" @click="handleLogout">Logout</button>
       </div>
