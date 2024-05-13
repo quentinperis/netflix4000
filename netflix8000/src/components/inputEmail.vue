@@ -9,20 +9,17 @@ const handleShowSignUpView = () => {
 </script>
 
 <template>
-  <div class="modal">
-    <h1>Unlimited movies, TV shows and more.</h1>
-    <h2>Watch anywhere. Cancel at any time.</h2>
-    <div id="ready">
-      <p>
-        Ready to watch? Enter your email to create or restart your membership
-      </p>
-      <form>
-        <input required type="email" placeholder="Email Address" class="email-input" />
-        <button class="get-started-button" @click="handleShowSignUpView">
-          GET STARTED &gt;
-        </button>
-      </form>
-    </div>
+  <div id="ready">
+    <form>
+      <input
+        type="email"
+        placeholder="Email address"
+        class="email-input"
+      />
+      <div>
+        <button class="get-started-button">GET STARTED &gt;</button>
+      </div>
+    </form>
   </div>
 </template>
 

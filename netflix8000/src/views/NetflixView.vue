@@ -23,13 +23,6 @@ const closeVideo = () => { showVideo.value = false };
     />
 
     <div class="content-wrapper">
-      <router-link to="/"
-        ><img
-          class="logo"
-          src="/image/Logonetflix.png"
-          alt="Votre logo Netflix"
-        />
-      </router-link>
       <div id="empty"></div>
       <div id="left">
         <h2>Watch Joker Now</h2>
