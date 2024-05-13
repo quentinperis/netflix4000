@@ -11,31 +11,31 @@ import axios from "axios";
 
 const authStore = useAuthStore();
 
-const showSignUp = ref(false);
-const showSignIn = ref(false);
-const showInput = ref(true);
-const reconnection = ref(false);
+// const showSignUp = ref(false);
+// const showSignIn = ref(false);
+// const showInput = ref(true);
+// const reconnection = ref(false);
 
 // SWITCHER ENTRE LES COMPOSANTS SignIn et SignUp
-const handleShowSignUp = () => {
-  showSignUp.value = true;
-  showSignIn.value = false;
-  showInput.value = false;
-};
-const handleShowSignIn = () => {
-  showSignIn.value = true;
-  showSignUp.value = false;
-  showInput.value = false;
-};
+// const handleShowSignUp = () => {
+//   showSignUp.value = true;
+//   showSignIn.value = false;
+//   showInput.value = false;
+// };
+// const handleShowSignIn = () => {
+//   showSignIn.value = true;
+//   showSignUp.value = false;
+//   showInput.value = false;
+// };
 
 // POUR FERMER MODAL
 
-const handleCloseModals = () => {
-  reconnection.value = false;
-  showSignIn.value = false;
-  showSignUp.value = false;
-  showInput.value = true;
-};
+// const handleCloseModals = () => {
+//   reconnection.value = false;
+//   showSignIn.value = false;
+//   showSignUp.value = false;
+//   showInput.value = true;
+// };
 
 // DECONNECTION
 const handleLogout = () => {
