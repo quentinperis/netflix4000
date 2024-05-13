@@ -1,15 +1,11 @@
 <script setup>
-import { ref, defineProps } from "vue";
-import { useRoute } from 'vue-router';
+import { ref } from "vue";
 import movies from "../components/movies.vue";
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
 
-// const props = defineProps({
-//   username: String,
-// });
-
-// AFFICHER le nom d'utilisateur
-const route = useRoute();
-const username = route.query.username;
+const authStore = useAuthStore();
+const router = useRouter();
 
 const showVideo = ref(false);
 const videoPath = "/image/joker.mp4"; // dossier publuc sur front
@@ -20,16 +16,6 @@ const closeVideo = () => { showVideo.value = false };
 
 <template>
   <div class="jokerbackground">
-    <header>
-      <div class="logo">
-        <router-link to="/"><img src="/image/Logonetflix.png" alt="Votre logo Netflix" /></router-link>
-
-        <RouterLink to="#">
-          <button class="btn" id="logout-button">Logout</button>
-        </RouterLink>
-        <span v-if="username">User : {{ username }}</span>
-      </div>
-    </header>
     <div class="content-wrapper">
       <div>
         <h1 class="jokertitle">Watch Joker Now</h1>
@@ -56,29 +42,10 @@ const closeVideo = () => { showVideo.value = false };
     <hr />
     <movies/>
   </div>
-</template>
+</template >
 
 <style scoped>
-span {
-  color: white;
-}
-.btn {
-  height: 40px;
-  width: 70px;
-  background-color: #de0510;
-  color: white;
-  z-index: 2;
-  border: none;
-  border-radius: 3px;
-  position: absolute;
-  top: 25px;
-  right: 75px;
-  cursor: pointer;
-}
 
-.btn:hover {
-  background-color: #c11119;
-}
 
 body::-webkit-scrollbar {
   width: 0 !important;
@@ -175,7 +142,6 @@ video {
   position: absolute;
   right: 17rem;
   top: 20rem;
-
   cursor: pointer;
   transition: transform 200ms ease;
 }

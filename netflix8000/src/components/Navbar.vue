@@ -1,0 +1,194 @@
+<script setup>
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import inputEmail from "@/components/inputEmail.vue";
+import signUp from "@/components/signUp.vue";
+import SignIn from "@/components/SignIn.vue";
+import { useAuthStore } from "@/stores/auth";
+import Reconnection from "@/components/Reconnection.vue";
+import router from "@/router";
+import axios from "axios";
+
+const authStore = useAuthStore();
+
+const showSignUp = ref(false);
+const showSignIn = ref(false);
+const showInput = ref(true);
+const reconnection = ref(false);
+
+// SWITCHER ENTRE LES COMPOSANTS SignIn et SignUp
+
+const handleShowSignUp = () => {
+  showSignUp.value = true;
+  showSignIn.value = false;
+  showInput.value = false;
+};
+
+const handleShowSignIn = () => {
+  showSignIn.value = true;
+  showSignUp.value = false;
+  showInput.value = false;
+};
+
+// EMITS POUR FERMER MODAL
+
+const handleCloseSignUp = () => {
+  showSignUp.value = false;
+  showInput.value = true;
+};
+
+const handleCloseSignIn = () => {
+  showSignIn.value = false;
+  showInput.value = true;
+};
+
+const handleCloseReconnection = () => {
+  reconnection.value = false;
+  showSignIn.value = false;
+  showInput.value = true;
+};
+
+// DECONNECTION
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  reconnection.value = false;
+  showSignIn.value = false;
+  showSignUp.value = false;
+  showInput.value = true;
+  authStore.logout();
+  router.push("/");
+};
+
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    if (error.response && error.response.status === 401) {
+      reconnection.value = true;
+      router.push("/");
+
+      authStore.logout();
+    } 
+    return Promise.reject(error);
+  }
+);
+
+</script>
+
+<template>
+  <div>
+    <RouterLink to="/">
+      <img class="logo" src="/image/Logonetflix.png" alt="Image logo" />
+    </RouterLink>
+  </div>
+
+  <div class="overlay">
+    <template v-if="authStore.isLoggedIn">
+      <!-- Si l'utilisateur est connecté, afficher le bouton de déconnexion -->
+      <div class="user-dashboard">
+        <RouterLink to="/netflix">Your films</RouterLink>
+        <span class="username">{{ authStore.username }}</span>
+        <button class="btn" @click="handleLogout">Logout</button>
+      </div>
+    </template>
+
+    <template v-else>
+      <!-- Ajout de la condition pour cacher le composant Reconnection -->
+      <inputEmail
+        class="modal"
+        v-if="showInput && !reconnection"
+        @showSignUp="handleShowSignUp"
+      />
+      <div class="dashboard-sign-in">
+        <button
+          id="signin-button"
+          class="btn"
+          @click="handleShowSignIn"
+          v-if="showInput && !reconnection"
+        >
+          Sign In
+        </button>
+      </div>
+      <Reconnection v-if="reconnection" @close="handleCloseReconnection" />
+      <SignIn v-if="showSignIn && !reconnection" @close="handleCloseSignIn" />
+      <signUp v-if="showSignUp" @close="handleCloseSignUp" />
+    </template>
+
+  </div>
+</template>
+
+<style scoped>
+.user-dashboard {
+  display: flex;
+  align-items: center;
+  color: white;
+  z-index: 1;
+  position: absolute;
+  top: 25px;
+  right: 75px;
+}
+.dashboard-sign-in {
+  height: 40px;
+  width: 70px;
+  display: flex;
+  color: white;
+  z-index: 1;
+  top: 25px;
+  right: 75px;
+  position: absolute;
+}
+
+.user-dashboard span {
+  padding: 10px 30px 10px;
+}
+a {
+  color: white;
+  text-decoration: none;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9);
+}
+
+.username {
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9);
+}
+
+.btn {
+  height: 40px;
+  width: 70px;
+  background-color: #de0510;
+  color: white;
+  padding: 7px 13px;
+  z-index: -1;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #c11119;
+}
+
+.logo {
+  position: absolute;
+  margin-top: 25px;
+  margin-left: 75px;
+  height: 51px;
+  width: 150px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.modal {
+  z-index: 2;
+  margin-top: 250px;
+}
+
+.overlay {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

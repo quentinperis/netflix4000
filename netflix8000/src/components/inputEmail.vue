@@ -1,22 +1,59 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+const emit = defineEmits(["showSignUp"]);
+
+const handleShowSignUpView = () => {
+  emit("showSignUp");
+};
+
+
 </script>
 
 <template>
-      <div id="ready">
+  <div class="modal">
+    <h1>Unlimited movies, TV shows and more.</h1>
+    <h2>Watch anywhere. Cancel at any time.</h2>
+    <div id="ready">
       <p>
         Ready to watch? Enter your email to create or restart your membership
       </p>
       <div class="container">
         <input type="email" placeholder="Email Address" class="email-input" />
-        <RouterLink class="RL" to="/signup"
-          ><button class="get-started-button">GET STARTED &gt;</button>
-        </RouterLink>
+        <button class="get-started-button" @click="handleShowSignUpView">
+          GET STARTED &gt;
+        </button>
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
+
+ .modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+} 
+
+ h1 {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 900;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  line-height: 125%;
+  width: 50%;
+  max-width: 90%;
+  padding-top: 100px;
+  margin: 0 auto;
+}
+
+ h2 {
+  color: white;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
 
 #ready {
   margin-top: 25px;
