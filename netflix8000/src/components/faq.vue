@@ -2,6 +2,13 @@
 import inputEmail from "./inputEmail.vue";
 import { ref } from "vue";
 
+const emit = defineEmits(["showSignUp"]);
+
+const handleShowSignUpView = () => {
+  emit("showSignUp");
+};
+
+
 const faqs = ref([
   {
     question: "What is Netflix?",
@@ -58,7 +65,7 @@ const togglePanel = (index) => {
       </ul>
     </div>
     <p>Ready to watch? Enter your email to create or restart your membership.</p>
-    <inputEmail />
+    <inputEmail  @showSignUp="handleShowSignUpView"/>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
-import home from "@/components/home.vue"
+import home from "@/components/home.vue";
 import signUp from "@/components/signUp.vue";
 import SignIn from "@/components/SignIn.vue";
 import { useAuthStore } from "@/stores/auth";
@@ -28,10 +28,12 @@ const handleShowSignIn = () => {
   showInput.value = false;
 };
 
+// POUR FERMER MODAL
+
 const handleCloseModals = () => {
-  showSignUp.value = false;
-  showSignIn.value = false;
   reconnection.value = false;
+  showSignIn.value = false;
+  showSignUp.value = false;
   showInput.value = true;
 };
 
@@ -53,27 +55,31 @@ axios.interceptors.response.use(
   async (error) => {
     if (error.response && error.response.status === 401) {
       reconnection.value = true;
-      
+
       router.push("/");
 
       authStore.logout();
-    } 
+    }
     return Promise.reject(error);
   }
 );
-
 </script>
 
 <template>
   <div>
     <RouterLink to="/">
-      <img class="logo" src="/image/Logonetflix.png" alt="Image logo"  @click="handleCloseModals"/>
+      <img
+        class="logo"
+        src="/image/Logonetflix.png"
+        alt="Image logo"
+        @click="handleCloseModals"
+      />
     </RouterLink>
   </div>
 
   <div class="overlay">
     <template v-if="authStore.isLoggedIn">
-      Si l'utilisateur est connecté, afficher le bouton de déconnexion
+      <!-- Si l'utilisateur est connecté, afficher le bouton de déconnexion -->
       <div class="user-dashboard">
         <span class="username">{{ authStore.username }}</span>
         <button class="btn" @click="handleLogout">Logout</button>
@@ -101,7 +107,6 @@ axios.interceptors.response.use(
       <SignIn v-if="showSignIn && !reconnection" @="handleCloseModals" />
       <signUp v-if="showSignUp" @="handleCloseModals" />
     </template>
-
   </div>
 </template>
 
@@ -115,6 +120,7 @@ axios.interceptors.response.use(
   top: 25px;
   right: 75px;
 }
+
 .dashboard-sign-in {
   height: 40px;
   width: 70px;
@@ -129,6 +135,7 @@ axios.interceptors.response.use(
 .user-dashboard span {
   padding: 10px 30px 10px;
 }
+
 a {
   color: white;
   text-decoration: none;
@@ -145,7 +152,7 @@ a {
   background-color: #de0510;
   color: white;
   padding: 7px 13px;
-  z-index: -1;
+  z-index: 1;
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -169,6 +176,7 @@ a {
   z-index: 2;
   margin-top: 250px;
 }
+
 .overlay {
   position: absolute;
   z-index: 2;
