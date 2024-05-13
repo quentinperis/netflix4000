@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
-import inputEmail from "@/components/inputEmail.vue";
+import home from "@/components/home.vue"
 import signUp from "@/components/signUp.vue";
 import SignIn from "@/components/SignIn.vue";
 import { useAuthStore } from "@/stores/auth";
@@ -82,7 +82,7 @@ axios.interceptors.response.use(
 
     <template v-else>
       <!-- Ajout de la condition pour cacher le composant Reconnection -->
-      <inputEmail
+      <home
         class="modal"
         v-if="showInput && !reconnection"
         @showSignUp="handleShowSignUp"
@@ -169,13 +169,12 @@ a {
   z-index: 2;
   margin-top: 250px;
 }
-
 .overlay {
-  top: 0;
   position: absolute;
-  width: 100%;
+  z-index: 2;
+  overflow: hidden;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 </style>

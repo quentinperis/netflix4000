@@ -1,17 +1,41 @@
 <script setup>
-
-import baseBackground from "@/components/baseBackground.vue";
-import faq from "@/components/faq.vue";
-
 </script>
 
 <template>
-  <div class="main">
-    <baseBackground />
-    <faq />
+    <div class="back">
+    <img
+      class="background-image"
+      src="/image/background-netflix.jpg"
+      alt="Image background"
+    />
+    <div class="shadow"></div>
   </div>
 </template>
 
 <style scoped>
+.back {
+  background-color: black;
+  width: 100%;
+  height: 100dvh;
+}
 
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shadow {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.76234243697479) 19%,
+    rgba(0, 0, 0, 0) 56%,
+    rgba(0, 0, 0, 0.7175245098039216) 80%
+  );
+}
 </style>

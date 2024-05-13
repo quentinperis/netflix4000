@@ -18,7 +18,6 @@ const closeVideo = () => { showVideo.value = false };
     />
 
     <div class="content-wrapper">
-   
       <div id="empty"></div>
       <div id="left">
         <h2>Watch Joker Now</h2>
