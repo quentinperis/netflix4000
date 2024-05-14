@@ -45,7 +45,7 @@ axios.interceptors.response.use(
 <template>
   <div>
     <div>
-      <RouterLink :to="authStore.isLoggedIn ? '/' : '/netflix'">
+      <RouterLink :to="!authStore.isLoggedIn ? '/' : '/netflix'">
         <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="modalStore.handleCloseModals" />
       </RouterLink>
     </div>

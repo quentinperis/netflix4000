@@ -1,5 +1,5 @@
 <script setup>
-import InputEmail from "./InputEmail.vue";
+import InputEmail from "@/components/InputEmail.vue";
 import { ref } from "vue";
 
 const faqs = ref([

@@ -4,22 +4,23 @@ const emits = defineEmits(["closeModal"]);
 </script>
 
 <template>
-      <div class="modal" v-if="selectedMovie">
-      <div id="left">
-        <div id="name-year">
-          <h2>{{ selectedMovie.name }}</h2>
-        </div>
-        <div> 
-        <h3>{{ selectedMovie.year }}</h3>
-          <p>{{ selectedMovie.description }}</p>
-        </div>
+  <div class="modal" v-if="selectedMovie">
+    <div id="left">
+      <div id="name-year">
+        <h2>{{ selectedMovie.name }}</h2>
       </div>
-      <div id="right">
-        <video controls :src="selectedMovie.videoPath"></video>
-        <button id="modal-close" @click="$emit('closeModal')">+</button>
+      <div> 
+        <h3>{{ selectedMovie.year }}</h3>
+        <p>{{ selectedMovie.description }}</p>
       </div>
     </div>
+    <div id="right">
+      <video controls :src="selectedMovie.videoPath"></video>
+      <button id="modal-close" @click="$emit('closeModal')">+</button>
+    </div>
+  </div>
 </template>
+
 
 <style scoped>
 .modal {

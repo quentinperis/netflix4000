@@ -4,13 +4,6 @@ import InputEmail from "@/components/InputEmail.vue";
 import SvgHome from "@/components/SvgHome.vue"
 import Footer from "@/components/Footer.vue";
 
-const emit = defineEmits(["showSignUp"]);
-
-const handleShowSignUpView = () => {
-  emit("showSignUp");
-};
-
-
 </script>
 
 <template>
@@ -31,7 +24,7 @@ const handleShowSignUpView = () => {
       <SvgHome />
     </div>
   </div>
-  <Faq @showSignUp="handleShowSignUpView" />
+  <Faq />
   <footer />
 </template>
 

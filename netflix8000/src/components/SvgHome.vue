@@ -636,7 +636,7 @@
 </template>
 
 <style scoped>
-  .box {
+.box {
   position: relative;
   background: linear-gradient(149deg, #192247 0%, #210e17 96.86%);
   padding: 5px 20px;
