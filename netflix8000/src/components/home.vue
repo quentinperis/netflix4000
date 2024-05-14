@@ -1,6 +1,7 @@
 <script setup>
 import faq from "@/components/faq.vue";
 import inputEmail from "@/components/inputEmail.vue";
+import Footer from "@/components/Footer.vue";
 
 const emit = defineEmits(["showSignUp"]);
 
@@ -385,7 +386,7 @@ const handleShowSignUpView = () => {
     </div>
   </div>
   <faq @showSignUp="handleShowSignUpView" />
-
+  <Footer />
 </template>
 
 <style scoped>

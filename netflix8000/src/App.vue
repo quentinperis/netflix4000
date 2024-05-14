@@ -23,7 +23,7 @@ if (token) {
 <template>
   <Navbar />
   <RouterView />
-  <Footer />
+  <Footer />  
 </template>
 
 <style scoped>
