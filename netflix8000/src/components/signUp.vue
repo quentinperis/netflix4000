@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
-import axios from "axios";
 import { RouterLink } from "vue-router";
 import router from "@/router";
+import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();

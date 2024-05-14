@@ -121,7 +121,7 @@ function toggleSpan() {
       <p>
         New to Netflix ?
 
-        <RouterLink to="/SignUp">
+        <RouterLink to="#">
           <a>sign up now</a>
         </RouterLink>
       </p>
@@ -160,21 +160,6 @@ function toggleSpan() {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.875rem;
-}
-
-#modal-close {
-  height: 2.2rem;
-  width: 2.2rem;
-  border-radius: 50%;
-  border: 0.125rem solid hsl(0, 0%, 35%);
-  font-size: 1rem;
-  background-color: transparent;
-  color: hsl(0, 0%, 35%);
-  cursor: pointer;
-  transition: transform 200ms ease;
-}
-#modal-close:active {
-  transform: translateY(3px);
 }
 
 h2 {

@@ -1,49 +1,26 @@
 <script setup>
-import { RouterLink } from "vue-router";
-import { ref } from "vue";
 import home from "@/components/home.vue";
 import signUp from "@/components/signUp.vue";
 import SignIn from "@/components/SignIn.vue";
-import { useAuthStore } from "@/stores/auth";
 import Reconnection from "@/components/Reconnection.vue";
 import router from "@/router";
 import axios from "axios";
+import { RouterLink } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { useModalsStore } from "@/stores/modals";
 
 const authStore = useAuthStore();
-
-const showSignUp = ref(false);
-const showSignIn = ref(false);
-const showInput = ref(true);
-const reconnection = ref(false);
-
-// SWITCHER ENTRE LES COMPOSANTS SignIn et SignUp
-const handleShowSignUp = () => {
-  showSignUp.value = true;
-  showSignIn.value = false;
-  showInput.value = false;
-};
-const handleShowSignIn = () => {
-  showSignIn.value = true;
-  showSignUp.value = false;
-  showInput.value = false;
-};
-
-// POUR FERMER MODAL
-
-const handleCloseModals = () => {
-  reconnection.value = false;
-  showSignIn.value = false;
-  showSignUp.value = false;
-  showInput.value = true;
-};
+const modalStore = useModalsStore();
 
 // DECONNECTION
 const handleLogout = () => {
   localStorage.removeItem("token");
-  reconnection.value = false;
-  showSignIn.value = false;
-  showSignUp.value = false;
-  showInput.value = true;
+
+  modalStore.reconnection = false;
+  modalStore.showSignIn = false;
+  modalStore.showSignUp = false;
+  modalStore.showInput = true;
+
   authStore.logout();
   router.push("/");
 };
@@ -54,7 +31,7 @@ axios.interceptors.response.use(
   },
   async (error) => {
     if (error.response && error.response.status === 401) {
-      reconnection.value = true;
+      modalStore.reconnection = true;
 
       router.push("/");
 
@@ -68,12 +45,7 @@ axios.interceptors.response.use(
 <template>
   <div>
     <RouterLink to="/">
-      <img
-        class="logo"
-        src="/image/Logonetflix.png"
-        alt="Image logo"
-        @click="handleCloseModals"
-      />
+      <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="modalStore.handleCloseModals" />
     </RouterLink>
   </div>
 
@@ -88,24 +60,18 @@ axios.interceptors.response.use(
 
     <template v-else>
       <!-- Ajout de la condition pour cacher le composant Reconnection -->
-      <home
-        class="modal"
-        v-if="showInput && !reconnection"
-        @showSignUp="handleShowSignUp"
-      />
+      <home class="modal" v-if="modalStore.showInput && !modalStore.reconnection" />
       <div class="dashboard-sign-in">
-        <button
-          id="signin-button"
-          class="btn"
-          @click="handleShowSignIn"
-          v-if="showInput && !reconnection"
-        >
+
+        <button id="signin-button" class="btn" @click="modalStore.handleShowSignIn"
+          v-if="modalStore.showInput && !modalStore.reconnection">
           Sign In
         </button>
+
       </div>
-      <Reconnection v-if="reconnection" @="handleCloseModals" />
-      <SignIn v-if="showSignIn && !reconnection" @="handleCloseModals" />
-      <signUp v-if="showSignUp" @="handleCloseModals" />
+      <Reconnection v-if="modalStore.reconnection" @modalStore="handleCloseModals" />
+      <SignIn v-if="modalStore.showSignIn" @modalStore="handleCloseModals" />
+      <signUp v-if="modalStore.showSignUp" @modalStore="handleCloseModals" />
     </template>
   </div>
 </template>
@@ -113,12 +79,14 @@ axios.interceptors.response.use(
 <style scoped>
 .user-dashboard {
   display: flex;
-  align-items: center;
   color: white;
-  z-index: 1;
-  position: absolute;
-  top: 25px;
-  right: 75px;
+  justify-content: end;
+  align-items: center;
+  z-index: 3;
+  position: relative;
+  width: 100%;
+  margin-top: 25px;
+  padding-right: 75px;
 }
 
 .dashboard-sign-in {
@@ -126,24 +94,10 @@ axios.interceptors.response.use(
   width: 70px;
   display: flex;
   color: white;
-  z-index: 1;
+  z-index: 3;
   top: 25px;
   right: 75px;
   position: absolute;
-}
-
-.user-dashboard span {
-  padding: 10px 30px 10px;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9);
-}
-
-.username {
-  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9);
 }
 
 .btn {
@@ -152,7 +106,7 @@ a {
   background-color: #de0510;
   color: white;
   padding: 7px 13px;
-  z-index: 1;
+  z-index: 3;
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -168,7 +122,7 @@ a {
   margin-left: 75px;
   height: 51px;
   width: 150px;
-  z-index: 1;
+  z-index: 3;
   cursor: pointer;
 }
 
@@ -176,15 +130,29 @@ a {
   z-index: 2;
 }
 
+
 .overlay {
   position: absolute;
   width: 100%;
-  z-index: 2;
+  z-index: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
 
+.user-dashboard span {
+  padding: 10px 30px 10px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9);
+}
+
+.username {
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9);
 }
 </style>
