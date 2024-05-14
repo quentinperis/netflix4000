@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import movies from "../components/movies.vue";
+import Movies from "../components/Movies.vue";
 
 const showVideo = ref(false);
 const videoPath = "/image/joker.mp4"; // dossier publuc sur front
@@ -43,7 +43,7 @@ const closeVideo = () => { showVideo.value = false };
       </div>
     </div>
   </div>
-  <movies />
+  <Movies />
 </template >
 
 <style scoped>

@@ -15,23 +15,21 @@ const router = createRouter({
       path: '/netflix',
       name: 'netflix',
       component: () => import('../views/NetflixView.vue'),
-      meta: { requiresAuth: true } 
-      // Indiquer que cette page nécessite une authentification
+
     }
   ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   const authStore = useAuthStore();
-//   if (to.matched.some((record) => record.meta.requiresAuth)) {
-//     if (!authStore.isLoggedIn) {
-//       next({ name: "home" });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach(async (to, from) => {
+  const authStore = useAuthStore();
+  if (
+    authStore.isLoggedIn && to.name !== 'netflix'
+    // проверка, что пользователь авторизован && ❗️ Избежать бесконечного перенаправления
+  ) {
+    // перенаправить пользователя на страницу входа
+    return { name: 'netflix' }
+  }
+})
+
 
 export default router

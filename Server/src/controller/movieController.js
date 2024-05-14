@@ -13,12 +13,13 @@ const movieController = {
 
   getAllMovies: async (req, res) => {
     try {
-      const movies = await Movie.find();
+      const movies = await Movie.find().select('genre imagePath');
       res.json(movies);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
+  
 
   updateMoviesPath: async () => {
     try {
@@ -60,7 +61,8 @@ const movieController = {
 
   getMovie: async (req, res) => {
     try {
-      const movie = await Movie.findOne({ name: req.params.name });
+
+      const movie = await Movie.findById(req.params.id).select('name description year videoPath');
       if (!movie) {
         return res.status(404).json({ message: "Film non trouvé" });
       }

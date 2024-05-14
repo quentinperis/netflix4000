@@ -7,16 +7,19 @@ import { useAuthStore } from "./stores/auth";
 
 const authStore = useAuthStore();
 
-// Vérifier s'il existe un token d'authentification lors du chargement de la page
-const token = localStorage.getItem("token");
-if (token) {
-  // Configurer les en-têtes axios avec le token
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
- 
-  // Vérifier l'état de connexion de l'utilisateur
-  authStore.checkAuthStatus();
-} 
 
+const checkAuthentication = async () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+   
+    // Vérifier l'état de connexion de l'utilisateur
+    await authStore.checkAuthStatus();
+  } 
+};
+
+checkAuthentication();
 
 </script>
 

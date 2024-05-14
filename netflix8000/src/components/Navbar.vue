@@ -1,6 +1,6 @@
 <script setup>
-import home from "@/components/home.vue";
-import signUp from "@/components/signUp.vue";
+import Home from "@/components/Home.vue";
+import SignUp from "@/components/SignUp.vue";
 import SignIn from "@/components/SignIn.vue";
 import Reconnection from "@/components/Reconnection.vue";
 import router from "@/router";
@@ -44,9 +44,11 @@ axios.interceptors.response.use(
 
 <template>
   <div>
-    <RouterLink to="/">
-      <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="modalStore.handleCloseModals" />
-    </RouterLink>
+    <div>
+      <RouterLink :to="authStore.isLoggedIn ? '/' : '/netflix'">
+        <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="modalStore.handleCloseModals" />
+      </RouterLink>
+    </div>
   </div>
 
   <div class="overlay">
@@ -60,7 +62,7 @@ axios.interceptors.response.use(
 
     <template v-else>
       <!-- Ajout de la condition pour cacher le composant Reconnection -->
-      <home class="modal" v-if="modalStore.showInput && !modalStore.reconnection" />
+      <Home class="modal" v-if="modalStore.showInput && !modalStore.reconnection" />
       <div class="dashboard-sign-in">
 
         <button id="signin-button" class="btn" @click="modalStore.handleShowSignIn"
@@ -71,7 +73,7 @@ axios.interceptors.response.use(
       </div>
       <Reconnection v-if="modalStore.reconnection" @modalStore="handleCloseModals" />
       <SignIn v-if="modalStore.showSignIn" @modalStore="handleCloseModals" />
-      <signUp v-if="modalStore.showSignUp" @modalStore="handleCloseModals" />
+      <SignUp v-if="modalStore.showSignUp" @modalStore="handleCloseModals" />
     </template>
   </div>
 </template>

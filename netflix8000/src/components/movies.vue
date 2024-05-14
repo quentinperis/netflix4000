@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import axios from "axios";
-import modalMovie from "./modalMovie.vue";
+import ModalMovie from "./ModalMovie.vue";
 
 const MOVIES_URL = "http://localhost:3000/movies";
 const movies = ref([]);
@@ -44,12 +44,8 @@ onMounted(async () => {
 
     res.data.forEach((m) => {
       movies.value.push({
-        name: m.name,
-        year: m.year,
-        description: m.description,
         imagePath: m.imagePath,
         genre: m.genre,
-        videoPath: m.videoPath,
       });
     });
   } catch (error) {
@@ -79,7 +75,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <modalMovie
+    <ModalMovie
     :selected-movie
     @close-modal="closeModal"/>
   </main>

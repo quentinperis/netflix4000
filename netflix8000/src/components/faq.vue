@@ -1,5 +1,5 @@
 <script setup>
-import inputEmail from "./inputEmail.vue";
+import InputEmail from "./InputEmail.vue";
 import { ref } from "vue";
 
 const faqs = ref([
@@ -58,7 +58,7 @@ const togglePanel = (index) => {
       </ul>
     </div>
     <p>Ready to watch? Enter your email to create or restart your membership.</p>
-    <inputEmail />
+    <InputEmail />
   </div>
 </template>
 

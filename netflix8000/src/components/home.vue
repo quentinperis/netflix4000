@@ -1,6 +1,6 @@
 <script setup>
-import faq from "@/components/faq.vue";
-import inputEmail from "@/components/inputEmail.vue";
+import Faq from "@/components/Faq.vue";
+import InputEmail from "@/components/InputEmail.vue";
 import SvgHome from "@/components/SvgHome.vue"
 import Footer from "@/components/Footer.vue";
 
@@ -21,18 +21,18 @@ const handleShowSignUpView = () => {
       <p>
         Ready to watch? Enter your email to create or restart your membership.
       </p>
-      <inputEmail />
+      <InputEmail />
     </div>
     <div class="mid"></div>
   </main>
   <div id="more">
     <h2>More Reasons to Join</h2>
     <div id="container">
-      <SvgHome/>
+      <SvgHome />
     </div>
   </div>
-  <faq @showSignUp="handleShowSignUpView" />
-  <footer/>
+  <Faq @showSignUp="handleShowSignUpView" />
+  <footer />
 </template>
 
 <style scoped>
