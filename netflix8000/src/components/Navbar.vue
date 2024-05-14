@@ -137,9 +137,9 @@ axios.interceptors.response.use(
   z-index: 1;
   overflow: hidden;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
 }
 
 .user-dashboard span {
