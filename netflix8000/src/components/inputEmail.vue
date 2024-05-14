@@ -1,10 +1,6 @@
 <script setup>
-const emit = defineEmits(["showSignUp"]);
-
-const handleShowSignUpView = () => {
-  emit("showSignUp");
-};
-
+import { useModalsStore } from "@/stores/modals";
+const modalStore = useModalsStore();
 
 </script>
 
@@ -13,7 +9,7 @@ const handleShowSignUpView = () => {
     <div class="container">
       <input type="email" placeholder="Email address" class="email-input" />
       <div>
-        <button class="get-started-button" @click="handleShowSignUpView">GET STARTED &gt;</button>
+        <button class="get-started-button" @click="modalStore.handleShowSignUp">GET STARTED &gt;</button>
       </div>
     </div>
   </div>

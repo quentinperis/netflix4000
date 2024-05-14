@@ -33,7 +33,7 @@ const authController = {
       }
 
       const token = jwt.sign({ userId: user.id }, secretKey, {
-        expiresIn: "5s",
+        expiresIn: "30s",
       });
 
       res.status(200).json({ token, username: user.username });

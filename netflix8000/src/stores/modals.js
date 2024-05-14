@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 export const useModalsStore = defineStore({
-  id: "modals",
+  id: "modal",
 
   state: () => ({
     showSignUp: false,
@@ -12,22 +12,22 @@ export const useModalsStore = defineStore({
 
   actions: {
     handleShowSignUp() {
-      showSignUp.value = true;
-      showSignIn.value = false;
-      showInput.value = false;
+      this.showSignUp = true;
+      this.showSignIn = false;
+      this.showInput = false;
     },
 
     handleShowSignIn() {
-      showSignIn.value = true;
-      showSignUp.value = false;
-      showInput.value = false;
+      this.showSignIn = true;
+      this.showSignUp = false;
+      this.showInput = false;
     },
 
     handleCloseModals() {
-      reconnection = false;
-      showSignIn = false;
-      showSignUp = false;
-      showInput = true;
+      this.reconnection = false;
+      this.showSignIn = false;
+      this.showSignUp = false;
+      this.showInput = true;
     },
   },
 });

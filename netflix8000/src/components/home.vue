@@ -2,13 +2,6 @@
 import faq from "@/components/faq.vue";
 import inputEmail from "@/components/inputEmail.vue";
 
-const emit = defineEmits(["showSignUp"]);
-
-const handleShowSignUpView = () => {
-  emit("showSignUp");
-};
-
-
 </script>
 
 <template>
@@ -19,7 +12,7 @@ const handleShowSignUpView = () => {
       <p>
         Ready to watch? Enter your email to create or restart your membership.
       </p>
-      <inputEmail @showSignUp="handleShowSignUpView" />
+      <inputEmail />
     </div>
     <div class="mid"></div>
   </main>
@@ -384,7 +377,7 @@ const handleShowSignUpView = () => {
       </div>
     </div>
   </div>
-  <faq @showSignUp="handleShowSignUpView" />
+  <faq />
 
 </template>
 
