@@ -17,26 +17,27 @@
   
   <style scoped>
   .footer {
-    background-color: rgb(0, 0, 0);
-    color: #f7f3f3;
-    padding: 40px 0;
-    text-align: center;
-  }
-  
-  .telephone {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.3rem;
-    margin: 1rem;
-  }
-  
-  .githubs a {
-    color: aqua;
-    text-decoration: underline; 
-    margin: 0 10px; 
-  }
-  
-  .githubs a:hover {
-    color: #fff; 
-  }
+  width: 100%;
+  background-color: rgb(0, 0, 0);
+  color: #f7f3f3;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.telephone {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.3rem;
+  margin: 1rem;
+}
+
+.githubs a {
+  color: aqua;
+  text-decoration: underline; 
+  margin: 0 10px; 
+}
+
+.githubs a:hover {
+  color: #fff; 
+}
   </style>
   

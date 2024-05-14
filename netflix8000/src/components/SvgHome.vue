@@ -1,5 +1,7 @@
 <template>
+
   <div class="box">
+    
     <h2>Enjoy on your TV</h2>
     <p>
       Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray
@@ -618,21 +620,22 @@
           <stop offset="1" stop-color="#E4A1FA"></stop>
         </radialGradient>
         <radialGradient
-          id="paint9_radial_5179_7919"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(62.1 11.1017) rotate(137.146) scale(73.6614 60.3576)"
+        id="paint9_radial_5179_7919"
+        cx="0"
+        cy="0"
+        r="1"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform="translate(62.1 11.1017) rotate(137.146) scale(73.6614 60.3576)"
         >
-          <stop stop-color="#FFDCCC"></stop>
-          <stop offset="0.333333" stop-color="#FDF6F6"></stop>
-          <stop offset="0.666667" stop-color="#FADCE9"></stop>
-          <stop offset="1" stop-color="#E4A1FA"></stop>
-        </radialGradient>
-      </defs>
-    </svg>
-  </div>
+        <stop stop-color="#FFDCCC"></stop>
+        <stop offset="0.333333" stop-color="#FDF6F6"></stop>
+        <stop offset="0.666667" stop-color="#FADCE9"></stop>
+        <stop offset="1" stop-color="#E4A1FA"></stop>
+      </radialGradient>
+    </defs>
+  </svg>
+</div>
+
 </template>
 
 <style scoped>

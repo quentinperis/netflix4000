@@ -23,9 +23,12 @@ const responseMessageUsername = ref("");
 const responseMessageEmail = ref("");
 
 // Calcul des états d'invalidité des champs
+// Validation du mot de passe
 const passwordInvalid = computed(() => {
-  return password.value.trim() === "" && passwordTouched.value;
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
+  return passwordTouched.value && !passwordRegex.test(password.value);
 });
+
 const emailInvalid = computed(() => {
   const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
   return emailTouched.value && !regexpEmail.test(email.value);
@@ -35,12 +38,12 @@ const usernameInvalid = computed(() => {
 });
 const submitDisabled = computed(
   () =>
-    password.value === "" ||
+    !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/.test(password.value) ||
     !passwordTouched.value ||
     !emailTouched.value ||
-    !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value) ||
-    username.value.trim() === ""
+    !usernameTouched.value
 );
+
 
 // Gestionnaire d'événement pour l'entrée du nom d'utilisateur
 const handleUsernameInput = async () => {
@@ -127,6 +130,7 @@ const moreSpan = ref(true);
 function toggleSpan() {
   moreSpan.value = !moreSpan.value;
 }
+
 </script>
 
 <template>
@@ -199,25 +203,29 @@ function toggleSpan() {
       </div>
 
       <div class="container">
-        <label for="password"></label>
-        <span
-          :class="{
-            invalid: passwordInvalid,
-          }"
-          v-if="passwordInvalid"
-        >
-          Invalid password!
-        </span>
-        <input
-          v-model="password"
-          @input="passwordTouched = true"
-          @change="passwordTouched = true"
-          id="password"
-          placeholder="Password"
-          type="password"
-          required
-        />
-      </div>
+  <label for="password"></label>
+  <span
+    :class="{
+      invalid: passwordInvalid,
+    }"
+    v-if="passwordInvalid"
+  >
+    Veuillez rentrer un mot de passe contenant AU MOINS 1 chiffre, 1 caractère spécial, une majuscule, une minuscule et 8 caractère.
+  </span>
+  <span v-else class="success-message">
+    Bon Toutou.
+  </span>
+  <input
+    v-model="password"
+    @input="passwordTouched = true"
+    @change="passwordTouched = true"
+    id="password"
+    placeholder="Password"
+    type="password"
+    required
+  />
+</div>
+
 
       <button class="btn" type="submit" :disabled="submitDisabled">
         Submit
@@ -249,6 +257,18 @@ function toggleSpan() {
 </template>
 
 <style scoped>
+
+.success-message {
+  color: rgb(176, 201, 67); /* Couleur du texte */
+  font-size: 1rem; /* Taille de la police */
+  margin-top: 5px; /* Marge supérieure */
+}
+
+.success-message::before {
+  content: "\1F44D"; /* Unicode pour l'emoji du pouce levé */
+  margin-right: 5px; /* Marge à droite de l'emoji */
+}
+
 .clickable {
   color: hsl(207, 77%, 38%);
   cursor: pointer;

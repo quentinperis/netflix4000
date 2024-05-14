@@ -1,7 +1,7 @@
 <script setup>
 import faq from "@/components/faq.vue";
 import inputEmail from "@/components/inputEmail.vue";
-import SvgHome from "@/components/SvgHome.vue"
+import SvgHome from "@/components/SvgHome.vue";
 import Footer from "@/components/Footer.vue";
 
 const emit = defineEmits(["showSignUp"]);
@@ -13,7 +13,7 @@ const handleShowSignUpView = () => {
 
 </script>
 
-<template>
+<template>        
   <main>
     <div class="top">
       <h1>Unlimited movies, TV shows and more.</h1>
@@ -32,7 +32,7 @@ const handleShowSignUpView = () => {
     </div>
   </div>
   <faq @showSignUp="handleShowSignUpView" />
-  <footer/>
+  <Footer />
 </template>
 
 <style scoped>
