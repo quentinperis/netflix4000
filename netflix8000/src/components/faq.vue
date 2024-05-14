@@ -146,6 +146,7 @@ li {
 }
 .faq {
   display: flex;
+  width: 100%;
   padding: 0 120px;
   flex-direction: column;
   justify-content: center;

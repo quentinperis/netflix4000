@@ -174,15 +174,17 @@ a {
 
 .modal {
   z-index: 2;
-  margin-top: 250px;
 }
 
 .overlay {
   position: absolute;
+  width: 100%;
   z-index: 2;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  align-items: center;
+
 }
 </style>

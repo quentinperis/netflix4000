@@ -148,6 +148,7 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: start;
+  width: 100%;
 
   >h2 {
     margin: 10px 0;

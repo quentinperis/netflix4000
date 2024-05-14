@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import axios from "axios";
 import { RouterLink } from "vue-router";
 import router from "@/router";
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();
 
@@ -21,7 +21,6 @@ const usernameAvailable = ref(false);
 
 const responseMessageUsername = ref("");
 const responseMessageEmail = ref("");
-
 
 // Calcul des états d'invalidité des champs
 const passwordInvalid = computed(() => {
@@ -115,20 +114,22 @@ const signUp = async () => {
       // Appeler l'action signUp de votre magasin authStore avec le nom d'utilisateur
       authStore.signUp(response.data.username);
 
-      // Rediriger vers la page /netflix 
-      router.push({ name: 'netflix' });
-
+      // Rediriger vers la page /netflix
+      router.push({ name: "netflix" });
     }
   } catch (error) {
     console.error("Erreur lors de l'inscription :", error);
   }
 };
 
+const moreSpan = ref(true);
 
+function toggleSpan() {
+  moreSpan.value = !moreSpan.value;
+}
 </script>
 
 <template>
-
   <div class="modal">
     <div class="modal-header">
       <h2>Sign Up</h2>
@@ -137,54 +138,90 @@ const signUp = async () => {
     <form @submit.prevent="signUp">
       <div class="container">
         <label for="username"></label>
-        <span :class="{
-      available: responseMessageUsername === 'Disponible',
-      unavailable: responseMessageUsername !== 'Disponible',
-    }">
+        <span
+          :class="{
+            available: responseMessageUsername === 'Disponible',
+            unavailable: responseMessageUsername !== 'Disponible',
+          }"
+        >
           {{ responseMessageUsername }}
         </span>
 
-        <span :class="{
-      invalid: usernameInvalid,
-    }" v-if="usernameInvalid">
+        <span
+          :class="{
+            invalid: usernameInvalid,
+          }"
+          v-if="usernameInvalid"
+        >
           Invalid username!
         </span>
-        <input v-model="username" id="username" placeholder="Enter your username" @input="handleUsernameInput"
-          @change="usernameTouched = true" type="text" required />
+        <input
+          v-model="username"
+          id="username"
+          placeholder="Enter your username"
+          @input="handleUsernameInput"
+          @change="usernameTouched = true"
+          type="text"
+          required
+        />
       </div>
 
       <div class="container">
         <label for="email"></label>
 
-        <span :class="{
-      invalid: emailInvalid,
-    }" v-if="emailInvalid">
+        <span
+          :class="{
+            invalid: emailInvalid,
+          }"
+          v-if="emailInvalid"
+        >
           Invalid email!
         </span>
 
-        <span :class="{
-      available: responseMessageEmail === 'Disponible',
-      unavailable: responseMessageEmail !== 'Disponible',
-    }">
+        <span
+          :class="{
+            available: responseMessageEmail === 'Disponible',
+            unavailable: responseMessageEmail !== 'Disponible',
+          }"
+        >
           {{ responseMessageEmail }}
         </span>
 
-        <input v-model="email" id="email" placeholder="Email Adress" @input="handleEmailInput"
-          @change="emailTouched = true" type="email" required />
+        <input
+          v-model="email"
+          id="email"
+          placeholder="Email Adress"
+          @input="handleEmailInput"
+          @change="emailTouched = true"
+          type="email"
+          required
+        />
       </div>
 
       <div class="container">
         <label for="password"></label>
-        <span :class="{
-      invalid: passwordInvalid,
-    }" v-if="passwordInvalid">
+        <span
+          :class="{
+            invalid: passwordInvalid,
+          }"
+          v-if="passwordInvalid"
+        >
           Invalid password!
         </span>
-        <input v-model="password" @input="passwordTouched = true" @change="passwordTouched = true" id="password"
-          placeholder="Password" type="password" required />
+        <input
+          v-model="password"
+          @input="passwordTouched = true"
+          @change="passwordTouched = true"
+          id="password"
+          placeholder="Password"
+          type="password"
+          required
+        />
       </div>
 
-      <button class="btn" type="submit" :disabled="submitDisabled">Submit</button>
+      <button class="btn" type="submit" :disabled="submitDisabled">
+        Submit
+      </button>
     </form>
     <div class="newto">
       <p>
@@ -192,17 +229,40 @@ const signUp = async () => {
         <RouterLink to="/SignIn">sign in now</RouterLink>
       </p>
     </div>
+    <br />
+    <span
+      >This page is protected by Google reCAPTCHA to ensure you're not a bot.
+    </span>
+    <span v-if="moreSpan" @click="toggleSpan" class="clickable"
+      >Learn more.</span
+    >
+    <span v-else>
+      <br />
+      <br />
+      The information collected by Google reCAPTCHA is subject to the Google
+      <a href="https://policies.google.com/privacy" target="_blank" class="clickable">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" class="clickable">Terms of Service</a>, and is used for
+      providing, maintaining, and improving the reCAPTCHA service and for
+      general security purposes (it is not used for personalized advertising by
+      Google).
+    </span>
   </div>
-
 </template>
 
 <style scoped>
+.clickable {
+  color: hsl(207, 77%, 38%);
+  cursor: pointer;
+}
+.clickable:hover {
+  text-decoration: underline;
+}
 .modal {
-  width: 31.25rem;
-  padding: 1.25rem;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 0.9375rem;
-  text-align: center;
+  width: 500px;
+  height: 80dvh;
+  margin: 10dvh 0;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
 }
 
 .modal-header {
@@ -214,19 +274,19 @@ const signUp = async () => {
 
 h2 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: 750;
   color: #fff;
   text-align: left;
 }
 
 input {
   width: 100%;
-  padding: 0.95rem;
-  margin-bottom: 1.56rem;
-  margin-top: 0.5rem;
-  background-color: #333;
-  border: none;
-  border-radius: 0.25rem;
+  padding: 20px;
+  margin-bottom: 25px;
+  border: 1px solid grey;
+  background-color: hsla(0, 0%, 20%, 0.397);
+  border-radius: 4px;
   color: #fff;
 }
 
