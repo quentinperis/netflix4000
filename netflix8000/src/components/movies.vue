@@ -7,7 +7,7 @@
 
       <!-- Carrousel avec navigation -->
       <div class="carousel-wrapper">
-        <Carousel v-bind="settings" :settings="carouselSettings" :wrap-around="true" :items-to-show="5" :breakpoints="breakpoints" :transition="500" :ref="`carousel_${category}`">
+        <Carousel v-bind="settings" :settings="carouselSettings" :wrap-around="true" :items-to-show="5"  :transition="500" :ref="`carousel_${category}`">
           <!-- Parcourir les films filtrés par catégorie -->
           <Slide v-for="movie in filteredMovies(category)" :key="movie.id">
             <div class="carousel__item">
@@ -180,11 +180,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.carousel__pagination-button{
+  background-color: blue;
+}
 .main__container {
   width: 100%;
   padding: 20px; /* Optionnel, pour espacer la main-container */
-  background-color: #1414141a;
+  background-color: #1414141f;
 }
 
 .category__title {
@@ -196,7 +198,6 @@ export default defineComponent({
 .carousel__item {
   min-height: 200px;
   width: 100%;
-  color: blue;
   font-size: 20px;
   border-radius: 8px;
   display: flex;
@@ -240,7 +241,6 @@ export default defineComponent({
   border: 5px solid white;
 }
 
-
 .carousel__viewport {
   perspective: 2000px;
 }
@@ -279,6 +279,54 @@ export default defineComponent({
 }
 
 
+/* Media query pour les résolutions inférieures à 480px */
+@media screen and (max-width: 480px) {
+  .carousel__item {
+    margin: 0 5px; /* Écart uniforme de 5px de chaque côté */
+  }
+
+  .carousel__item img {
+    width: 215px; /* Calcul de la largeur en tenant compte de la marge */
+    height: 121px; /* Ajustement automatique de la hauteur */
+    max-width: 90vw; /* Limite la largeur maximale à 90% de la largeur de la vue */
+    max-height: calc(90vw * 121 / 215); /* Calcul de la hauteur maximale en fonction du ratio d'aspect */
+    object-fit: cover; /* Assurez-vous que les images couvrent complètement le conteneur */
+    border-radius: 8px; /* Conserver le bord arrondi */
+  }
+}
+
+/* Media query pour les résolutions entre 481px et 768px */
+@media screen and (min-width: 481px) and (max-width: 768px){
+
+  .category__title{
+    margin-bottom: -60px;
+  }
+  .carousel__item {
+    margin: 0 5px; /* Écart uniforme de 5px de chaque côté */
+  }
+
+  .carousel__item img {
+    width: 122px; /* Calcul de la largeur en tenant compte de la marge */
+    height: 60px; /* Ajustement automatique de la hauteur */
+    max-width: 80vw; /* Limite la largeur maximale à 80% de la largeur de la vue */
+    max-height: calc(80vw * 121 / 215); /* Calcul de la hauteur maximale en fonction 
+    object-fit: cover; /* Assurez-vous que les images couvrent complètement le conteneur */
+    border-radius: 8px; /* Conserver le bord arrondi */
+  }
+}
+@media screen and (min-width: 769px) {
+  .carousel__item {
+    margin: 0 5px; /* Écart uniforme de 5px de chaque côté */
+  }
+
+  .carousel__item img {
+    width: 215px; /* Largeur fixe de 215px */
+    height: 121px; /* Hauteur fixe de 121px */
+    max-width: 100%; /* Assurez-vous que les images ne dépassent pas la largeur du conteneur */
+    object-fit: cover; /* Assurez-vous que les images couvrent complètement le conteneur */
+    border-radius: 8px; /* Conserver le bord arrondi */
+  }
+}
 /* .carousel-wrapper {
   position: relative;
   width: 100%; 
