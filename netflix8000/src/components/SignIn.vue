@@ -4,7 +4,9 @@ import { RouterLink } from "vue-router";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+import { useModalsStore } from "@/stores/modals";
 
+const modalStore = useModalsStore();
 const authStore = useAuthStore();
 
 const username = ref("");
@@ -120,10 +122,7 @@ function toggleSpan() {
     <div class="newto">
       <p>
         New to Netflix ?
-
-        <RouterLink to="#">
-          <a>sign up now</a>
-        </RouterLink>
+          <a @click="modalStore.handleShowSignUp">sign up now</a>
       </p>
     </div>
     <br>
@@ -139,6 +138,10 @@ function toggleSpan() {
 </template>
 
 <style scoped>
+a {
+  cursor: pointer;
+}
+
 .clickable {
   color: hsl(207, 77%, 38%);
   cursor: pointer;

@@ -4,7 +4,9 @@ import { RouterLink } from "vue-router";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+import { useModalsStore } from "@/stores/modals";
 
+const modalStore = useModalsStore();
 const authStore = useAuthStore();
 
 // Déclaration des références
@@ -40,7 +42,11 @@ const submitDisabled = computed(
   () =>
     !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/.test(password.value) ||
     !passwordTouched.value ||
+
+    !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value) ||
     !emailTouched.value ||
+
+    !(username.value) ||
     !usernameTouched.value
 );
 
@@ -208,11 +214,11 @@ function toggleSpan() {
     :class="{
       invalid: passwordInvalid,
     }"
-    v-if="passwordInvalid"
+    v-if="passwordInvalid && passwordTouched"
   >
-    Veuillez rentrer un mot de passe contenant AU MOINS 1 chiffre, 1 caractère spécial, une majuscule, une minuscule et 8 caractère.
+    Veuillez rentrer un mot de passe contenant AU MOINS 1 chiffre, 1 caractère spécial, une majuscule, une minuscule et 8 caractères.
   </span>
-  <span v-else class="success-message">
+  <span v-if="!passwordInvalid && passwordTouched" class="success-message">
     Bon Toutou.
   </span>
   <input
@@ -227,6 +233,7 @@ function toggleSpan() {
 </div>
 
 
+
       <button class="btn" type="submit" :disabled="submitDisabled">
         Submit
       </button>
@@ -234,7 +241,7 @@ function toggleSpan() {
     <div class="newto">
       <p>
         Already a user ?
-        <RouterLink to="/SignIn">sign in now</RouterLink>
+        <a @click="modalStore.handleShowSignIn">sign In</a>
       </p>
     </div>
     <br />
@@ -258,15 +265,19 @@ function toggleSpan() {
 
 <style scoped>
 
+a {
+  cursor: pointer;
+}
+
 .success-message {
-  color: rgb(176, 201, 67); /* Couleur du texte */
-  font-size: 1rem; /* Taille de la police */
-  margin-top: 5px; /* Marge supérieure */
+  color: rgb(176, 201, 67); 
+  font-size: 1rem; 
+  margin-top: 5px; 
 }
 
 .success-message::before {
-  content: "\1F44D"; /* Unicode pour l'emoji du pouce levé */
-  margin-right: 5px; /* Marge à droite de l'emoji */
+  content: "\1F44D"; 
+  margin-right: 5px; 
 }
 
 .clickable {
