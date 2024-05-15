@@ -73,7 +73,7 @@ axios.interceptors.response.use(
       </div>
       <Reconnection v-if="modalStore.reconnection" @modalStore="handleCloseModals" />
       <SignIn v-if="modalStore.showSignIn && !modalStore.reconnection" @modalStore="handleCloseModals" />
-      <SignUp v-if="modalStore.showSignUp" @modalStore="handleCloseModals" />
+      <SignUp v-if="modalStore.showSignUp && !modalStore.reconnection" @modalStore="handleCloseModals" />
     </template>
   </div>
 </template>
