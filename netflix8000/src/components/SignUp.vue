@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from "vue";
-import { RouterLink } from "vue-router";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
@@ -235,7 +234,7 @@ function toggleSpan() {
 
 
       <button class="btn" type="submit" :disabled="submitDisabled">
-        Submit
+        Sign Up
       </button>
     </form>
     <div class="newto">

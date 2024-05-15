@@ -32,7 +32,7 @@ const handleShowSignUpView = () => {
     </div>
   </div>
   <faq @showSignUp="handleShowSignUpView" />
-  <Footer />
+  <Footer style="width: 100%;"/>
 </template>
 
 <style scoped>
