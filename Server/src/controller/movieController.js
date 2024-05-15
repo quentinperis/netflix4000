@@ -13,13 +13,29 @@ const movieController = {
 
   getAllMovies: async (req, res) => {
     try {
-      const movies = await Movie.find().select('genre imagePath');
+      const movies = await Movie.find().select("_id genre imagePath");
       res.json(movies);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
-  
+
+  getMovie: async (req, res) => {
+    try {
+      const movie = await Movie.findById(req.params.id).select(
+        "name description year videoPath"
+      );
+      if (!movie) {
+        return res.status(404).json({ message: "Film non trouvé" });
+      }
+      res.json(movie);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  parDefautPage: (req, res) => {
+    res.status(404).send("Oups, on dirait qu'il n'y a pas de films ici");
+  },
 
   updateMoviesPath: async () => {
     try {
@@ -57,22 +73,6 @@ const movieController = {
         error
       );
     }
-  },
-
-  getMovie: async (req, res) => {
-    try {
-
-      const movie = await Movie.findById(req.params.id).select('name description year videoPath');
-      if (!movie) {
-        return res.status(404).json({ message: "Film non trouvé" });
-      }
-      res.json(movie);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-  parDefautPage: (req, res) => {
-    res.status(404).send("Oups, on dirait qu'il n'y a pas de films ici");
   },
 };
 

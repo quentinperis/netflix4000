@@ -19,11 +19,7 @@ const categories = computed(() => {
 
 // Filtrage les films par catégorie
 const filteredMovies = (category) => {
-  console.log("Catégorie filtrée :", category);
-
   return movies.value.filter((m) => {
-    console.log("Film actuel :", m); 
-
     return (
       m.genre.one === category ||
       m.genre.two === category ||
@@ -32,43 +28,13 @@ const filteredMovies = (category) => {
   });
 };
 
-
-const openModal = async (movie) => {
-  try {
-    if (!movie || !movie._id) {
-      console.error("Le film est invalide ou ne contient pas de propriété _id :", movie);
-      return;
-    }
-
-    const movieId = movie._id; // Utiliser directement l'_id du film
-    console.log("ID du film :", movieId);
-
-    const response = await axios.get(`http://localhost:3000/${movieId}`);
-    if (response.status !== 200) return;
-
-    selectedMovie.value = response.data;
-  } catch (error) {
-    console.error("Une erreur s'est produite lors de la récupération des détails du film :", error);
-  }
-};
-
-
-
-
-const closeModal = () => {
-  selectedMovie.value = null;
-};
-
 onMounted(async () => {
   try {
     const res = await axios.get("http://localhost:3000/movies");
     if (res.status !== 200) return;
-
-     // Ajouter un console.log pour vérifier les données retournées par le serveur
-    console.log("Données des films :", res.data);
-
     res.data.forEach((m) => {
       movies.value.push({
+        id: m._id,
         imagePath: m.imagePath,
         genre: m.genre,
       });
@@ -76,7 +42,21 @@ onMounted(async () => {
   } catch (error) {
     console.error(error);
   }
+
 });
+
+const openModal = async (m) => {
+  const movieId = m.id;
+  const response = await axios.get(`http://localhost:3000/${movieId}`);
+  if (response.status !== 200) return;
+  try {
+    selectedMovie.value = response.data;
+  } catch (error) {
+    console.error("Une erreur s'est produite lors de la récupération des détails du film :", error);
+  }
+};
+
+const closeModal = () => { selectedMovie.value = null };
 
 </script>
 
@@ -86,7 +66,7 @@ onMounted(async () => {
       <h2>{{ category }}</h2>
 
       <div class="wrapper">
-        <div v-for="m in filteredMovies(category)" :key="m._id" class="card">
+        <div v-for="m in filteredMovies(category)" :key="m" class="card">
           <img
             v-if="
               m.genre &&

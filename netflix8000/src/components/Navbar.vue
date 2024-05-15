@@ -32,7 +32,7 @@ axios.interceptors.response.use(
   async (error) => {
     if (error.response && error.response.status === 401) {
       modalStore.reconnection = true;
-
+    
       router.push("/");
 
       authStore.logout();
@@ -44,7 +44,7 @@ axios.interceptors.response.use(
 
 <template>
   <div>
-    <div>
+    <div >
       <RouterLink :to="!authStore.isLoggedIn ? '/' : '/netflix'">
         <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="modalStore.handleCloseModals" />
       </RouterLink>
@@ -72,7 +72,7 @@ axios.interceptors.response.use(
 
       </div>
       <Reconnection v-if="modalStore.reconnection" @modalStore="handleCloseModals" />
-      <SignIn v-if="modalStore.showSignIn" @modalStore="handleCloseModals" />
+      <SignIn v-if="modalStore.showSignIn && !modalStore.reconnection" @modalStore="handleCloseModals" />
       <SignUp v-if="modalStore.showSignUp" @modalStore="handleCloseModals" />
     </template>
   </div>
