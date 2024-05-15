@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Movies from "../components/Movies.vue";
 
 const showVideo = ref(false);
@@ -7,6 +7,9 @@ const videoPath = "/image/joker.mp4"; // dossier publuc sur front
 const playVideo = () => { showVideo.value = true };
 const closeVideo = () => { showVideo.value = false };
 
+onMounted(() => {
+  window.scrollTo(0, 0);
+})
 </script>
 
 <template>

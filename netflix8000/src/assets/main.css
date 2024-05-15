@@ -1,2 +1,6 @@
 @import './base.css';
 
+html {
+  scrollbar-width: thin;
+}
+

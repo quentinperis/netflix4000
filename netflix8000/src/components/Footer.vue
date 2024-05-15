@@ -1,10 +1,10 @@
 <template>
     <div class="footer">
       <p class="telephone"> 
-        Des questions&nbsp;? Appelez le <u>(+33) 0805-543-063</u>
+        Questions&nbsp;? Contact us <u>(+33) 0805-543-063</u>
       </p>
       <p class="credits">
-        Netflix 4000 Crédits © 2024. Tous droits réservés.
+        Netflix 4000 Credits © 2024. All rights reserved.
       </p> 
       <p class="githubs">
         Github : <a href="https://github.com/NataBoud" target="_blank">Natalia Boudard</a> &nbsp; | &nbsp;

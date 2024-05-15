@@ -31,7 +31,7 @@ const handleShowSignUpView = () => {
       <SvgHome/>
     </div>
   </div>
-  <faq @showSignUp="handleShowSignUpView" />
+  <faq/>
   <Footer style="width: 100%;"/>
 </template>
 

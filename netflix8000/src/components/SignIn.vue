@@ -5,8 +5,14 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 
-const modalStore = useModalsStore();
 const authStore = useAuthStore();
+const modalStore = useModalsStore();
+
+const handleSignUp = () => {
+  modalStore.handleShowSignUp();
+  // Remonter en haut de la page après l'affichage de la modal
+  window.scrollTo(0, 0);
+}
 
 const username = ref("");
 const email = ref("");
@@ -121,7 +127,7 @@ function toggleSpan() {
     <div class="newto">
       <p>
         New to Netflix ?
-          <a @click="modalStore.handleShowSignUp">sign up now</a>
+          <a @click="handleSignUp">sign up now</a>
       </p>
     </div>
     <br>

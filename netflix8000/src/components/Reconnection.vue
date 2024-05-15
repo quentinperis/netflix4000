@@ -50,7 +50,6 @@ const logIn = async () => {
 
       // Appeler la méthode logIn de votre magasin authStore avec le nom d'utilisateur récupéré
       authStore.logIn(response.data.username);
-
       // Rediriger vers la page /netflix
       router.push({ name: "netflix" });
     }
