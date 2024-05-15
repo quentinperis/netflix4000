@@ -32,13 +32,15 @@
 - `npm i dotenv`
 - Créer ficher .env et placer la dans .gitignore
 
-5. **Générer une clé secrète en NodeJS**
+6. **Générer une clé secrète en NodeJS**
 
 - exécuter en bash : `node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"`
 - `ACCESS_TOKEN_SECRET = PLACER SECRET_KEY_ICI`
 
-5. **Front recuperer les info de user**
+7. **Front recuperer les info de user**
 
 - `npm install jwt-decode`
 
+8. **Importer Carousel Vue**
 
+- `npm install vue3-carousel`
