@@ -8,6 +8,7 @@ export const useModalsStore = defineStore({
     showSignIn: false,
     showInput: true,
     reconnection: false,
+    errorMessage: false,
   }),
 
   actions: {

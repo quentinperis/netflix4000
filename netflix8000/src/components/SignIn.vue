@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from "vue";
-import { RouterLink } from "vue-router";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
@@ -32,6 +31,7 @@ const submitDisabled = computed(
     !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
 );
 
+
 // Méthode de soumission du formulaire
 const logIn = async () => {
   try {
@@ -48,17 +48,16 @@ const logIn = async () => {
       ] = `Bearer ${response.data.token}`;
 
       username.value = response.data.username; // Mettre à jour le nom d'utilisateur
-
-      // Appeler la méthode logIn de votre magasin authStore avec le nom d'utilisateur récupéré
       authStore.logIn(response.data.username);
 
-      // Rediriger vers la page /netflix
       router.push({ name: "netflix" });
     }
   } catch (error) {
-    console.error("Erreur lors de la connexion :", error);
+    console.error("Erreur lors de la connection :", error);
   }
 };
+
+const errorMessageText= "Utilisateur ou mot de passe incorrect";
 
 const moreSpan = ref(true)
 
@@ -114,6 +113,8 @@ function toggleSpan() {
           required
         />
       </div>
+      <!-- Affichage du message d'erreur -->
+      <span class="error-message" v-if="modalStore.errorMessage">{{ errorMessageText }}</span>
 
       <button class="btn" type="submit" :disabled="submitDisabled">
         Sign In
@@ -138,6 +139,9 @@ function toggleSpan() {
 </template>
 
 <style scoped>
+.error-message {
+  color: red;
+}
 a {
   cursor: pointer;
 }

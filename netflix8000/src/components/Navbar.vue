@@ -31,7 +31,11 @@ axios.interceptors.response.use(
   },
   async (error) => {
     if (error.response && error.response.status === 401) {
-      modalStore.reconnection = true;
+
+
+        modalStore.errorMessage = true;
+      
+      // modalStore.reconnection = true;
     
       router.push("/");
 
