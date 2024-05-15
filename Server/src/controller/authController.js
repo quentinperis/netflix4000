@@ -6,38 +6,32 @@ require('dotenv').config();
 
 
 const authController = {
+  
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
-
       console.log("Données reçues pour connexion :", req.body);
 
       const user = await User.findOne({ email });
       if (!user) {
-        return res
-          .status(401)
-          .json({
-            error: error.message,
-            message: "Utilisateur ou mot de passe incorrect",
-          });
+        console.log("Not User: ", !user);
+        return res.status(401).json({ 
+          message: "Utilisateur ou mot de passe incorrect",
+        });
       }
 
       console.log("Données de l'utilisateur :", req.body);
 
-      const isValid = bcrypt.compare(password, user.password);
-
+      const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
-        return res
-          .status(401)
-          .json({ message: "Utilisateur ou mot de passe incorrect" });
+        return res.status(401).json({ message: "Utilisateur ou mot de passe incorrect" });
       }
 
-      const token = jwt.sign({ userId: user.id }, secretKey, {
-        expiresIn: "15s",
-      });
+      const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "15s" });
 
       res.status(200).json({ token, username: user.username });
     } catch (error) {
+      console.error("Erreur lors de la connexion :", error);
       res.status(500).json({ error: error.message });
     }
   },
