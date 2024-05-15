@@ -1,12 +1,19 @@
 <script setup>
-import Faq from "@/components/Faq.vue";
-import InputEmail from "@/components/InputEmail.vue";
-import SvgHome from "@/components/SvgHome.vue"
+import faq from "@/components/Faq.vue";
+import inputEmail from "@/components/InputEmail.vue";
+import SvgHome from "@/components/SvgHome.vue";
 import Footer from "@/components/Footer.vue";
+
+const emit = defineEmits(["showSignUp"]);
+
+const handleShowSignUpView = () => {
+  emit("showSignUp");
+};
+
 
 </script>
 
-<template>
+<template>        
   <main>
     <div class="top">
       <h1>Unlimited movies, TV shows and more.</h1>
@@ -14,18 +21,18 @@ import Footer from "@/components/Footer.vue";
       <p>
         Ready to watch? Enter your email to create or restart your membership.
       </p>
-      <InputEmail />
+      <inputEmail />
     </div>
     <div class="mid"></div>
   </main>
   <div id="more">
     <h2>More Reasons to Join</h2>
     <div id="container">
-      <SvgHome />
+      <SvgHome/>
     </div>
   </div>
-  <Faq />
-  <footer />
+  <faq @showSignUp="handleShowSignUpView" />
+  <Footer />
 </template>
 
 <style scoped>

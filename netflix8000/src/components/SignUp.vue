@@ -4,7 +4,9 @@ import { RouterLink } from "vue-router";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+import { useModalsStore } from "@/stores/modals";
 
+const modalStore = useModalsStore();
 const authStore = useAuthStore();
 
 // Déclaration des références
@@ -23,9 +25,12 @@ const responseMessageUsername = ref("");
 const responseMessageEmail = ref("");
 
 // Calcul des états d'invalidité des champs
+// Validation du mot de passe
 const passwordInvalid = computed(() => {
-  return password.value.trim() === "" && passwordTouched.value;
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
+  return passwordTouched.value && !passwordRegex.test(password.value);
 });
+
 const emailInvalid = computed(() => {
   const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
   return emailTouched.value && !regexpEmail.test(email.value);
@@ -35,12 +40,16 @@ const usernameInvalid = computed(() => {
 });
 const submitDisabled = computed(
   () =>
-    password.value === "" ||
+    !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/.test(password.value) ||
     !passwordTouched.value ||
+
+    !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email.value) ||
     !emailTouched.value ||
-    !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value) ||
-    username.value.trim() === ""
+
+    !(username.value) ||
+    !usernameTouched.value
 );
+
 
 // Gestionnaire d'événement pour l'entrée du nom d'utilisateur
 const handleUsernameInput = async () => {
@@ -127,6 +136,7 @@ const moreSpan = ref(true);
 function toggleSpan() {
   moreSpan.value = !moreSpan.value;
 }
+
 </script>
 
 <template>
@@ -199,25 +209,30 @@ function toggleSpan() {
       </div>
 
       <div class="container">
-        <label for="password"></label>
-        <span
-          :class="{
-            invalid: passwordInvalid,
-          }"
-          v-if="passwordInvalid"
-        >
-          Invalid password!
-        </span>
-        <input
-          v-model="password"
-          @input="passwordTouched = true"
-          @change="passwordTouched = true"
-          id="password"
-          placeholder="Password"
-          type="password"
-          required
-        />
-      </div>
+  <label for="password"></label>
+  <span
+    :class="{
+      invalid: passwordInvalid,
+    }"
+    v-if="passwordInvalid && passwordTouched"
+  >
+    Veuillez rentrer un mot de passe contenant AU MOINS 1 chiffre, 1 caractère spécial, une majuscule, une minuscule et 8 caractères.
+  </span>
+  <span v-if="!passwordInvalid && passwordTouched" class="success-message">
+    Bon Toutou.
+  </span>
+  <input
+    v-model="password"
+    @input="passwordTouched = true"
+    @change="passwordTouched = true"
+    id="password"
+    placeholder="Password"
+    type="password"
+    required
+  />
+</div>
+
+
 
       <button class="btn" type="submit" :disabled="submitDisabled">
         Submit
@@ -226,7 +241,7 @@ function toggleSpan() {
     <div class="newto">
       <p>
         Already a user ?
-        <RouterLink to="/SignIn">sign in now</RouterLink>
+        <a @click="modalStore.handleShowSignIn">sign In</a>
       </p>
     </div>
     <br />
@@ -249,6 +264,22 @@ function toggleSpan() {
 </template>
 
 <style scoped>
+
+a {
+  cursor: pointer;
+}
+
+.success-message {
+  color: rgb(176, 201, 67); 
+  font-size: 1rem; 
+  margin-top: 5px; 
+}
+
+.success-message::before {
+  content: "\1F44D"; 
+  margin-right: 5px; 
+}
+
 .clickable {
   color: hsl(207, 77%, 38%);
   cursor: pointer;
