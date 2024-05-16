@@ -17,7 +17,11 @@ const isAuthenticated = (req, res, next) => {
     return next();
     
   } catch (error) {
-    res.status(401).json({ message: error.toString() });
+    if (error.name === 'TokenExpiredError') {
+      res.status(401).json({ message: 'Session expired' });
+    } else {
+      res.status(401).json({ message: 'Unauthorized' });
+    }
   }
 };
 

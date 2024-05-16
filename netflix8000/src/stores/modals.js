@@ -30,5 +30,8 @@ export const useModalsStore = defineStore({
       this.showSignUp = false;
       this.showInput = true;
     },
+    resetErrorMessage() {
+      this.errorMessage = false;
+    }
   },
 });

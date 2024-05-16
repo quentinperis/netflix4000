@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch  } from "vue";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
@@ -10,6 +10,7 @@ const authStore = useAuthStore();
 
 const username = ref("");
 const email = ref("");
+
 const emailTouched = ref(false);
 const password = ref("");
 const passwordTouched = ref(false);
@@ -53,11 +54,19 @@ const logIn = async () => {
       router.push({ name: "netflix" });
     }
   } catch (error) {
-    console.error("Erreur lors de la connection :", error);
+    if (error.response && error.response.status === 401) {
+      // Afficher le message d'erreur
+      modalStore.errorMessage = true;
+    } else {
+      console.error("Erreur lors de la connexion :", error);
+      modalStore.errorMessage = "Une erreur s'est produite. Veuillez réessayer.";
+    }
   }
 };
 
-const errorMessageText= "Utilisateur ou mot de passe incorrect";
+const errorMessage = "Utilisateur ou mot de passe incorrect";
+// Réinitialiser le message d'erreur lors de la modification des champs email et mot de passe
+watch([email, password], modalStore.resetErrorMessage());
 
 const moreSpan = ref(true)
 
@@ -86,7 +95,7 @@ function toggleSpan() {
           v-model="email"
           id="email"
           placeholder="Email Adress"
-          @input="emailTouched = true"
+          @input="emailTouched = true, modalStore.resetErrorMessage()"
           @change="emailTouched = true"
           type="email"
           required
@@ -105,7 +114,7 @@ function toggleSpan() {
         </span>
         <input
           v-model="password"
-          @input="passwordTouched = true"
+          @input="passwordTouched = true, modalStore.resetErrorMessage()"
           @change="passwordTouched = true"
           id="password"
           placeholder="Password"
@@ -114,7 +123,7 @@ function toggleSpan() {
         />
       </div>
       <!-- Affichage du message d'erreur -->
-      <span class="error-message" v-if="modalStore.errorMessage">{{ errorMessageText }}</span>
+      <span class="error-message" v-if="modalStore.errorMessage">{{ errorMessage }}</span>
 
       <button class="btn" type="submit" :disabled="submitDisabled">
         Sign In

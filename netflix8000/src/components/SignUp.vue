@@ -8,7 +8,6 @@ import { useModalsStore } from "@/stores/modals";
 const modalStore = useModalsStore();
 const authStore = useAuthStore();
 
-// Déclaration des références
 const username = ref("");
 const email = ref("");
 const password = ref("");
@@ -118,11 +117,7 @@ const signUp = async () => {
       ] = `Bearer ${response.data.token}`;
 
       username.value = response.data.username; // Mettre à jour le nom d'utilisateur
-
-      // Appeler l'action signUp de votre magasin authStore avec le nom d'utilisateur
       authStore.signUp(response.data.username);
-
-      // Rediriger vers la page /netflix
       router.push({ name: "netflix" });
     }
   } catch (error) {
