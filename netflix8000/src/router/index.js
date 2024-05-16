@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import PageNotFoundView from '../views/PageNotFoundView.vue'
 import { useAuthStore } from '@/stores/auth'; 
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
       path: "/netflix",
       name: "netflix",
       component: () => import("../views/NetflixView.vue"),
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'notFound',
+      component: PageNotFoundView,
     },
   ],
 });

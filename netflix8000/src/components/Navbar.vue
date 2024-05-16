@@ -12,41 +12,53 @@ import { useModalsStore } from "@/stores/modals";
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
 
+const handleSignIn = () => {
+  modalStore.handleShowSignIn();
+  // Remonter en haut de la page après l'affichage de la modal
+  window.scrollTo(0, 0);
+}
+
+const handleShowHome = () => {
+  modalStore.handleCloseModals();
+  // Remonter en haut de la page après l'affichage de la modal
+  window.scrollTo(0, 0);
+}
+
 // DECONNECTION
 const handleLogout = () => {
   localStorage.removeItem("token");
-
-  modalStore.reconnection = false;
-  modalStore.showSignIn = false;
-  modalStore.showSignUp = false;
-  modalStore.showInput = true;
-
+  modalStore.handleCloseModals();
+  window.scrollTo(0, 0);
   authStore.logout();
   router.push("/");
 };
 
 axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    if (error.response && error.response.status === 401) {
-      modalStore.reconnection = true;
-    
-      router.push("/");
-
-      authStore.logout();
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      if (error.response && error.response.status === 401) {
+        if (error.response.data.message === 'Session expired') {
+          modalStore.reconnection = true;
+          authStore.logout();
+          router.push("/");
+        } else {
+          modalStore.errorMessage = true;
+        }
+      }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
-);
+  );
+
+
 </script>
 
 <template>
   <div>
     <div >
       <RouterLink :to="!authStore.isLoggedIn ? '/' : '/netflix'">
-        <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="modalStore.handleCloseModals" />
+        <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="handleShowHome" />
       </RouterLink>
     </div>
   </div>
@@ -65,15 +77,15 @@ axios.interceptors.response.use(
       <Home class="modal" v-if="modalStore.showInput && !modalStore.reconnection" />
       <div class="dashboard-sign-in">
 
-        <button id="signin-button" class="btn" @click="modalStore.handleShowSignIn"
+        <button id="signin-button" class="btn" @click="handleSignIn"
           v-if="modalStore.showInput && !modalStore.reconnection">
           Sign In
         </button>
 
       </div>
-      <Reconnection v-if="modalStore.reconnection" @modalStore="handleCloseModals" />
-      <SignIn v-if="modalStore.showSignIn && !modalStore.reconnection" @modalStore="handleCloseModals" />
-      <SignUp v-if="modalStore.showSignUp && !modalStore.reconnection" @modalStore="handleCloseModals" />
+      <Reconnection v-if="modalStore.reconnection"/>
+      <SignIn v-if="modalStore.showSignIn && !modalStore.reconnection"/>
+      <SignUp v-if="modalStore.showSignUp && !modalStore.reconnection"/>
     </template>
   </div>
 </template>
