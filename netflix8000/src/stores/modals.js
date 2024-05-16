@@ -8,6 +8,7 @@ export const useModalsStore = defineStore({
     showSignIn: false,
     showInput: true,
     reconnection: false,
+    errorMessage: false,
   }),
 
   actions: {
@@ -29,5 +30,8 @@ export const useModalsStore = defineStore({
       this.showSignUp = false;
       this.showInput = true;
     },
+    resetErrorMessage() {
+      this.errorMessage = false;
+    }
   },
 });

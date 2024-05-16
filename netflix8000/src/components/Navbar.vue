@@ -4,7 +4,6 @@ import SignUp from "@/components/SignUp.vue";
 import SignIn from "@/components/SignIn.vue";
 import Reconnection from "@/components/Reconnection.vue";
 import router from "@/router";
-import axios from "axios";
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
@@ -33,21 +32,6 @@ const handleLogout = () => {
   router.push("/");
 };
 
-axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    if (error.response && error.response.status === 401) {
-      modalStore.reconnection = true;
-    
-      router.push("/");
-
-      authStore.logout();
-    }
-    return Promise.reject(error);
-  }
-);
 </script>
 
 <template>

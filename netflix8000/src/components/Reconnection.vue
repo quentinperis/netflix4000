@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
@@ -7,6 +7,7 @@ import { useModalsStore } from "@/stores/modals";
 
 const modalStore = useModalsStore();
 const authStore = useAuthStore();
+const modalStore = useModalsStore();
 
 const username = ref("");
 const email = ref("");
@@ -54,11 +55,20 @@ const logIn = async () => {
       router.push({ name: "netflix" });
     }
   } catch (error) {
-    console.error("Erreur lors de la connexion :", error);
+    if (error.response && error.response.status === 401) {
+      // Afficher le message d'erreur
+      modalStore.errorMessage = true;
+    } else {
+      console.error("Erreur lors de la connexion :", error);
+      modalStore.errorMessage =
+        "Une erreur s'est produite. Veuillez réessayer.";
+    }
   }
 };
-const moreSpan = ref(true)
 
+const errorMessage = "Utilisateur ou mot de passe incorrect";
+// Réinitialiser le message d'erreur lors de la modification des champs email et mot de passe
+watch([email, password], modalStore.resetErrorMessage());
 function toggleSpan() {
   moreSpan.value = !moreSpan.value
 }
@@ -85,6 +95,31 @@ function toggleSpan() {
           id="email"
           placeholder="Email Adress"
           @input="emailTouched = true"
+          @change="emailTouched = true"
+          type="email"
+          required
+        />
+      </div>
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Votre session est expirée.</h2>
+    </div>
+    <form @submit.prevent="logIn">
+      <div class="container">
+        <label for="email"></label>
+        <span
+          :class="{
+            invalid: emailInvalid,
+          }"
+          v-if="emailInvalid"
+        >
+          Invalid email!
+        </span>
+        <input
+          v-model="email"
+          id="email"
+          placeholder="Email Adress"
+          @input="(emailTouched = true), modalStore.resetErrorMessage()"
           @change="emailTouched = true"
           type="email"
           required
@@ -144,9 +179,51 @@ function toggleSpan() {
       advertising by Google).
     </span>
   </div>
+      <div class="container">
+        <label for="password"></label>
+        <span
+          :class="{
+            invalid: passwordInvalid,
+          }"
+          v-if="passwordInvalid"
+        >
+          Invalid password!
+        </span>
+        <input
+          v-model="password"
+          @input="(passwordTouched = true), modalStore.resetErrorMessage()"
+          @change="passwordTouched = true"
+          id="password"
+          placeholder="Password"
+          type="password"
+          required
+        />
+      </div>
+      <!-- Affichage du message d'erreur -->
+      <span class="error-message" v-if="modalStore.errorMessage">{{
+        errorMessage
+      }}</span>
+
+      <button class="btn" type="submit" :disabled="submitDisabled">
+        Submit
+      </button>
+    </form>
+    <div class="newto">
+      <p>
+        New to Netflix ?
+
+        <RouterLink to="/SignUp">
+          <a>sign up now</a>
+        </RouterLink>
+      </p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.error-message {
+  color: red;
+}
 a {
   cursor: pointer;
 }
@@ -251,7 +328,7 @@ form > button:is([disabled]) {
   background-color: gray;
 }
 
-form > button:not([disabled]):hover {
+form>button:not([disabled]):hover {
   cursor: pointer;
 }
 </style>
