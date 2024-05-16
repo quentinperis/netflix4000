@@ -2,6 +2,12 @@
 import { useModalsStore } from "@/stores/modals";
 const modalStore = useModalsStore();
 
+const handleSignUp = () => {
+  modalStore.handleShowSignUp();
+  // Remonter en haut de la page après l'affichage de la modal
+  window.scrollTo(0, 0);
+}
+
 </script>
 
 <template>
@@ -9,7 +15,7 @@ const modalStore = useModalsStore();
     <div class="container">
       <input type="email" placeholder="Email address" class="email-input" />
       <div>
-        <button class="get-started-button" @click="modalStore.handleShowSignUp">GET STARTED &gt;</button>
+        <button class="get-started-button" @click="handleSignUp">GET STARTED &gt;</button>
       </div>
     </div>
   </div>
