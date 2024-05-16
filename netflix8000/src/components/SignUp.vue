@@ -195,7 +195,7 @@ function toggleSpan() {
         />
       </div>
 
-      <button class="btn" type="submit" :disabled="formStore.submitDisabled">
+      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp">
         Sign Up
       </button>
     </form>

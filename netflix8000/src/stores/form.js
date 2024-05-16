@@ -11,7 +11,7 @@ export const useFormStore = defineStore({
     emailTouched: false,
     usernameTouched: false,
     passwordTouched: false,
-    
+
     emailUnavailable: false,
     usernameAvailable: false,
 
@@ -22,7 +22,8 @@ export const useFormStore = defineStore({
   getters: {
     // Calcul des états d'invalidité des champs avec getters au lieux de computed()
     passwordInvalid(state) {
-      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
+      const passwordRegex =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
       return state.passwordTouched && !passwordRegex.test(state.password);
     },
     emailInvalid(state) {
@@ -32,16 +33,28 @@ export const useFormStore = defineStore({
     usernameInvalid(state) {
       return state.usernameTouched && state.username.trim() === "";
     },
-    submitDisabled(state) {
-      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
+    submitDisabledSignUp(state) {
+      const passwordRegex =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
       const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
       return (
         !passwordRegex.test(state.password) ||
         !state.passwordTouched ||
         !regexpEmail.test(state.email) ||
         !state.emailTouched ||
-        !(state.username) ||
+        !state.username ||
         !state.usernameTouched
+      );
+    },
+    submitDisabledSignIn(state) {
+      const passwordRegex =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
+      const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+      return (
+        !passwordRegex.test(state.password) ||
+        !state.passwordTouched ||
+        !regexpEmail.test(state.email) ||
+        !state.emailTouched 
       );
     },
   },
@@ -108,17 +121,16 @@ export const useFormStore = defineStore({
     },
 
     resetForm() {
-        this.username = "";
-        this.email = "";
-        this.password = "";
-        this.emailTouched = false;
-        this.usernameTouched = false;
-        this.passwordTouched = false;
-        this.emailUnavailable = false;
-        this.usernameAvailable = false;
-        this.responseMessageUsername = "";
-        this.responseMessageEmail = "";
-      },
-
+      this.username = "";
+      this.email = "";
+      this.password = "";
+      this.emailTouched = false;
+      this.usernameTouched = false;
+      this.passwordTouched = false;
+      this.emailUnavailable = false;
+      this.usernameAvailable = false;
+      this.responseMessageUsername = "";
+      this.responseMessageEmail = "";
+    },
   },
 });

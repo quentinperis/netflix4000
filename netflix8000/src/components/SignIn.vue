@@ -46,7 +46,6 @@ const logIn = async () => {
   }
 };
 
-const errorMessage = "Utilisateur ou mot de passe incorrect";
 // Réinitialiser le message d'erreur lors de la modification des champs email et mot de passe
 watch(
   () => [ formStore.email, formStore.password ],
@@ -96,7 +95,7 @@ function toggleSpan() {
           v-model="formStore.email"
           id="email"
           placeholder="Email Adress"
-          @input="formStore.setEmail($event.target.value)"
+          @input="(formStore.setEmail($event.target.value)), modalStore.resetErrorMessage()"
           type="email"
           required
         />
@@ -130,7 +129,7 @@ function toggleSpan() {
         </span>
         <input
           v-model="formStore.password"
-          @input="formStore.setPassword($event.target.value)"
+          @input="(formStore.setPassword($event.target.value)), modalStore.resetErrorMessage()"
           id="password"
           placeholder="Password"
           type="password"
@@ -142,7 +141,7 @@ function toggleSpan() {
         {{ modalStore.errorMessage }}
       </span>
 
-      <button class="btn" type="submit" :disabled="formStore.submitDisabled">
+      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignIn">
         Sign In
       </button>
     </form>
