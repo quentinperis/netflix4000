@@ -2,11 +2,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { secretKey } = require("../middlewares/authentication");
-require('dotenv').config(); 
-
+require("dotenv").config();
 
 const authController = {
-  
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -15,7 +13,7 @@ const authController = {
       const user = await User.findOne({ email });
       if (!user) {
         console.log("Not User: ", !user);
-        return res.status(401).json({ 
+        return res.status(401).json({
           message: "Utilisateur ou mot de passe incorrect",
         });
       }
@@ -24,10 +22,14 @@ const authController = {
 
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
-        return res.status(401).json({ message: "Utilisateur ou mot de passe incorrect" });
+        return res
+          .status(401)
+          .json({ message: "Utilisateur ou mot de passe incorrect" });
       }
 
-      const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "5s" });
+      const token = jwt.sign({ userId: user.id }, secretKey, {
+        expiresIn: "10s",
+      });
 
       res.status(200).json({ token, username: user.username });
     } catch (error) {
@@ -134,11 +136,9 @@ const authController = {
         "Erreur lors de la récupération des détails de l'utilisateur :",
         error
       );
-      res
-        .status(500)
-        .json({
-          error: "Erreur lors de la récupération des détails de l'utilisateur",
-        });
+      res.status(500).json({
+        error: "Erreur lors de la récupération des détails de l'utilisateur",
+      });
     }
   },
 };

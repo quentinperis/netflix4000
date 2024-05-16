@@ -9,12 +9,7 @@ const authStore = useAuthStore();
   <div id="lost">
     <div id="nav">
       <RouterLink :to="!authStore.isLoggedIn ? '/' : '/netflix'">
-        <img
-          class="logo"
-          src="/image/Logonetflix.png"
-          alt="Image logo"
-          @click="handleShowHome"
-        />
+        <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="handleShowHome" />
       </RouterLink>
     </div>
     <div id="container">
@@ -45,7 +40,6 @@ const authStore = useAuthStore();
   z-index: 10;
   width: 100%;
   height: 100dvh;
-  position: fixed;
   overflow: hidden;
 }
 
@@ -82,13 +76,15 @@ img {
   width: 100%;
   height: 100%;
   color: white;
-  > * {
+
+  >* {
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
   }
-  > #up {
+
+  >#up {
     flex-direction: column;
   }
 }
@@ -97,11 +93,13 @@ img {
   height: 60%;
   width: 100%;
   top: 0;
-  > h1 {
+
+  >h1 {
     font-size: 3.5rem;
     font-weight: 600;
   }
-  > p {
+
+  >p {
     text-align: center;
     width: 45%;
     font-size: 1.2rem;
@@ -109,6 +107,7 @@ img {
     margin-bottom: 25px;
   }
 }
+
 button {
   font-size: 1.1rem;
   font-weight: 600;
@@ -121,19 +120,23 @@ button {
 button:hover {
   opacity: 0.7;
 }
+
 #down {
   height: 5%;
-  > #redCross {
+
+  >#redCross {
     background-color: red;
     height: 100%;
     width: 2px;
   }
-  > h4 {
+
+  >h4 {
     margin: 0 10px;
     font-size: 1.5rem;
     font-weight: 100;
   }
-  > h3 {
+
+  >h3 {
     font-size: 1.5rem;
     font-weight: 600;
   }
