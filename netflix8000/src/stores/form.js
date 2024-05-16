@@ -20,7 +20,6 @@ export const useFormStore = defineStore({
   }),
 
   getters: {
-    // Calcul des états d'invalidité des champs avec getters au lieux de computed()
     passwordInvalid(state) {
       const passwordRegex =
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:";'<>?,./]).{8,}$/;
@@ -54,11 +53,10 @@ export const useFormStore = defineStore({
         !passwordRegex.test(state.password) ||
         !state.passwordTouched ||
         !regexpEmail.test(state.email) ||
-        !state.emailTouched 
+        !state.emailTouched
       );
     },
   },
-
   actions: {
     resetErrorMessage() {
       this.responseMessageUsername = "";
@@ -106,7 +104,6 @@ export const useFormStore = defineStore({
           this.emailUnavailable = !response.data.available;
           this.responseMessageEmail = ""; // Effacez le message avant de vérifier la disponibilité
           if (!this.emailInvalid) {
-            // Vérifiez si l'email est valide avant d'afficher "Disponible"
             this.responseMessageEmail = "Disponible";
           }
         } catch (error) {
@@ -124,11 +121,14 @@ export const useFormStore = defineStore({
       this.username = "";
       this.email = "";
       this.password = "";
+
       this.emailTouched = false;
       this.usernameTouched = false;
       this.passwordTouched = false;
+
       this.emailUnavailable = false;
       this.usernameAvailable = false;
+
       this.responseMessageUsername = "";
       this.responseMessageEmail = "";
     },

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
@@ -10,8 +10,11 @@ const authStore = useAuthStore();
 const modalStore = useModalsStore();
 const formStore = useFormStore();
 
+onMounted(() => {
+  formStore.resetForm(); // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
+});
+
 const handleSignUp = () => {
-  formStore.resetForm(); // Réinitialise les champs et les messages
   modalStore.handleShowSignUp();
   window.scrollTo(0, 0); // Remonter en haut de la page après l'affichage de la modal
 };

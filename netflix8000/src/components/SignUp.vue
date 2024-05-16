@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import router from "@/router";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
@@ -9,13 +9,32 @@ import { useFormStore } from "@/stores/form";
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
 const formStore = useFormStore();
+const moreSpan = ref(true);
+
+function toggleSpan() { moreSpan.value = !moreSpan.value };
 
 const handleSignIn = () => {
   modalStore.handleShowSignIn();
-  formStore.resetForm(); // Réinitialise les champs et les messages
   window.scrollTo(0, 0); // Remonter en haut de la page après l'affichage de la modal
 };
+// ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
+onMounted(() => { formStore.resetForm(); });
 
+watch(() => formStore.username, (newUsername, oldUsername) => {
+    if (newUsername !== oldUsername) {
+      formStore.setUsername(newUsername);
+      formStore.checkUsernameAvailability();
+    }
+  }
+);
+watch(
+  () => formStore.email, (newEmail, oldEmail) => {
+    if (newEmail !== oldEmail) {
+      formStore.setEmail(newEmail);
+      formStore.checkEmailAvailability();
+    }
+  }
+);
 // Méthode de soumission du formulaire
 const signUp = async () => {
   try {
@@ -28,7 +47,6 @@ const signUp = async () => {
       
       localStorage.setItem("token", response.data.token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-
       authStore.signUp(response.data.username);
       router.push({ name: "netflix" });
     }
@@ -36,12 +54,6 @@ const signUp = async () => {
     console.error("Erreur lors de l'inscription :", error);
   }
 };
-
-const moreSpan = ref(true);
-
-function toggleSpan() {
-  moreSpan.value = !moreSpan.value;
-}
 </script>
 
 
@@ -179,6 +191,7 @@ function toggleSpan() {
           Please enter a password containing AT LEAST 1 number, 1 special
           character, an uppercase letter, a lowercase letter and 8 characters.
         </span>
+        
         <span
           v-if="!formStore.passwordInvalid && formStore.passwordTouched"
           class="success-message"
