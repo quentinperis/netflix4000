@@ -6,7 +6,7 @@ export const useAuthStore = defineStore({
   state: () => ({
     isLoggedIn: false,
     username: "",
-    
+
   }),
   actions: {
     signUp(username) {
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore({
       this.isLoggedIn = false;
       this.username = "";
     },
-   
+
     async checkAuthStatus() {
       const token = localStorage.getItem("token");
       if (token) {
@@ -51,5 +51,6 @@ export const useAuthStore = defineStore({
         this.username = "";
       }
     },
+
   },
 });

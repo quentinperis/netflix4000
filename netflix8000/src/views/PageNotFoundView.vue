@@ -1,19 +1,22 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import { useModalsStore } from "@/stores/modals";
+import SignIn from "@/components/SignIn.vue";
 
 const authStore = useAuthStore();
+const modalStore = useModalsStore();
 </script>
 
 <template>
-  <div id="lost">
-    <div id="nav">
-      <RouterLink :to="!authStore.isLoggedIn ? '/' : '/netflix'">
-        <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="handleShowHome" />
-      </RouterLink>
-    </div>
+  <div id="lost">  
+    
+    <div id="nav"></div>
+   
     <div id="container">
+       <SignIn v-if="modalStore.showSignIn" />
       <img src="../../public/image/Seul Sur Mars.jpg" alt="Seul sur Mars" />
+      
       <div id="onLost">
         <div id="up">
           <h1>Lost your way?</h1>
@@ -32,6 +35,7 @@ const authStore = useAuthStore();
         </div>
       </div>
     </div>
+   
   </div>
 </template>
 
@@ -46,14 +50,14 @@ const authStore = useAuthStore();
 #nav {
   width: 100%;
   background-color: black;
-  padding: 15px 30px;
-  padding-top: 20px;
+  height: 10%;
 }
 
 #container {
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: 3;
 }
 
 img {
@@ -77,14 +81,14 @@ img {
   height: 100%;
   color: white;
 
-  >* {
+  > * {
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
   }
 
-  >#up {
+  > #up {
     flex-direction: column;
   }
 }
@@ -94,12 +98,12 @@ img {
   width: 100%;
   top: 0;
 
-  >h1 {
+  > h1 {
     font-size: 3.5rem;
     font-weight: 600;
   }
 
-  >p {
+  > p {
     text-align: center;
     width: 45%;
     font-size: 1.2rem;
@@ -124,19 +128,19 @@ button:hover {
 #down {
   height: 5%;
 
-  >#redCross {
+  > #redCross {
     background-color: red;
     height: 100%;
     width: 2px;
   }
 
-  >h4 {
+  > h4 {
     margin: 0 10px;
     font-size: 1.5rem;
     font-weight: 100;
   }
 
-  >h3 {
+  > h3 {
     font-size: 1.5rem;
     font-weight: 600;
   }

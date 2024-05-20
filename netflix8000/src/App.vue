@@ -17,7 +17,6 @@ if (token) {
   authStore.checkAuthStatus();
 } 
 
-
 </script>
 
 <template>
