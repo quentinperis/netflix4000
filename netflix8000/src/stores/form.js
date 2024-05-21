@@ -1,3 +1,5 @@
+
+// form.js
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -7,18 +9,14 @@ export const useFormStore = defineStore({
     username: "",
     email: "",
     password: "",
-
     emailTouched: false,
     usernameTouched: false,
     passwordTouched: false,
-
     emailUnavailable: false,
     usernameAvailable: false,
-
     responseMessageUsername: "",
     responseMessageEmail: "",
   }),
-
   getters: {
     passwordInvalid(state) {
       const passwordRegex =
@@ -54,6 +52,13 @@ export const useFormStore = defineStore({
         !state.passwordTouched ||
         !regexpEmail.test(state.email) ||
         !state.emailTouched
+      );
+    },
+    submitDisabledGetStarted(state) {
+      const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+      return (
+        !regexpEmail.test(state.email) ||
+        !state.emailTouched 
       );
     },
   },
@@ -116,21 +121,21 @@ export const useFormStore = defineStore({
         this.responseMessageEmail = "";
       }
     },
-
     resetForm() {
       this.username = "";
       this.email = "";
       this.password = "";
-
       this.emailTouched = false;
       this.usernameTouched = false;
       this.passwordTouched = false;
-
       this.emailUnavailable = false;
       this.usernameAvailable = false;
-
       this.responseMessageUsername = "";
       this.responseMessageEmail = "";
+    },
+    resetAll() {
+      this.resetForm();
+      this.resetErrorMessage();
     },
   },
 });

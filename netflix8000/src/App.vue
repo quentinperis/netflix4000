@@ -26,7 +26,10 @@ const showFooter = computed(() => route.name !== 'notFound');
 <template>
   <Navbar />
   <RouterView />
+ 
   <Footer v-show="showFooter"/>  
+
+
 </template>
 
 <style scoped>
