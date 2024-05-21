@@ -2,14 +2,6 @@
 import faq from "@/components/Faq.vue";
 import inputEmail from "@/components/InputEmail.vue";
 import SvgHome from "@/components/SvgHome.vue";
-import Footer from "@/components/Footer.vue";
-
-const emit = defineEmits(["showSignUp"]);
-
-const handleShowSignUpView = () => {
-  emit("showSignUp");
-};
-
 
 </script>
 
@@ -32,7 +24,7 @@ const handleShowSignUpView = () => {
     </div>
   </div>
   <faq/>
-  <Footer style="width: 100%;"/>
+  
 </template>
 
 <style scoped>
