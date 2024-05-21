@@ -31,7 +31,7 @@ onMounted(() => {
     <img
       class="background-image"
       src="/image/background-netflix.jpg"
-      alt="Image background"
+      alt="netflix"
     />
   
     <div class="shadow"></div>

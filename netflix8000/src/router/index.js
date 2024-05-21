@@ -37,7 +37,6 @@ router.beforeEach(async (to, from) => {
 });
 
 
-
 // router.beforeEach(async (to, from, next) => {
 //   const authStore = useAuthStore();
 
@@ -65,9 +64,7 @@ axios.interceptors.response.use(
         modalStore.reconnection = true;
         authStore.logout();
         router.push("/");
-      } else {
-        modalStore.errorMessage = true;
-      }
+      } 
     }
     return Promise.reject(error);
   }

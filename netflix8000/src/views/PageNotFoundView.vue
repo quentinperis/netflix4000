@@ -15,7 +15,7 @@ const modalStore = useModalsStore();
    
     <div id="container">
        <SignIn v-if="modalStore.showSignIn" />
-      <img src="../../public/image/Seul Sur Mars.jpg" alt="Seul sur Mars" />
+      <img src="/image/Seul Sur Mars.jpg" alt="Seul sur Mars" />
       
       <div id="onLost">
         <div id="up">

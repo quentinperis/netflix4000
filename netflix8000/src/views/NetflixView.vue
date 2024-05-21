@@ -20,7 +20,7 @@ onMounted(() => {
   <div class="back">
     <img
       class="background-image"
-      src="../../public/image/4317036.webp"
+      src="/image/4317036.webp"
       alt="joker Image"
     />
     <hr />

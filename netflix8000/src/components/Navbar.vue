@@ -1,11 +1,14 @@
 <script setup>
 import router from "@/router";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
+import { computed } from "vue";
+
 
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
+const route = useRoute();
 
 const handleSignIn = () => {
   modalStore.handleShowSignIn();
@@ -27,11 +30,14 @@ const handleLogout = () => {
   authStore.logout();
   router.push("/");
 };
+
+// Propriété calculée pour déterminer la visibilité des éléments
+const showAuthButtons = computed(() => route.name !== 'notFound');
 </script>
+
 
 <template>
   <div class="overlay" id="shadow">
-    
     <div>
       <div>
         <RouterLink :to="!authStore.isLoggedIn ? '/' : '/netflix'">
@@ -45,28 +51,30 @@ const handleLogout = () => {
       </div>
     </div>
 
-    <template v-if="authStore.isLoggedIn">
-      <!-- Si l'utilisateur est connecté, afficher le bouton de déconnexion -->
-      <div class="user-dashboard">
-        <span class="username">{{ authStore.username }}</span>
-        <button class="btn" @click="handleLogout">Logout</button>
-      </div>
-    </template>
+    <template v-if="showAuthButtons">
+      <template v-if="authStore.isLoggedIn">
+        <div class="user-dashboard">
+          <span class="username">{{ authStore.username }}</span>
+          <button class="btn" @click="handleLogout">Logout</button>
+        </div>
+      </template>
 
-    <template v-else>
-      <div class="dashboard-sign-in">
-        <button
-          id="signin-button"
-          class="btn"
-          @click="handleSignIn"
-          v-if="modalStore.showInput && !modalStore.reconnection" 
-        >
-          Sign In
-        </button>
-      </div>
+      <template v-else>
+        <div class="dashboard-sign-in">
+          <button
+            id="signin-button"
+            class="btn"
+            @click="handleSignIn"
+            v-if="modalStore.showInput && !modalStore.reconnection"
+          >
+            Sign In
+          </button>
+        </div>
+      </template>
     </template>
   </div>
 </template>
+
 
 <style scoped>
 .overlay {
@@ -77,7 +85,7 @@ const handleLogout = () => {
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  padding: 1rem  2rem 1rem 2rem;
+  padding: 1rem 2rem 1rem 2rem;
   /* background: linear-gradient(360deg, rgba(0, 0, 0, 0) 7%, hsl(0, 0%, 1%) 60%); */
 }
 
@@ -97,6 +105,7 @@ const handleLogout = () => {
   border-radius: 3px;
   cursor: pointer;
 }
+
 .btn:hover {
   background-color: #c11119;
 }
@@ -109,5 +118,4 @@ const handleLogout = () => {
 .user-dashboard span {
   padding: 10px 30px 10px;
 }
-
 </style>
