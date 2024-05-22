@@ -1,12 +1,21 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { ref, computed, onMounted, withDirectives } from "vue";
 import axios from "axios";
 import ModalMovie from "./ModalMovie.vue";
+import { Carousel, Navigation, Pagination, Slide } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
 
 const movies = ref([]);
 const selectedMovie = ref(null);
 
-// Toutes les catégories uniques des films
+// Paramètres du carrousel
+const carouselSettings = {
+  wrapAround: true,
+  navigationEnabled: false,
+  transition: 500,
+};
+
+// Calcul des catégories uniques
 const categories = computed(() => {
   const uniqueCategories = new Set();
   movies.value.forEach((m) => {
@@ -17,7 +26,7 @@ const categories = computed(() => {
   return Array.from(uniqueCategories);
 });
 
-// Filtrage les films par catégorie
+// Filtrer les films par catégorie
 const filteredMovies = (category) => {
   return movies.value.filter((m) => {
     return (
@@ -28,6 +37,28 @@ const filteredMovies = (category) => {
   });
 };
 
+// Ouvrir la modal
+const openModal = async (m) => {
+  const movieId = m.id;
+  const response = await axios.get(`http://localhost:3000/${movieId}`);
+  if (response.status !== 200) return;
+  try {
+    selectedMovie.value = response.data;
+  } catch (error) {
+    console.error(
+      "Une erreur s'est produite lors de la récupération des détails du film :",
+      error
+    );
+  }
+};
+
+// Fermer la modal
+const closeModal = () => {
+  selectedMovie.value = null;
+};
+
+
+// Charger les films depuis l'API
 onMounted(async () => {
   try {
     const res = await axios.get("http://localhost:3000/movies");
@@ -42,94 +73,153 @@ onMounted(async () => {
   } catch (error) {
     console.error(error);
   }
-
 });
-
-const openModal = async (m) => {
-  const movieId = m.id;
-  const response = await axios.get(`http://localhost:3000/${movieId}`);
-  if (response.status !== 200) return;
-  try {
-    selectedMovie.value = response.data;
-  } catch (error) {
-    console.error("Une erreur s'est produite lors de la récupération des détails du film :", error);
-  }
-};
-
-const closeModal = () => { selectedMovie.value = null };
-
 </script>
 
 <template>
   <main>
+    <!-- Parcourir les catégories -->
     <div class="container" v-for="category in categories" :key="category">
       <h2>{{ category }}</h2>
 
-      <div class="wrapper">
-        <div v-for="m in filteredMovies(category)" :key="m" class="card">
-          <img
-            v-if="
-              m.genre &&
-              (m.genre.one === category ||
-                m.genre.two === category ||
-                m.genre.three === category)
-            "
-            :src="m.imagePath"
-            :alt="m.name"
-            @click="openModal(m)"
-          />
-        </div>
+      <!-- Carrousel avec navigation -->
+      <div class="carousel-wrapper">
+        <Carousel
+          v-bind="settings"
+          :settings="carouselSettings"
+          :wrap-around="true"
+          :items-to-show="6"
+          :transition="500"
+          :ref="`carousel_${category}`"
+        >
+          <!-- Parcourir les films filtrés par catégorie -->
+          <Slide v-for="m in filteredMovies(category)" :key="m.id">
+            <div class="carousel__item">
+              <img
+                :src="m.imagePath"
+                :alt="m.name"
+                @click="openModal(m)"
+                class="movie__image"
+              />
+            </div>
+          </Slide>
+
+          <!-- Navigation -->
+          <template #addons>
+            <Navigation/>
+            <Pagination />
+          </template>
+
+          <!-- Flèche de navigation précédente
+          <template #prev="{ prev }">
+            <button @click="prev()" class="carousel__prev">Précédent</button>
+          </template> -->
+
+          <!-- Flèche de navigation suivante -->
+          <!-- <template #next="{ next }">
+            <button @click="next()" class="carousel__next">Suivant</button>
+          </template> -->
+        </Carousel>
       </div>
     </div>
-    <ModalMovie :selected-movie="selectedMovie" @close-modal="closeModal"/>
+
+    <!-- Modal -->
+    <ModalMovie :selected-movie="selectedMovie" @close-modal="closeModal" />
   </main>
 </template>
 
 <style scoped>
-#name {
-  margin-right: 30px;
-}
-#name-year {
-  height: 50%;
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-  justify-content: start;
-}
-
-#name-year {
-  align-items: center;
-}
-
-#right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 main {
-  /* margin-top: 45rem; */
-  background-color: hsl(0, 0%, 5%);
+  background-color: hsl(0, 0%, 1%);
   padding: 1px 20px;
 }
 .container {
   padding-bottom: 2em;
 }
-
 h2 {
-  margin-top: 1em;
-  color: white;
-  padding-bottom: 0.5em;
+  margin-bottom: 20px;
+  color: rgb(254, 254, 254);
+  font-weight: bold;
 }
-.wrapper {
+
+.carousel__item {
+  min-height: 200px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 8px;
   display: flex;
-  overflow-x: auto;
+  justify-content: center;
+  align-items: center;
+  > img {
+    width: 215px; /* Images à pleine largeur */
+    height: 121px; /* Maintient le ratio d'aspect */
+    border-radius: 8px;
+    cursor: pointer;
+  }
 }
-img {
-  height: 500px;
-  margin-right: 1em;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 10px;
+
+.carousel__slide {
+  padding: 5px;
+  transition-duration: 400ms;
+}
+
+.carousel__slide--active {
+  transform: scale(1.5);
+}
+
+.carousel__pagination-button {
+  color: white;
+}
+
+
+
+/* Media query pour les résolutions inférieures à 480px */
+@media screen and (max-width: 480px) {
+  .carousel__item {
+    margin: 0 5px;
+    > img {
+      width: 215px;
+      height: 121px;
+      max-width: 90vw;
+      max-height: calc(90vw * 121 / 215);
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+
+  .carousel__prev,
+  .carousel__next {
+    height: 25%;
+  }
+}
+
+/* Media query pour les résolutions entre 481px et 768px */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .category__title {
+    margin-bottom: -60px;
+  }
+  .carousel__item {
+    margin: 0 5px;
+    > img {
+      width: 122px;
+      height: 60px;
+      max-width: 80vw;
+      max-height: calc(80vw * 121 / 215);
+      border-radius: 8px;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .carousel__item {
+    margin: 0 5px;
+    > img {
+      width: 215px;
+      height: 121px;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
 }
 </style>

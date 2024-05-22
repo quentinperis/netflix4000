@@ -5,6 +5,10 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 import { useFormStore } from "@/stores/form";
+import { Checkbox } from "vue-recaptcha";
+
+const response = ref()
+
 
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
@@ -207,6 +211,7 @@ const signUp = async () => {
           required
         />
       </div>
+    <Checkbox/>
 
       <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp">
         Sign Up
@@ -323,6 +328,7 @@ input {
   width: 100%;
   padding: 0.9375rem;
   background-color: #de0e10;
+  margin-top: 15px;
   color: #fff;
   border: none;
   border-radius: 0.25rem;
