@@ -7,7 +7,7 @@
 
       <!-- Carrousel avec navigation -->
       <div class="carousel-wrapper">
-        <Carousel v-bind="settings" :settings="carouselSettings" :wrap-around="true" :items-to-show="5"  :transition="500" :ref="`carousel_${category}`">
+        <Carousel v-bind="settings" :settings="carouselSettings" :wrap-around="true" :items-to-show="6"  :transition="500" :ref="`carousel_${category}`">
           <!-- Parcourir les films filtrés par catégorie -->
           <Slide v-for="movie in filteredMovies(category)" :key="movie.id">
             <div class="carousel__item">
@@ -180,24 +180,29 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.carousel__pagination-button{
-  background-color: blue;
+.body {
+  background-color: black;
+}
+.carousel__next button{
+  color: red;
+  background-color: greenyellow;
 }
 .main__container {
   width: 100%;
   padding: 20px; /* Optionnel, pour espacer la main-container */
-  background-color: #1414141f;
+  background-color: #000000;
 }
 
 .category__title {
   margin-bottom : 20px;
-  color: green;
+  color: rgb(254, 254, 254);
   font-weight: bold;
 }
 
 .carousel__item {
   min-height: 200px;
   width: 100%;
+  color: blue;
   font-size: 20px;
   border-radius: 8px;
   display: flex;
@@ -226,7 +231,7 @@ export default defineComponent({
 .modal__content {
   width: 70%; /* Ajustez la taille de la modal */
   padding: 20px;
-  background-color: white;
+  background-color: rgb(0, 0, 0);
   border-radius: 8px;
 }
 
@@ -240,6 +245,7 @@ export default defineComponent({
   box-sizing: content-box;
   border: 5px solid white;
 }
+
 
 .carousel__viewport {
   perspective: 2000px;
@@ -293,11 +299,15 @@ export default defineComponent({
     object-fit: cover; /* Assurez-vous que les images couvrent complètement le conteneur */
     border-radius: 8px; /* Conserver le bord arrondi */
   }
+
+  .carousel__prev,
+.carousel__next {
+  height: 25%;
+}
 }
 
 /* Media query pour les résolutions entre 481px et 768px */
 @media screen and (min-width: 481px) and (max-width: 768px){
-
   .category__title{
     margin-bottom: -60px;
   }
