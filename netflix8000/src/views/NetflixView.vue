@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import Movies from "../components/Movies.vue";
+import Movies from "@/components/netflixPageComponents/Movies.vue";
 
 const showVideo = ref(false);
 const videoPath = "/image/joker.mp4"; // dossier publuc sur front
@@ -61,7 +61,7 @@ onMounted(() => {
 }
 .background-image {
   width: 100%;
-  height: 75dvh;
+  height: 100dvh;
   object-fit: cover;
   z-index: -1;
 }

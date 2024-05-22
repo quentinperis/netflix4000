@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import axios from "axios";
-import ModalMovie from "./ModalMovie.vue";
+import ModalMovie from "@/components/netflixPageComponents/ModalMovie.vue";
 
 const movies = ref([]);
 const selectedMovie = ref(null);

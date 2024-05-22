@@ -2,7 +2,6 @@
 import { RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
-import SignIn from "@/components/SignIn.vue";
 
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
@@ -14,7 +13,6 @@ const modalStore = useModalsStore();
     <div id="nav"></div>
    
     <div id="container">
-       <SignIn v-if="modalStore.showSignIn" />
       <img src="/image/Seul Sur Mars.jpg" alt="Seul sur Mars" />
       
       <div id="onLost">

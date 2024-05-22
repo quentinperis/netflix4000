@@ -108,9 +108,9 @@ export const useFormStore = defineStore({
           );
           this.emailUnavailable = !response.data.available;
           this.responseMessageEmail = ""; // Effacez le message avant de vérifier la disponibilité
-          if (!this.emailInvalid) {
-            this.responseMessageEmail = "Disponible";
-          }
+          // if (!this.emailInvalid) {
+          //   this.responseMessageEmail = "Disponible";
+          // }
         } catch (error) {
           this.responseMessageEmail =
             error.response && error.response.status === 400
@@ -133,8 +133,7 @@ export const useFormStore = defineStore({
       this.responseMessageUsername = "";
       this.responseMessageEmail = "";
     },
-    resetAll() {
-      this.resetForm();
+    resetInputErrors() {
       this.resetErrorMessage();
     },
   },

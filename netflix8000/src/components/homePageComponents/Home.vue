@@ -1,11 +1,11 @@
 <script setup>
-import faq from "@/components/Faq.vue";
-import inputEmail from "@/components/InputEmail.vue";
-import SvgHome from "@/components/SvgHome.vue";
+import Faq from "@/components/homePageComponents/Faq.vue";
+import InputEmail from "@/components/homePageComponents/InputEmail.vue";
+import SvgHome from "@/components/homePageComponents/SvgHome.vue";
 
 </script>
 
-<template>        
+<template>
   <main>
     <div class="top">
       <h1>Unlimited movies, TV shows and more.</h1>
@@ -13,18 +13,18 @@ import SvgHome from "@/components/SvgHome.vue";
       <p>
         Ready to watch? Enter your email to create or restart your membership.
       </p>
-      <inputEmail />
+      <InputEmail />
     </div>
     <div class="mid"></div>
   </main>
   <div id="more">
     <h2>More Reasons to Join</h2>
     <div id="container">
-      <SvgHome/>
+      <SvgHome />
     </div>
   </div>
-  <faq/>
-  
+  <Faq />
+
 </template>
 
 <style scoped>
@@ -32,7 +32,6 @@ main {
   position: relative;
   top: 0;
   width: 100%;
-  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;

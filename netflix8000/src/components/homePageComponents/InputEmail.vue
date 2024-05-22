@@ -8,38 +8,42 @@ const modalStore = useModalsStore();
 
 // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
 onMounted(() => {
-  formStore.resetForm();
+  formStore.resetInputErrors();
 });
 
-const handleSignUp = (email) => { // Prendre email comme argument
+const handleSignUp = (email) => {
+  // Prendre email comme argument
   modalStore.handleShowSignUp(email); // Passer email au store
-  console.log(email)
+  console.log(email);
   window.scrollTo(0, 0);
 };
 
-
-watch( () => formStore.email, (newEmail, oldEmail) => {
-  
+watch(
+  () => formStore.email,
+  (newEmail, oldEmail) => {
     if (newEmail !== oldEmail) {
       formStore.setEmail(newEmail);
       formStore.checkEmailAvailability();
     }
-});
-
+  }
+);
 </script>
 
 <template>
   <div id="ready">
-    <div class="container">
-      <input
-        v-model="formStore.email"
-        id="email"
-        placeholder="Email Adress"
-        @input="formStore.setEmail($event.target.value)"
-        @blur="formStore.checkEmailAvailability"
-        type="email"
-        required
-      />
+    <div class="input">
+      <div>
+        <input
+          v-model="formStore.email"
+          id="email"
+          placeholder="Email Adress"
+          @input="formStore.setEmail($event.target.value)"
+          @blur="formStore.checkEmailAvailability"
+          type="email"
+          required
+        />
+      </div>
+
       <div>
         <button
           class="get-started-button"
@@ -49,13 +53,10 @@ watch( () => formStore.email, (newEmail, oldEmail) => {
           GET STARTED &gt;
         </button>
       </div>
+    </div>
 
-      <span
-        :class="{
-          invalid: formStore.emailInvalid,
-        }"
-        v-if="formStore.emailInvalid"
-      >
+    <div class="errors">
+      <span class="errors" v-if="formStore.emailInvalid">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -77,12 +78,25 @@ watch( () => formStore.email, (newEmail, oldEmail) => {
         Please enter a valid email address.
       </span>
 
-      <span
-        :class="{
-          available: formStore.responseMessageEmail === 'Disponible',
-          unavailable: formStore.responseMessageEmail !== 'Disponible',
-        }"
-      >
+      <span class="errors" v-if="formStore.responseMessageEmail">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          role="img"
+          data-icon="CircleXSmall"
+          aria-hidden="true"
+          class="default-ltr-cache-0 e1vkmu651"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
+            fill="currentColor"
+          ></path>
+        </svg>
         {{ formStore.responseMessageEmail }}
       </span>
     </div>
@@ -95,16 +109,26 @@ watch( () => formStore.email, (newEmail, oldEmail) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  flex-direction: column;
+  width: 80%;
   height: 50px;
 }
 
-.container {
+.input {
   width: 100%;
   height: 100%;
   display: flex;
   color: white;
   justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.errors {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  color: white;
+  justify-content: start;
 }
 
 input {
@@ -136,13 +160,9 @@ button {
   background-color: #c11119;
 }
 
-
-.invalid {
+.errors {
+  margin-top: 0.15rem;
   color: red;
-}
-
-.available {
-  color: green;
 }
 
 .unavailable {

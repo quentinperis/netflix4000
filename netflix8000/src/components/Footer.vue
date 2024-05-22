@@ -17,8 +17,8 @@
 
 <style scoped>
 .footer {
-  position: relative;
-  z-index: 3;
+  width: 100%;
+  z-index: 2;
   background-color: rgb(0, 0, 0);
   color: #f7f3f3;
   padding: 40px 0;
