@@ -5,7 +5,7 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 import { useFormStore } from "@/stores/form";
-
+import { Checkbox } from "vue-recaptcha";
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
 const formStore = useFormStore();
@@ -39,20 +39,23 @@ const logIn = async () => {
 
       router.push({ name: "netflix" });
     }
-  }  catch (error) {
+  } catch (error) {
     if (error.response && error.response.status === 401) {
       modalStore.errorMessage = "Utilisateur ou mot de passe incorrect";
     } else {
       console.error("Erreur lors de la connexion :", error);
-      modalStore.errorMessage = "Une erreur s'est produite. Veuillez réessayer.";
+      modalStore.errorMessage =
+        "Une erreur s'est produite. Veuillez réessayer.";
     }
   }
 };
 
 // Réinitialiser le message d'erreur lors de la modification des champs email et mot de passe
 watch(
-  () => [ formStore.email, formStore.password ],
-  () => { modalStore.resetErrorMessage() }
+  () => [formStore.email, formStore.password],
+  () => {
+    modalStore.resetErrorMessage();
+  }
 );
 
 const moreSpan = ref(true);
@@ -98,7 +101,10 @@ function toggleSpan() {
           v-model="formStore.email"
           id="email"
           placeholder="Email Adress"
-          @input="(formStore.setEmail($event.target.value)), modalStore.resetErrorMessage()"
+          @input="
+            formStore.setEmail($event.target.value),
+              modalStore.resetErrorMessage()
+          "
           type="email"
           required
         />
@@ -132,7 +138,10 @@ function toggleSpan() {
         </span>
         <input
           v-model="formStore.password"
-          @input="(formStore.setPassword($event.target.value)), modalStore.resetErrorMessage()"
+          @input="
+            formStore.setPassword($event.target.value),
+              modalStore.resetErrorMessage()
+          "
           id="password"
           placeholder="Password"
           type="password"
@@ -144,7 +153,13 @@ function toggleSpan() {
         {{ modalStore.errorMessage }}
       </span>
 
-      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignIn">
+      <Checkbox />
+
+      <button
+        class="btn"
+        type="submit"
+        :disabled="formStore.submitDisabledSignIn"
+      >
         Sign In
       </button>
     </form>
@@ -178,8 +193,8 @@ function toggleSpan() {
         target="_blank"
         class="clickable"
       >
-        Terms of Service
-      </a>, and is used for providing, maintaining, and improving the reCAPTCHA
+        Terms of Service </a
+      >, and is used for providing, maintaining, and improving the reCAPTCHA
       service and for general security purposes (it is not used for personalized
       advertising by Google).
     </span>
@@ -240,11 +255,12 @@ input {
 
 .btn {
   width: 100%;
-  padding: 15px;
+  padding: 0.9375rem;
   background-color: #de0e10;
+  margin-top: 15px;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 1.2rem;
   transition: background-color 0.3s ease;
