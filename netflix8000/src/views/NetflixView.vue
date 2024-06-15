@@ -23,7 +23,6 @@ onMounted(() => {
       src="/image/4317036.webp"
       alt="joker Image"
     />
-    <hr />
     <div class="content-wrapper">
       <div id="content">
         <h2>Watch Joker Now</h2>
@@ -74,9 +73,8 @@ onMounted(() => {
   background: rgb(0, 0, 0, 0.5);
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.76234243697479) 10%,
-    rgba(0, 0, 0, 0) 25%,
-    rgba(0, 0, 0, 0.7175245098039216) 55%
+    transparent,
+    rgba(0, 0, 0.1%) 35%
   );
 }
 

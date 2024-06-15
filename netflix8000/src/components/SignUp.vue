@@ -5,22 +5,31 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 import { useFormStore } from "@/stores/form";
+import { Checkbox } from "vue-recaptcha";
+
+const response = ref();
 
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
 const formStore = useFormStore();
 const moreSpan = ref(true);
 
-function toggleSpan() { moreSpan.value = !moreSpan.value };
+function toggleSpan() {
+  moreSpan.value = !moreSpan.value;
+}
 
 const handleSignIn = () => {
   modalStore.handleShowSignIn();
   window.scrollTo(0, 0); // Remonter en haut de la page après l'affichage de la modal
 };
 // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
-onMounted(() => { formStore.resetForm(); });
+onMounted(() => {
+  formStore.resetForm();
+});
 
-watch(() => formStore.username, (newUsername, oldUsername) => {
+watch(
+  () => formStore.username,
+  (newUsername, oldUsername) => {
     if (newUsername !== oldUsername) {
       formStore.setUsername(newUsername);
       formStore.checkUsernameAvailability();
@@ -28,7 +37,8 @@ watch(() => formStore.username, (newUsername, oldUsername) => {
   }
 );
 watch(
-  () => formStore.email, (newEmail, oldEmail) => {
+  () => formStore.email,
+  (newEmail, oldEmail) => {
     if (newEmail !== oldEmail) {
       formStore.setEmail(newEmail);
       formStore.checkEmailAvailability();
@@ -44,9 +54,10 @@ const signUp = async () => {
       password: formStore.password,
     });
     if (response.data.token) {
-      
       localStorage.setItem("token", response.data.token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
       authStore.signUp(response.data.username);
       router.push({ name: "netflix" });
     }
@@ -55,7 +66,6 @@ const signUp = async () => {
   }
 };
 </script>
-
 
 <template>
   <div class="modal">
@@ -191,7 +201,7 @@ const signUp = async () => {
           Please enter a password containing AT LEAST 1 number, 1 special
           character, an uppercase letter, a lowercase letter and 8 characters.
         </span>
-        
+
         <span
           v-if="!formStore.passwordInvalid && formStore.passwordTouched"
           class="success-message"
@@ -207,8 +217,13 @@ const signUp = async () => {
           required
         />
       </div>
+      <Checkbox />
 
-      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp">
+      <button
+        class="btn"
+        type="submit"
+        :disabled="formStore.submitDisabledSignUp"
+      >
         Sign Up
       </button>
     </form>
@@ -323,6 +338,7 @@ input {
   width: 100%;
   padding: 0.9375rem;
   background-color: #de0e10;
+  margin-top: 15px;
   color: #fff;
   border: none;
   border-radius: 0.25rem;

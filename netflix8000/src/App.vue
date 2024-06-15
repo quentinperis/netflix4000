@@ -5,7 +5,12 @@ import Footer from "./components/Footer.vue";
 import axios from "axios";
 import { useAuthStore } from "./stores/auth";
 import { computed } from "vue";
+import { useRecaptchaProvider } from 'vue-recaptcha'
 
+
+// Create a global head instance
+
+useRecaptchaProvider()
 const authStore = useAuthStore();
 const route = useRoute();
 
