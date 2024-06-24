@@ -9,7 +9,9 @@ const modalStore = useModalsStore();
 // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
 onMounted(() => {
   formStore.resetInputErrors();
+  formStore.setEmail(''); 
 });
+
 
 const handleSignUp = (email) => {
   // Prendre email comme argument
@@ -56,7 +58,7 @@ watch(
     </div>
 
     <div class="errors">
-      <span class="errors" v-if="formStore.emailInvalid">
+      <span class="errors" v-if="formStore.emailInvalid && formStore.email !== ''">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
