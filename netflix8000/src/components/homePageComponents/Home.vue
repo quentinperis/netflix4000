@@ -2,11 +2,12 @@
 import Faq from "@/components/homePageComponents/Faq.vue";
 import InputEmail from "@/components/homePageComponents/InputEmail.vue";
 import SvgHome from "@/components/homePageComponents/SvgHome.vue";
-
+import Footer from "@/components/Footer.vue";
 </script>
 
 <template>
-  <main>
+ <div class="container">
+   <main>
     <div class="top">
       <h1>Unlimited movies, TV shows and more.</h1>
       <h2>Watch anywhere. Cancel at any time.</h2>
@@ -24,10 +25,19 @@ import SvgHome from "@/components/homePageComponents/SvgHome.vue";
     </div>
   </div>
   <Faq />
-
+  <Footer />
+ </div>
+    
+ 
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+}
 main {
   position: relative;
   top: 0;
@@ -122,7 +132,7 @@ main {
   width: 70px;
   background-color: #de0510;
   color: white;
-  z-index: 2;
+  z-index: 999;
   border: none;
   border-radius: 3px;
   position: absolute;
@@ -180,7 +190,7 @@ main {
   }
 
   .top {
-    padding: 150px 300px;
+    padding: 150px 250px;
 
     >h1 {
       font-size: 2.5rem;
@@ -200,7 +210,27 @@ main {
   }
 
   .top {
-    padding: 150px 200px;
+    padding: 150px 100px;
+
+    >h1 {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  #more {
+    padding: 20px 30px;
+  }
+
+  #container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .top {
+    padding: 150px 20px;
 
     >h1 {
       font-size: 2rem;

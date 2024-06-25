@@ -9,11 +9,14 @@ const modalStore = useModalsStore();
 // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
 onMounted(() => {
   formStore.resetInputErrors();
-  formStore.setEmail(''); 
+  formStore.setEmail("");
 });
 
-
 const handleSignUp = (email) => {
+  if (formStore.emailTouched) {
+    console.log('Veuillez entrer une adresse email ');
+  }
+
   // Prendre email comme argument
   modalStore.handleShowSignUp(email); // Passer email au store
   console.log(email);
@@ -33,10 +36,11 @@ watch(
 
 <template>
   <div id="ready">
-    <div class="input">
-      <div>
+    <div class="container">
+      <div class="input-container">
         <input
           v-model="formStore.email"
+          :class="{ 'error-input': formStore.emailError }"
           id="email"
           placeholder="Email Adress"
           @input="formStore.setEmail($event.target.value)"
@@ -44,63 +48,64 @@ watch(
           type="email"
           required
         />
+        <div>
+          <button
+            class="get-started-button"
+            @click="handleSignUp(formStore.email)"
+            :disabled="formStore.submitDisabledGetStarted"
+          >
+            GET STARTED &gt;
+          </button>
+        </div>
       </div>
-
-      <div>
-        <button
-          class="get-started-button"
-          @click="handleSignUp(formStore.email)"
-          :disabled="formStore.submitDisabledGetStarted"
+      <div class="errors-container">
+        <span
+          class="errors"
+          v-if="formStore.emailInvalid && formStore.email !== ''"
         >
-          GET STARTED &gt;
-        </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            role="img"
+            data-icon="CircleXSmall"
+            aria-hidden="true"
+            class="default-ltr-cache-0 e1vkmu651"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          Veuillez entrer une adresse email valide.
+        </span>
+
+        <span class="errors" v-if="formStore.responseMessageEmail">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            role="img"
+            data-icon="CircleXSmall"
+            aria-hidden="true"
+            class="default-ltr-cache-0 e1vkmu651"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          {{ formStore.responseMessageEmail }}
+        </span>
       </div>
-    </div>
-
-    <div class="errors">
-      <span class="errors" v-if="formStore.emailInvalid && formStore.email !== ''">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          role="img"
-          data-icon="CircleXSmall"
-          aria-hidden="true"
-          class="default-ltr-cache-0 e1vkmu651"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
-            fill="currentColor"
-          ></path>
-        </svg>
-        Please enter a valid email address.
-      </span>
-
-      <span class="errors" v-if="formStore.responseMessageEmail">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          role="img"
-          data-icon="CircleXSmall"
-          aria-hidden="true"
-          class="default-ltr-cache-0 e1vkmu651"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
-            fill="currentColor"
-          ></path>
-        </svg>
-        {{ formStore.responseMessageEmail }}
-      </span>
     </div>
   </div>
 </template>
@@ -111,42 +116,50 @@ watch(
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  width: 80%;
-  height: 50px;
-}
-
-.input {
   width: 100%;
-  height: 100%;
+  height: 70px;
+}
+.container {
+  display: grid;
+  flex-direction: column;
+  width: 100%;
+}
+.input-container {
+  width: 100%;
+  height: 50px;
   display: flex;
   color: white;
   justify-content: space-between;
-  margin-top: 2.5rem;
 }
-
-.errors {
+.errors-container {
   width: 100%;
-  height: 100%;
-  display: flex;
-  color: white;
-  justify-content: start;
+  height: 20px; /* Fixe la hauteur pour éviter le décalage */
 }
-
+.errors {
+  display: flex;
+  align-items: center; /* Centre verticalement les éléments */
+  justify-content: flex-start; /* Aligne les éléments à gauche */
+  color: red;
+  margin-top: 0.3rem;
+}
+svg {
+  margin: 0 0.7rem;
+}
 input {
   border: 1px solid grey;
   border-radius: 5px;
-  background-color: hwb(0 15% 85% / 0.783);
+  background-color: hsla(0, 0%, 20%, 0.397);
   color: white;
   padding: 10px;
   width: 100%;
   height: 100%;
 }
-
 input::placeholder {
   color: hsla(0, 0%, 75%, 0.938);
 }
-
+input.error-input::placeholder {
+  color: red;
+}
 button {
   margin-left: 7px;
   width: 150px;
@@ -157,7 +170,6 @@ button {
   cursor: pointer;
   border-radius: 5px;
 }
-
 .get-started-button:hover {
   background-color: #c11119;
 }
@@ -166,7 +178,6 @@ button {
   margin-top: 0.15rem;
   color: red;
 }
-
 .unavailable {
   color: red;
 }

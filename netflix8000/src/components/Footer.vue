@@ -18,13 +18,11 @@
 <style scoped>
 .footer {
   width: 100%;
-  z-index: 2;
   background-color: rgb(0, 0, 0);
   color: #f7f3f3;
   padding: 40px 0;
   text-align: center;
 }
-
 .telephone {
   color: rgba(255, 255, 255, 0.7);
   font-size: 1.3rem;

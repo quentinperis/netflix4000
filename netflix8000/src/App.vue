@@ -18,9 +18,6 @@ if (token) {
   authStore.checkAuthStatus();
 }
 
-// Propriété calculée pour déterminer la visibilité du pied de footer
-const showFooter = computed(() => route.name !== 'home' && route.name !== 'notFound');
-
 
 </script>
 
@@ -30,7 +27,7 @@ const showFooter = computed(() => route.name !== 'home' && route.name !== 'notFo
     <div class="content-container">
       <RouterView />
     </div>
-    <Footer v-show="showFooter" />
+    <Footer />
   </div>
 </template>
 
@@ -38,10 +35,10 @@ const showFooter = computed(() => route.name !== 'home' && route.name !== 'notFo
 .app-container {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .content-container {
   flex: 1;
-  position: relative;
 }
 </style>
