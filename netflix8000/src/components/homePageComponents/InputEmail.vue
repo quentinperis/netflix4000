@@ -13,10 +13,6 @@ onMounted(() => {
 });
 
 const handleSignUp = (email) => {
-  if (formStore.emailTouched) {
-    console.log('Veuillez entrer une adresse email ');
-  }
-
   // Prendre email comme argument
   modalStore.handleShowSignUp(email); // Passer email au store
   console.log(email);
@@ -49,12 +45,12 @@ watch(
           required
         />
         <div>
-          <button
+          <button 
             class="get-started-button"
             @click="handleSignUp(formStore.email)"
             :disabled="formStore.submitDisabledGetStarted"
           >
-            GET STARTED &gt;
+            Get Started &gt;
           </button>
         </div>
       </div>
@@ -123,10 +119,12 @@ watch(
   display: grid;
   flex-direction: column;
   width: 100%;
+  margin-top: 1em;
+  padding: 4em;
 }
 .input-container {
   width: 100%;
-  height: 50px;
+  height: 55px;
   display: flex;
   color: white;
   justify-content: space-between;
@@ -148,7 +146,7 @@ svg {
 input {
   border: 1px solid grey;
   border-radius: 5px;
-  background-color: hsla(0, 0%, 20%, 0.397);
+  background-color: hsla(0, 0%, 20%, 0.74);
   color: white;
   padding: 10px;
   width: 100%;
@@ -157,13 +155,14 @@ input {
 input::placeholder {
   color: hsla(0, 0%, 75%, 0.938);
 }
-input.error-input::placeholder {
-  color: red;
-}
+
 button {
   margin-left: 7px;
-  width: 150px;
+  width: 190px;
   height: 100%;
+  padding: 3px 15px;
+  font-size: 22px;
+  font-weight: 700;
   border: none;
   background-color: #de0e10;
   color: white;
@@ -172,6 +171,10 @@ button {
 }
 .get-started-button:hover {
   background-color: #c11119;
+}
+
+.get-started-button:disabled {
+  cursor: not-allowed;
 }
 
 .errors {

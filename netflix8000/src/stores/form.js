@@ -57,11 +57,6 @@ export const useFormStore = defineStore({
     submitDisabledGetStarted(state) {
       const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-      if (this.email.trim(0)) {
-        console.log("Veuillez entrer une adresse mail.")
-      }
-
-
       return (
         !regexpEmail.test(state.email) || // Vérifie si l'email est valide
         !state.emailTouched || 
