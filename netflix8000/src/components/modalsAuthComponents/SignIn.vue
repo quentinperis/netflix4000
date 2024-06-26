@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import router from "@/router";
-import axios from "axios";
+import { instance as axios } from "@/api/axios"; 
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 import { useFormStore } from "@/stores/form";
@@ -22,10 +22,12 @@ const handleSignUp = () => {
 // Méthode de soumission du formulaire
 const logIn = async () => {
   try {
-    const response = await axios.post("http://localhost:3000/auth/login", {
+    const payload = {
       email: formStore.email,
       password: formStore.password,
-    });
+    };
+
+    const response = await axios.post("/auth/login", payload);
 
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);

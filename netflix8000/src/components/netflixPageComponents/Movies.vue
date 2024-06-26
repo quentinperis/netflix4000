@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
-import axios from "axios";
 import ModalMovie from "@/components/netflixPageComponents/ModalMovie.vue";
+import { instance as axios } from "@/api/axios"; 
 
 const movies = ref([]);
 const selectedMovie = ref(null);
@@ -30,7 +30,7 @@ const filteredMovies = (category) => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get("http://localhost:3000/movies");
+    const res = await axios.get("/movies");
     if (res.status !== 200) return;
     res.data.forEach((m) => {
       movies.value.push({

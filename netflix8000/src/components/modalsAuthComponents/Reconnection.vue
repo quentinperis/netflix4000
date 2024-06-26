@@ -163,7 +163,7 @@ function toggleSpan() {
     </form>
     <br />
 
-    <span
+    <span class="text-recaptcha"
       >This page is protected by Google reCAPTCHA to ensure you're not a bot.
     </span>
     <span v-if="moreSpan" @click="toggleSpan" class="clickable"
@@ -195,6 +195,9 @@ function toggleSpan() {
 <style scoped>
 .error-message {
   color: red;
+}
+.text-recaptcha {
+  color: #636363;
 }
 
 a {

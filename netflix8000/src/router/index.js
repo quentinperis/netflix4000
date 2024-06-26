@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import PageNotFoundView from "../views/PageNotFoundView.vue";
 import { useAuthStore } from "@/stores/auth";
-import axios from "axios";
+import { instance as axios } from "@/api/axios"; 
 import { useModalsStore } from "@/stores/modals";
 
 const router = createRouter({
