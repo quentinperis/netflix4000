@@ -5,6 +5,7 @@ import { instance as axios } from "@/api/axios"; // Importer instance personnali
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 import { useFormStore } from "@/stores/form";
+import { Checkbox } from "vue-recaptcha";
 
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
@@ -122,7 +123,7 @@ const signUp = async () => {
         <input v-model="formStore.password" @input="formStore.setPassword($event.target.value)" id="password"
           placeholder="Password" type="password" required />
       </div>
-
+      <Checkbox class="check-box-recaptcha"/>
       <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp">
         Sign Up
       </button>
@@ -228,7 +229,8 @@ input {
 
 .btn {
   width: 100%;
-  padding: 0.9375rem;
+  padding: 1em;
+  margin-top: 1em;
   background-color: #de0e10;
   color: #fff;
   border: none;

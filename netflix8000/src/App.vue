@@ -1,18 +1,16 @@
 <script setup>
-import { RouterView, useRoute } from "vue-router";
+import { RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
-import axios from "axios";
+import { instance as axios } from "@/api/axios"; 
 import { useAuthStore } from "./stores/auth";
-import { computed } from "vue";
 import { useRecaptchaProvider } from 'vue-recaptcha'
 
 
 // Create a global head instance
-
 useRecaptchaProvider()
 const authStore = useAuthStore();
-const route = useRoute();
+
 
 // Quand le user est connecté : vérifier s'il existe un token lors du chargement de la page
 const token = localStorage.getItem("token");
@@ -22,7 +20,6 @@ if (token) {
   // Vérifier l'état de connexion de l'utilisateur
   authStore.checkAuthStatus();
 }
-
 
 </script>
 

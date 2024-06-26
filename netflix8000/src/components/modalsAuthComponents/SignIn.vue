@@ -1,10 +1,11 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import router from "@/router";
-import { instance as axios } from "@/api/axios"; 
+import { instance as axios } from "@/api/axios";
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 import { useFormStore } from "@/stores/form";
+import { Checkbox } from "vue-recaptcha";
 
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
@@ -104,7 +105,7 @@ function toggleSpan() {
       <span class="error-message" v-if="modalStore.errorMessage">
         {{ modalStore.errorMessage }}
       </span>
-
+      <Checkbox class="check-box-recaptcha"/>
       <button class="btn" type="submit" :disabled="formStore.submitDisabledSignIn">
         Sign In
       </button>
@@ -157,6 +158,10 @@ a {
   color: #636363;
 }
 
+.check-box-recaptcha {
+  cursor: pointer;
+}
+
 .clickable:hover {
   text-decoration: underline;
 }
@@ -197,7 +202,8 @@ input {
 
 .btn {
   width: 100%;
-  padding: 15px;
+  padding: 1em;
+  margin-top: 1em;
   background-color: #de0e10;
   color: #fff;
   border: none;

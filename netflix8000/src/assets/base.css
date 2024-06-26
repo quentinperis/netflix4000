@@ -1,5 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+:root {
+  --vc-clr-primary: #ffffff !important;
+  --vc-clr-secondary: #7e7e7e7f !important;
+  --vc-clr-white: #ffffff !important;
+  --vc-nav-width: 30px !important;
+  --vc-nav-height: 30px !important;
+  --vc-nav-border-radius: 50% !important; /* Exemple pour des boutons arrondis */
+  --vc-nav-color: var(--vc-clr-primary) !important;
+  --vc-nav-color-hover: var(--vc-clr-secondary) !important;
+  --vc-nav-background: transparent !important;
+  --vc-nav-background-hover: rgb(119, 119, 119) !important; /* Exemple pour fond au survol */
+  --vc-pgn-width: 12px !important;
+  --vc-pgn-height: 12px !important;
+  --vc-pgn-margin: 4px !important;
+  --vc-pgn-border-radius: 50% !important; /* Exemple pour des points arrondis */
+  --vc-pgn-background-color: var(--vc-clr-secondary) !important;
+  --vc-pgn-active-color: var(--vc-clr-primary) !important;
+}
 *,
 *::before,
 *::after {
@@ -34,3 +52,4 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
