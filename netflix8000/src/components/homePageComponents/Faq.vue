@@ -2,6 +2,7 @@
 import InputEmail from "@/components/homePageComponents/InputEmail.vue";
 import { ref } from "vue";
 
+
 const faqs = ref([
   {
     question: "What is Netflix?",
