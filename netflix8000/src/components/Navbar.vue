@@ -41,12 +41,7 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
     <div>
       <div>
         <RouterLink :to="!authStore.isLoggedIn ? '/' : '/netflix'">
-          <img
-            class="logo"
-            src="/image/Logonetflix.png"
-            alt="Image logo"
-            @click="handleShowHome"
-          />
+          <img class="logo" src="/image/Logonetflix.png" alt="Image logo" @click="handleShowHome" />
         </RouterLink>
       </div>
     </div>
@@ -61,12 +56,8 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
 
       <template v-else>
         <div class="dashboard-sign-in">
-          <button
-            id="signin-button"
-            class="btn"
-            @click="handleSignIn"
-            v-if="modalStore.showInput && !modalStore.reconnection"
-          >
+          <button id="signin-button" class="btn" @click="handleSignIn"
+            v-if="modalStore.showInput && !modalStore.reconnection">
             Sign In
           </button>
         </div>
@@ -85,8 +76,7 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  padding: 1rem 2rem 1rem 2rem;
-  /* background: linear-gradient(360deg, rgba(0, 0, 0, 0) 7%, hsl(0, 0%, 1%) 60%); */
+  padding: 1rem 15%;
 }
 
 .logo {
@@ -100,8 +90,10 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
 .btn {
   background-color: #de0510;
   color: white;
-  padding: 12px 17px;
+  padding: 8px 17px;
   border: none;
+  font-size: 1em;
+  font-weight: 700;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -117,5 +109,23 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
 
 .user-dashboard span {
   padding: 10px 30px 10px;
+}
+
+
+@media screen and (max-width: 1280px) {
+  .overlay {
+  padding: 1rem 5%;
+}
+}
+
+@media (max-width: 768px) {
+  .logo {
+    height: 31px;
+    width: 100px;
+  }
+  .overlay {
+  padding: 1rem 5%;
+}
+
 }
 </style>

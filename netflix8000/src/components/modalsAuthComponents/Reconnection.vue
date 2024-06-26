@@ -1,136 +1,82 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import router from "@/router";
-import axios from "axios";
+import { instance as axios } from "@/api/axios"; 
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
 import { useFormStore } from "@/stores/form";
-import { Checkbox } from "vue-recaptcha";
 
-const response = ref();
-
-const authStore = useAuthStore();
 const modalStore = useModalsStore();
+const authStore = useAuthStore();
 const formStore = useFormStore();
+
+onMounted(() => {
+  formStore.resetForm(); // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
+});
+
+// Méthode de soumission du formulaire
+const logIn = async () => {
+  try {
+    const payload = {
+      email: formStore.email,
+      password: formStore.password,
+    };
+
+    const response = await axios.post("/auth/login", payload);
+
+
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
+
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+
+      formStore.username = response.data.username; // Mettre à jour le nom d'utilisateur
+
+      // Appeler la méthode logIn de authStore avec le nom d'utilisateur récupéré
+      authStore.logIn(response.data.username);
+      // Rediriger vers la page /netflix
+      router.push({ name: "netflix" });
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      // Afficher le message d'erreur
+      modalStore.errorMessage = true;
+    } else {
+      console.error("Erreur lors de la connexion :", error);
+      modalStore.errorMessage =
+        "Une erreur s'est produite. Veuillez réessayer.";
+    }
+  }
+};
+
+const errorMessage = "Utilisateur ou mot de passe incorrect";
+
+// Réinitialiser le message d'erreur lors de la modification des champs email et mot de passe
+watch(
+  () => [formStore.email, formStore.password],
+  () => {
+    modalStore.resetErrorMessage();
+  }
+);
+
 const moreSpan = ref(true);
 
 function toggleSpan() {
   moreSpan.value = !moreSpan.value;
 }
-
-const handleSignIn = () => {
-  modalStore.handleShowSignIn();
-  window.scrollTo(0, 0); // Remonter en haut de la page après l'affichage de la modal
-};
-// ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
-onMounted(() => {
-  formStore.resetForm();
-});
-
-watch(
-  () => formStore.username,
-  (newUsername, oldUsername) => {
-    if (newUsername !== oldUsername) {
-      formStore.setUsername(newUsername);
-      formStore.checkUsernameAvailability();
-    }
-  }
-);
-watch(
-  () => formStore.email,
-  (newEmail, oldEmail) => {
-    if (newEmail !== oldEmail) {
-      formStore.setEmail(newEmail);
-      formStore.checkEmailAvailability();
-    }
-  }
-);
-// Méthode de soumission du formulaire
-const signUp = async () => {
-  try {
-    const response = await axios.post("http://localhost:3000/auth/signup", {
-      username: formStore.username,
-      email: formStore.email,
-      password: formStore.password,
-    });
-    if (response.data.token) {
-      localStorage.setItem("token", response.data.token);
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
-      authStore.signUp(response.data.username);
-      router.push({ name: "netflix" });
-    }
-  } catch (error) {
-    console.error("Erreur lors de l'inscription :", error);
-  }
-};
 </script>
 
 <template>
   <div class="modal">
     <div class="modal-header">
-      <h2>Sign Up</h2>
+      <h2>Your session has expired.</h2>
     </div>
-
-    <form @submit.prevent="signUp">
-      <div class="container">
-        <label for="username"></label>
-        <span
-          :class="{
-            available: formStore.responseMessageUsername === 'Disponible',
-            unavailable: formStore.responseMessageUsername !== 'Disponible',
-          }"
-        >
-          {{ formStore.responseMessageUsername }}
-        </span>
-
-        <span
-          :class="{
-            invalid: formStore.usernameInvalid,
-          }"
-          v-if="formStore.usernameInvalid"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            role="img"
-            data-icon="CircleXSmall"
-            aria-hidden="true"
-            class="default-ltr-cache-0 e1vkmu651"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
-              fill="currentColor"
-            ></path>
-          </svg>
-          Invalid username!
-        </span>
-        <input
-          v-model="formStore.username"
-          id="username"
-          placeholder="Enter your username"
-          @input="formStore.setUsername($event.target.value)"
-          @blur="formStore.checkUsernameAvailability"
-          type="text"
-          required
-        />
-      </div>
-
+    <form @submit.prevent="logIn">
       <div class="container">
         <label for="email"></label>
-
-        <span
-          :class="{
-            invalid: formStore.emailInvalid,
-          }"
-          v-if="formStore.emailInvalid"
-        >
+        <span :class="{ invalid: emailInvalid }" v-if="emailInvalid">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -149,24 +95,13 @@ const signUp = async () => {
               fill="currentColor"
             ></path>
           </svg>
-          Invalid email!
+          Please enter a valid email address.
         </span>
-
-        <span
-          :class="{
-            available: formStore.responseMessageEmail === 'Disponible',
-            unavailable: formStore.responseMessageEmail !== 'Disponible',
-          }"
-        >
-          {{ formStore.responseMessageEmail }}
-        </span>
-
         <input
           v-model="formStore.email"
           id="email"
           placeholder="Email Adress"
-          @input="formStore.setEmail($event.target.value)"
-          @blur="formStore.checkEmailAvailability"
+          @input="(formStore.setEmail($event.target.value)), modalStore.resetErrorMessage()"
           type="email"
           required
         />
@@ -174,12 +109,7 @@ const signUp = async () => {
 
       <div class="container">
         <label for="password"></label>
-        <span
-          :class="{
-            invalid: formStore.passwordInvalid,
-          }"
-          v-if="formStore.passwordInvalid && formStore.passwordTouched"
-        >
+        <span :class="{ invalid: passwordInvalid }" v-if="passwordInvalid">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -198,43 +128,45 @@ const signUp = async () => {
               fill="currentColor"
             ></path>
           </svg>
-          Please enter a password containing AT LEAST 1 number, 1 special
-          character, an uppercase letter, a lowercase letter and 8 characters.
-        </span>
-
-        <span
-          v-if="!formStore.passwordInvalid && formStore.passwordTouched"
-          class="success-message"
-        >
-          Good Doggo.
+          Please enter a valid password.
         </span>
         <input
           v-model="formStore.password"
-          @input="formStore.setPassword($event.target.value)"
+          @input="(formStore.setPassword($event.target.value)), modalStore.resetErrorMessage()"
           id="password"
           placeholder="Password"
           type="password"
           required
         />
       </div>
-      <Checkbox />
-
-      <button
-        class="btn"
-        type="submit"
-        :disabled="formStore.submitDisabledSignUp"
-      >
-        Sign Up
+      <span class="error-message" v-if="modalStore.errorMessage">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            role="img"
+            data-icon="CircleXSmall"
+            aria-hidden="true"
+            class="default-ltr-cache-0 e1vkmu651"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        {{ errorMessage}}
+      </span>
+      <button class="btn" type="submit" :disabled="submitDisabledSignIn">
+        Sign In
       </button>
     </form>
-    <div class="newto">
-      <p>
-        Already a user ?
-        <a @click="handleSignIn">sign In</a>
-      </p>
-    </div>
     <br />
-    <span
+
+    <span class="text-recaptcha"
       >This page is protected by Google reCAPTCHA to ensure you're not a bot.
     </span>
     <span v-if="moreSpan" @click="toggleSpan" class="clickable"
@@ -264,19 +196,15 @@ const signUp = async () => {
 </template>
 
 <style scoped>
+.error-message {
+  color: red;
+}
+.text-recaptcha {
+  color: #636363;
+}
+
 a {
   cursor: pointer;
-}
-
-.success-message {
-  color: rgb(176, 201, 67);
-  font-size: 1rem;
-  margin-top: 5px;
-}
-
-.success-message::before {
-  content: "\1F44D";
-  margin-right: 5px;
 }
 
 .clickable {
@@ -322,26 +250,13 @@ input {
   color: #fff;
 }
 
-.available {
-  color: green;
-}
-
-.unavailable {
-  color: red;
-}
-
-.invalid {
-  color: red;
-}
-
 .btn {
   width: 100%;
-  padding: 0.9375rem;
+  padding: 15px;
   background-color: #de0e10;
-  margin-top: 15px;
   color: #fff;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1.2rem;
   transition: background-color 0.3s ease;
@@ -356,10 +271,22 @@ input {
   cursor: not-allowed;
 }
 
+.available {
+  color: green;
+}
+
+.unavailable {
+  color: red;
+}
+
+.invalid {
+  color: red;
+}
+
 .newto {
   color: #fff;
   font-size: 0.9rem;
-  margin-top: 1.25rem;
+  margin-top: 20px;
 }
 
 a {
@@ -368,13 +295,21 @@ a {
   font-weight: bold;
 }
 
-@media only screen and (max-width: 48em) {
+@media only screen and (max-width: 768px) {
   .container {
     flex-direction: column;
   }
 
   .get-started-button {
-    margin-top: 0.625rem;
+    margin-top: 10px;
   }
+}
+
+form > button:is([disabled]) {
+  background-color: gray;
+}
+
+form > button:not([disabled]):hover {
+  cursor: pointer;
 }
 </style>

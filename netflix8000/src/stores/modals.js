@@ -9,15 +9,17 @@ export const useModalsStore = defineStore({
     showInput: true,
     reconnection: false,
     errorMessage: false,
+
+    signUpEmail: ""
   }),
 
   actions: {
-    handleShowSignUp() {
+    handleShowSignUp(email) { // Accepter email comme paramètre
       this.showSignUp = true;
       this.showSignIn = false;
       this.showInput = false;
+      this.signUpEmail = email; // Assigner email au state
     },
-
     handleShowSignIn() {
       this.showSignIn = true;
       this.showSignUp = false;
@@ -29,6 +31,8 @@ export const useModalsStore = defineStore({
       this.showSignIn = false;
       this.showSignUp = false;
       this.showInput = true;
+
+      this.signUpEmail = "";
     },
     resetErrorMessage() {
       this.errorMessage = false;

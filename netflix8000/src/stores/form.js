@@ -1,3 +1,5 @@
+
+// form.js
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -7,18 +9,14 @@ export const useFormStore = defineStore({
     username: "",
     email: "",
     password: "",
-
     emailTouched: false,
     usernameTouched: false,
     passwordTouched: false,
-
     emailUnavailable: false,
     usernameAvailable: false,
-
     responseMessageUsername: "",
     responseMessageEmail: "",
   }),
-
   getters: {
     passwordInvalid(state) {
       const passwordRegex =
@@ -56,6 +54,17 @@ export const useFormStore = defineStore({
         !state.emailTouched
       );
     },
+    submitDisabledGetStarted(state) {
+      const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+
+      return (
+        !regexpEmail.test(state.email) || // Vérifie si l'email est valide
+        !state.emailTouched || 
+        // Vérifie si l'email a été touché
+        state.responseMessageEmail === "Cet email est déjà pris" || // Vérifie le premier message d'erreur
+        state.responseMessageEmail === "Veuillez entrer une adresse email valide." // Vérifie le second message d'erreur
+      );
+    }, 
   },
   actions: {
     resetErrorMessage() {
@@ -103,9 +112,9 @@ export const useFormStore = defineStore({
           );
           this.emailUnavailable = !response.data.available;
           this.responseMessageEmail = ""; // Effacez le message avant de vérifier la disponibilité
-          if (!this.emailInvalid) {
-            this.responseMessageEmail = "Disponible";
-          }
+          // if (!this.emailInvalid) {
+          //   this.responseMessageEmail = "Disponible";
+          // }
         } catch (error) {
           this.responseMessageEmail =
             error.response && error.response.status === 400
@@ -116,21 +125,20 @@ export const useFormStore = defineStore({
         this.responseMessageEmail = "";
       }
     },
-
     resetForm() {
       this.username = "";
       this.email = "";
       this.password = "";
-
       this.emailTouched = false;
       this.usernameTouched = false;
       this.passwordTouched = false;
-
       this.emailUnavailable = false;
       this.usernameAvailable = false;
-
       this.responseMessageUsername = "";
       this.responseMessageEmail = "";
+    },
+    resetInputErrors() {
+      this.resetErrorMessage();
     },
   },
 });

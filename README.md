@@ -13,6 +13,7 @@
 - `npm i mongoose`
 - `npm i cors`
 - `npm i body-parser`
+- `npm install -g nodemon`
 - `nodemon app.js`
 
 3. **Ouvrir le terminal depuis netflix4000**

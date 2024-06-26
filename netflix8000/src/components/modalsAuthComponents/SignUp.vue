@@ -1,126 +1,140 @@
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import router from "@/router";
-import axios from "axios";
+import { instance as axios } from "@/api/axios"; // Importer instance personnalisée
 import { useAuthStore } from "@/stores/auth";
 import { useModalsStore } from "@/stores/modals";
+import { useFormStore } from "@/stores/form";
 
-const modalStore = useModalsStore();
 const authStore = useAuthStore();
+const modalStore = useModalsStore();
+const formStore = useFormStore();
+const moreSpan = ref(true);
 
-const username = ref("");
-const email = ref("");
-const emailTouched = ref(false);
-const password = ref("");
-const passwordTouched = ref(false);
+function toggleSpan() { moreSpan.value = !moreSpan.value };
 
-const passwordInvalid = computed(() => {
-  return password.value.trim() === "" && passwordTouched.value;
+// ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
+onMounted(() => {
+  formStore.resetForm();
+  formStore.setEmail(modalStore.signUpEmail); // Initialiser l'email du formulaire
 });
 
-const emailInvalid = computed(() => {
-  const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  return emailTouched.value && !regexpEmail.test(email.value);
-});
+const handleSignIn = () => {
+  modalStore.handleShowSignIn();
+  window.scrollTo(0, 0); // Remonter en haut de la page après l'affichage de la modal
+};
 
-const submitDisabled = computed(
-  () =>
-    password.value === "" ||
-    !passwordTouched.value ||
-    !emailTouched.value ||
-    !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.value)
+
+watch(() => formStore.username, (newUsername, oldUsername) => {
+  if (newUsername !== oldUsername) {
+    formStore.setUsername(newUsername);
+    formStore.checkUsernameAvailability();
+  }
+}
 );
-
+watch(
+  () => formStore.email, (newEmail, oldEmail) => {
+    if (newEmail !== oldEmail) {
+      formStore.setEmail(newEmail);
+      formStore.checkEmailAvailability();
+    }
+  }
+);
 // Méthode de soumission du formulaire
-const logIn = async () => {
+const signUp = async () => {
   try {
-    const response = await axios.post("http://localhost:3000/auth/login", {
-      email: email.value,
-      password: password.value,
-    });
+    const payload = {
+      username: formStore.username,
+      email: formStore.email,
+      password: formStore.password,
+    };
+    console.log("Payload envoyé :", payload);
 
+    const response = await axios.post("/auth/signup", payload);
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
-
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
-
-      username.value = response.data.username; // Mettre à jour le nom d'utilisateur
-
-      // Appeler la méthode logIn de votre magasin authStore avec le nom d'utilisateur récupéré
-      authStore.logIn(response.data.username);
-      // Rediriger vers la page /netflix
+      axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      authStore.signUp(response.data.username);
       router.push({ name: "netflix" });
     }
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      // Afficher le message d'erreur
-      modalStore.errorMessage = true;
-    } else {
-      console.error("Erreur lors de la connexion :", error);
-      modalStore.errorMessage = "Une erreur s'est produite. Veuillez réessayer.";
-    }
+    console.error("Erreur lors de l'inscription :", error);
   }
 };
 
-const errorMessage = "Utilisateur ou mot de passe incorrect";
-// Réinitialiser le message d'erreur lors de la modification des champs email et mot de passe
-watch([email, password], modalStore.resetErrorMessage());
-
-const moreSpan = ref(true)
-
-function toggleSpan() {
-  moreSpan.value = !moreSpan.value
-}
 </script>
 
 <template>
   <div class="modal">
     <div class="modal-header">
-      <h2>Your session has expired.</h2>
+      <h2>Sign Up</h2>
     </div>
-    <form @submit.prevent="logIn">
+
+    <form @submit.prevent="signUp">
       <div class="container">
-        <label for="email"></label>
+        <label for="username"></label>
         <span :class="{
-      invalid: emailInvalid,
-    }" v-if="emailInvalid">
+      available: formStore.responseMessageUsername === 'Disponible',
+      unavailable: formStore.responseMessageUsername !== 'Disponible',
+    }">
+          {{ formStore.responseMessageUsername }}
+        </span>
+
+        <span :class="{
+      invalid: formStore.usernameInvalid,
+    }" v-if="formStore.usernameInvalid">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img"
             data-icon="CircleXSmall" aria-hidden="true" class="default-ltr-cache-0 e1vkmu651">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
               fill="currentColor"></path>
-          </svg> Invalid email!
+          </svg>
+          Invalid username!
         </span>
-        <input v-model="email" id="email" placeholder="Email Adress"
-          @input="(emailTouched = true), modalStore.resetErrorMessage()" @change="emailTouched = true" type="email"
+        <input v-model="formStore.username" id="username" placeholder="Enter your username"
+          @input="formStore.setUsername($event.target.value)" @blur="formStore.checkUsernameAvailability" type="text"
           required />
+      </div>
+
+      <div class="container">
+        <label for="email"></label>
+        <input v-model="formStore.email" id="email" placeholder="Email Adress" type="email" required />
       </div>
 
       <div class="container">
         <label for="password"></label>
         <span :class="{
-      invalid: passwordInvalid,
-    }" v-if="passwordInvalid">
+      invalid: formStore.passwordInvalid,
+    }" v-if="formStore.passwordInvalid && formStore.passwordTouched">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img"
             data-icon="CircleXSmall" aria-hidden="true" class="default-ltr-cache-0 e1vkmu651">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM4.46967 5.53033L6.93934 8L4.46967 10.4697L5.53033 11.5303L8 9.06066L10.4697 11.5303L11.5303 10.4697L9.06066 8L11.5303 5.53033L10.4697 4.46967L8 6.93934L5.53033 4.46967L4.46967 5.53033Z"
               fill="currentColor"></path>
-          </svg> Invalid password!
+          </svg>
+          Please enter a password containing AT LEAST 1 number, 1 special
+          character, an uppercase letter, a lowercase letter and 8 characters.
         </span>
-        <input v-model="password" @input="(passwordTouched = true), modalStore.resetErrorMessage()"
-          @change="passwordTouched = true" id="password" placeholder="Password" type="password" required />
+
+        <span v-if="!formStore.passwordInvalid && formStore.passwordTouched" class="success-message">
+          Good Doggo.
+        </span>
+        <input v-model="formStore.password" @input="formStore.setPassword($event.target.value)" id="password"
+          placeholder="Password" type="password" required />
       </div>
-      <span class="error-message" v-if="modalStore.errorMessage">{{ errorMessage }}</span>
-      <button class="btn" type="submit" :disabled="submitDisabled">
-        Sign In
+
+      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp">
+        Sign Up
       </button>
     </form>
+    <div class="newto">
+      <p>
+        Already a user ?
+        <a @click="handleSignIn">sign In</a>
+      </p>
+    </div>
     <br />
-
-    <span>This page is protected by Google reCAPTCHA to ensure you're not a bot.
+    <span class="text-recaptcha">This page is protected by Google reCAPTCHA to ensure you're not a bot.
     </span>
     <span v-if="moreSpan" @click="toggleSpan" class="clickable">Learn more.</span>
     <span v-else>
@@ -138,12 +152,23 @@ function toggleSpan() {
 </template>
 
 <style scoped>
-.error-message {
-  color: red;
-}
-
 a {
   cursor: pointer;
+}
+
+.text-recaptcha {
+  color: #636363;
+}
+
+.success-message {
+  color: rgb(176, 201, 67);
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.success-message::before {
+  content: "\1F44D";
+  margin-right: 5px;
 }
 
 .clickable {
@@ -189,13 +214,25 @@ input {
   color: #fff;
 }
 
+.available {
+  color: green;
+}
+
+.unavailable {
+  color: red;
+}
+
+.invalid {
+  color: red;
+}
+
 .btn {
   width: 100%;
-  padding: 15px;
+  padding: 0.9375rem;
   background-color: #de0e10;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 1.2rem;
   transition: background-color 0.3s ease;
@@ -210,22 +247,10 @@ input {
   cursor: not-allowed;
 }
 
-.available {
-  color: green;
-}
-
-.unavailable {
-  color: red;
-}
-
-.invalid {
-  color: red;
-}
-
 .newto {
   color: #fff;
   font-size: 0.9rem;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 a {
@@ -234,21 +259,13 @@ a {
   font-weight: bold;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 48em) {
   .container {
     flex-direction: column;
   }
 
   .get-started-button {
-    margin-top: 10px;
+    margin-top: 0.625rem;
   }
-}
-
-form>button:is([disabled]) {
-  background-color: gray;
-}
-
-form>button:not([disabled]):hover {
-  cursor: pointer;
 }
 </style>
