@@ -20,13 +20,13 @@
   width: 100%;
   background-color: rgb(0, 0, 0);
   color: #f7f3f3;
-  padding: 40px 0;
+  padding: 7% 0;
   text-align: center;
 }
 .telephone {
   color: rgba(255, 255, 255, 0.7);
   font-size: 1.3rem;
-  margin: 1rem;
+  margin-bottom: 3rem;
 }
 
 .githubs a {

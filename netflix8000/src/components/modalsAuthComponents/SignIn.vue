@@ -114,9 +114,9 @@ function toggleSpan() {
       </p>
     </div>
     <br />
-    <span>
+    <span class="text-recaptcha">
       This page is protected by Google reCAPTCHA to ensure you're not a bot.
-    </span>
+    </span class="recaptcha">
     <span v-if="moreSpan" @click="toggleSpan" class="clickable">
       Learn more.
     </span>
@@ -149,6 +149,10 @@ a {
 .clickable {
   color: hsl(207, 77%, 38%);
   cursor: pointer;
+}
+
+.text-recaptcha {
+  color: #636363;
 }
 
 .clickable:hover {

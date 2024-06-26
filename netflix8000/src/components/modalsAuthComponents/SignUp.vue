@@ -186,7 +186,7 @@ const signUp = async () => {
       </p>
     </div>
     <br />
-    <span
+    <span class="text-recaptcha"
       >This page is protected by Google reCAPTCHA to ensure you're not a bot.
     </span>
     <span v-if="moreSpan" @click="toggleSpan" class="clickable"
@@ -218,6 +218,10 @@ const signUp = async () => {
 <style scoped>
 a {
   cursor: pointer;
+}
+
+.text-recaptcha {
+  color: #636363;
 }
 
 .success-message {

@@ -6,38 +6,41 @@ import Footer from "@/components/Footer.vue";
 </script>
 
 <template>
- <div class="container">
-   <main>
-    <div class="top">
-      <h1>Unlimited movies, TV shows and more.</h1>
-      <h2>Watch anywhere. Cancel at any time.</h2>
-      <p>
-        Ready to watch? Enter your email to create or restart your membership.
-      </p>
-      <InputEmail />
+  <div class="container">
+    <main>
+      <div class="top">
+        <h1>Unlimited movies, TV shows and more.</h1>
+        <h2>Watch anywhere. Cancel at any time.</h2>
+        <InputEmail />
+      </div>
+      <div class="mid"></div>
+    </main>
+    <div id="more">
+      <h1>More Reasons to Join</h1>
+      <div id="container">
+        <SvgHome />
+      </div>
     </div>
-    <div class="mid"></div>
-  </main>
-  <div id="more">
-    <h2>More Reasons to Join</h2>
-    <div id="container">
-      <SvgHome />
-    </div>
+    <hr>
+    <Faq />
+    <hr>
+    <Footer />
   </div>
-  <Faq />
-  <Footer />
- </div>
-    
- 
 </template>
 
 <style scoped>
+hr {
+  height: 8px;
+  background-color: rgb(38, 38, 38);
+  border: none;
+}
+
 .container {
   display: flex;
   justify-content: center;
   flex-direction: column;
-
 }
+
 main {
   position: relative;
   top: 0;
@@ -75,7 +78,6 @@ main {
   right: 0;
   bottom: 0;
   left: 0;
-  /* margin-top: -0.10rem; */
   border-radius: inherit;
   background: radial-gradient(50% 500% at 50% -420%,
       rgba(64, 97, 231, 0.4) 80%,
@@ -86,154 +88,150 @@ main {
 .top {
   width: 100%;
   height: 100%;
-  padding: 150px 550px;
+  padding: 220px 10% 150px 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   align-items: center;
-
-  >p {
-    color: hsl(0, 0%, 98%);
-  }
-}
-
-.top h1 {
-  color: white;
-  font-size: 4rem;
-  font-weight: 900;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-
-.top h2 {
-  color: white;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  margin-bottom: 20px;
 }
 
 .top p {
   color: white;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 1.45em;
 }
 
-.top button {
-  background-color: #de0510;
+.top h1 {
   color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
+  font-size: 3.2rem;
+  font-weight: 900;
+  margin-bottom: 0.15em;
 }
 
-#signin-button {
-  height: 40px;
-  width: 70px;
-  background-color: #de0510;
+.top h2 {
   color: white;
-  z-index: 999;
-  border: none;
-  border-radius: 3px;
-  position: absolute;
-  top: 25px;
-  right: 75px;
-  cursor: pointer;
+  font-size: 1.75em;
+  margin-bottom: 20px;
 }
 
 #more {
   font-size: 1.1rem;
   color: hsl(0, 0%, 98%);
   background-color: black;
-  padding: 20px 120px;
+  padding: 1em 15% 5em 15%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   width: 100%;
+}
 
-  >h2 {
-    margin: 10px 0;
-    font-weight: 500;
-  }
+#more h1 {
+  color: white;
+  font-size: 2.9rem;
+  font-weight: 900;
+  margin-bottom: 0.4em;
+  text-align: center;
 }
 
 #container {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
 @media screen and (max-width: 1780px) {
   .top {
-    padding: 150px 400px;
+    padding: 130px 10%;
   }
 }
 
 @media screen and (max-width: 1400px) {
   .top {
-    padding: 150px 350px;
+    padding: 150px 8%;
   }
 }
 
 @media screen and (max-width: 1280px) {
   #more {
-    padding: 20px 70px;
+    padding: 1em 5% 5em 5%;
   }
 
   #container {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
   .top {
-    padding: 150px 250px;
+    padding: 150px 5%;
 
-    >h1 {
-      font-size: 2.5rem;
+    h1 {
+      font-size: 2.85rem;
     }
   }
 }
 
 @media screen and (max-width: 960px) {
   #more {
-    padding: 20px 30px;
+    padding: 1em 5% 5em 5%;
+    width: 100%;
+    box-sizing: border-box;
   }
+
 
   #container {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
     gap: 10px;
   }
 
   .top {
-    padding: 150px 100px;
+    padding: 150px 3%;
 
-    >h1 {
+    h1 {
       font-size: 2rem;
     }
   }
 }
 
-@media screen and (max-width: 425px) {
-  #more {
-    padding: 20px 30px;
+@media screen and (max-width: 768px) {
+
+  .top {
+    padding: 150px 5%;
   }
 
-  #container {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 10px;
+  #more {
+    padding: 1em 5% 5em 5%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #more h1 {
+    color: white;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.4em;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  #more {
+    padding: 0 5%;
   }
 
   .top {
-    padding: 150px 20px;
+    padding: 120px 2%;
 
-    >h1 {
+    h1 {
       font-size: 2rem;
+      line-height: 1.2;
+      margin-bottom: 0.5em;
+    }
+
+    h2 {
+      font-size: 1.35em;
+      padding-bottom: 1em;
     }
   }
 }

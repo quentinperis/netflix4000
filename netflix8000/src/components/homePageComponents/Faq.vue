@@ -36,7 +36,7 @@ const togglePanel = (index) => {
 <template>
   <div class="faq">
     <div class="faq-container">
-      <h2 id="title-faq">Frequently Asked Questions</h2>
+      <h1>Frequently Asked Questions</h1>
       <ul>
         <!-- Boucle sur les questions et réponses -->
         <li v-for="(faq, index) in faqs" :key="index">
@@ -49,7 +49,7 @@ const togglePanel = (index) => {
               <p v-else class="plus">+</p>
             </button>
           </div>
-          
+
           <!-- Affichage de la réponse correspondante si le panneau est ouvert -->
           <div v-if="toggle === index" class="panel">
             <p>{{ faq.answer }}</p>
@@ -57,7 +57,6 @@ const togglePanel = (index) => {
         </li>
       </ul>
     </div>
-    <p>Ready to watch? Enter your email to create or restart your membership.</p>
     <InputEmail />
   </div>
 </template>
@@ -86,9 +85,17 @@ ul,
 }
 
 .faq-container {
-  width: 80%;
+  width: 100%;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+h1 {
+  font-size: 2.9rem;
+  font-weight: 900;
+  color: hsl(0, 0%, 95%);
+  text-align: center;
+  margin-bottom: 0.4em;
 }
 
 h2 {
@@ -97,25 +104,26 @@ h2 {
   color: hsl(0, 0%, 95%);
 }
 
-#title-faq {
-  margin-bottom: 10px;
-}
+
 
 .button-faq {
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 1em 2em;
   background-color: transparent;
   color: hsl(0, 0%, 95%);
   border: none;
 }
+
 .panel {
   background-color: hsl(0, 0%, 20%);
   overflow: hidden;
   margin-bottom: 5px;
   margin-top: 1px;
-  > p {
+
+  >p {
     padding: 25px;
     font-size: 1.2rem;
     color: hsl(0, 0%, 95%);
@@ -127,6 +135,7 @@ li {
   transition: background-color 200ms ease 200ms;
   margin-bottom: 8px;
 }
+
 #li-bot {
   margin-bottom: 55px;
 }
@@ -137,31 +146,37 @@ li {
   display: inline-block;
   cursor: pointer;
 }
+
 .faq {
   display: flex;
   width: 100%;
-  padding: 0 120px;
+  padding: 0 15%;
+
   flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: center;
   background-color: black;
-  padding-bottom: 100px;
-  > p {
-    color: hsl(0, 0%, 98%);
-  }
-}
-@media screen and (max-width: 1280px) {
-  .faq {
-    padding: 0 75px;
-  }
-}
-@media screen and (max-width: 960px) {
-  .faq {
-    padding: 0px 30px;
-  }
-  .faq-container {
-  width: 100%;
-}
 }
 
+@media screen and (max-width: 1280px) {
+  .faq {
+    padding: 0 5%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .faq {
+    padding: 5%;
+  }
+
+  .faq-container {
+    width: 100%;
+  }
+  h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5em;
+}
+}
 </style>
