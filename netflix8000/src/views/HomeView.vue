@@ -35,13 +35,15 @@ onMounted(() => {
 .container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .back {
   background-color: black;
   width: 100%;
   position: relative;
-  flex: 1; /* Take up available space */
+  flex: 1;
+  /* Take up available space */
   display: flex;
   flex-direction: column;
 }
@@ -67,16 +69,13 @@ onMounted(() => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.63) 19%,
-    rgba(0, 0, 0, 0.24) 56%,
-    rgba(0, 0, 0, 0.715) 80%
-  );
+  background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.63) 19%,
+      rgba(0, 0, 0, 0.24) 56%,
+      rgba(0, 0, 0, 0.715) 80%);
 }
 
 .modal {
   z-index: 3;
 }
-
 </style>

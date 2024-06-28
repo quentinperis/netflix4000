@@ -180,4 +180,20 @@ h2 {
   font-size: 1.5em;
 }
 }
+
+@media screen and (max-width: 768px) {
+  .faq {
+    padding: 5%;
+  }
+
+  .faq-container {
+    width: 100%;
+  }
+  h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.2rem;
+}
+}
 </style>

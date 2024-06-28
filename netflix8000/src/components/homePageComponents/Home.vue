@@ -217,7 +217,7 @@ main {
 
 @media screen and (max-width: 425px) {
   #more {
-    padding: 0 5%;
+    padding: 1em 5% 5em 5%;
   }
 
   .top {

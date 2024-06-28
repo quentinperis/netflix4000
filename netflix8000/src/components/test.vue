@@ -177,8 +177,7 @@ const selectedMovie = ref(null);
       prevSlide,
       nextSlide,
     };
-  },
-});
+
 </script>
 
 <style scoped>

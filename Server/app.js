@@ -1,11 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cors = require('cors'); 
+const cors = require('cors');
+require("dotenv").config(); 
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const uriMongoDb = process.env.MONGODB_URI;
 
 // Importation du contrôleur movieController
 const movieController = require("./src/controller/movieController");
@@ -17,7 +19,7 @@ const movieRouter = require("./src/routes/moviesRoutes");
 
 //-------------------CONNECTION BDD----------------------//
 
-mongoose.connect("mongodb://localhost:27017/movies_db");
+mongoose.connect(uriMongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Erreur de connexion à MongoBD"));
 db.once("open", () => {

@@ -10,7 +10,11 @@
   --vc-nav-color: var(--vc-clr-primary) !important;
   --vc-nav-color-hover: var(--vc-clr-secondary) !important;
   --vc-nav-background: transparent !important;
-  --vc-nav-background-hover: rgb(119, 119, 119) !important; /* Exemple pour fond au survol */
+  --vc-nav-background-hover: rgb(
+    119,
+    119,
+    119
+  ) !important; /* Exemple pour fond au survol */
   --vc-pgn-width: 12px !important;
   --vc-pgn-height: 12px !important;
   --vc-pgn-margin: 4px !important;
@@ -27,29 +31,19 @@
 }
 
 body {
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   color: var(--color-text);
   background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
