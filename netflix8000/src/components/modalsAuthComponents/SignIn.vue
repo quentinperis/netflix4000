@@ -10,16 +10,15 @@ import { Checkbox } from "vue-recaptcha";
 const authStore = useAuthStore();
 const modalStore = useModalsStore();
 const formStore = useFormStore();
+const recaptchaChecked = ref(false);
 
 onMounted(() => {
   formStore.resetForm(); // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
 });
-
 const handleSignUp = () => {
   modalStore.handleShowSignUp();
   window.scrollTo(0, 0); // Remonter en haut de la page après l'affichage de la modal
 };
-
 // Méthode de soumission du formulaire
 const logIn = async () => {
   try {
@@ -27,15 +26,17 @@ const logIn = async () => {
       email: formStore.email,
       password: formStore.password,
     };
+    // un log pour afficher l'URL exacte de la requête POST
+    console.log('URL de la requête POST:', `${import.meta.env.VITE_API_BASE_URL}/auth/login`);
 
-    const response = await axios.post("/auth/login", payload);
+    const response = await axios.post('/auth/login', payload); 
+    // Utilisation de l'instance personnalisée
+    console.log('Réponse de connexion :', response.data);
 
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
 
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
 
       formStore.username = response.data.username; // Mettre à jour le nom d'utilisateur
       authStore.logIn(response.data.username);
@@ -51,7 +52,6 @@ const logIn = async () => {
     }
   }
 };
-
 // Réinitialiser le message d'erreur lors de la modification des champs email et mot de passe
 watch(
   () => [formStore.email, formStore.password],
@@ -105,8 +105,8 @@ function toggleSpan() {
       <span class="error-message" v-if="modalStore.errorMessage">
         {{ modalStore.errorMessage }}
       </span>
-      <Checkbox class="check-box-recaptcha"/>
-      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignIn">
+      <Checkbox class="check-box-recaptcha" v-model="recaptchaChecked" />
+      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp || !recaptchaChecked">
         Sign In
       </button>
     </form>

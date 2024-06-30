@@ -10,6 +10,7 @@ import { Checkbox } from "vue-recaptcha";
 const modalStore = useModalsStore();
 const authStore = useAuthStore();
 const formStore = useFormStore();
+const recaptchaChecked = ref(false);
 
 onMounted(() => {
   formStore.resetForm(); // ❗️ Réinitialiser les champs et les messages lorsque le composant est monté
@@ -114,8 +115,8 @@ function toggleSpan() {
         </svg>
         {{ errorMessage }}
       </span>
-      <Checkbox class="check-box-recaptcha"/>
-      <button class="btn" type="submit" :disabled="submitDisabledSignIn">
+      <Checkbox class="check-box-recaptcha" v-model="recaptchaChecked" />
+      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp || !recaptchaChecked">
         Sign In
       </button>
     </form>

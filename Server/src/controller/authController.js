@@ -5,45 +5,34 @@ const { secretKey } = require("../middlewares/authentication");
 require("dotenv").config();
 
 const authController = {
+
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
       console.log("Données reçues pour connexion :", req.body);
 
       const user = await User.findOne({ email });
-      if (!user) {
-        console.log("Not User: ", !user);
-        return res.status(401).json({
-          message: "Utilisateur ou mot de passe incorrect",
-        });
+      if (!user) { console.log("Not User: ", !user);
+        return res.status(401).json({ message: "Utilisateur ou mot de passe incorrect",});
       }
-
       console.log("Données de l'utilisateur :", req.body);
-
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
         return res
           .status(401)
           .json({ message: "Utilisateur ou mot de passe incorrect" });
       }
-
-      const token = jwt.sign({ userId: user.id }, secretKey, {
-        expiresIn: "1800s",
-      });
-
+      const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "1800s",});
       res.status(200).json({ token, username: user.username });
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       res.status(500).json({ error: error.message });
     }
   },
-
   signup: async (req, res) => {
     try {
       const { username, email, password } = req.body;
-
       console.log("Données reçues pour l'inscription :", req.body);
-
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new User({
         username: username,
@@ -51,14 +40,10 @@ const authController = {
         password: hashedPassword,
         role: "user", // Définit le rôle par défaut comme "user"
       });
-
-      // Enregistre le nouvel utilisateur dans la base de données
       await newUser.save();
       console.log("Utilisateur ajouté avec succès !");
-
-      // Appel de la méthode login pour récupérer les données de l'utilisateur
+      // Récupérer les données de l'utilisateur
       const userData = await authController.login(req, res);
-
       // Envoie une réponse avec les données de l'utilisateur
       res.status(201).json(userData);
     } catch (error) {
@@ -73,31 +58,22 @@ const authController = {
       }
     }
   },
-
   checkUsername: async (req, res) => {
     try {
       const user = await User.findOne({ username: req.params.username });
-
       if (user) {
         console.log("Ce nom d'utilisateur est déjà pris");
-        return res
-          .status(400)
-          .json({ error: "Ce nom d'utilisateur est déjà pris" });
+        return res.status(400).json({ error: "Ce nom d'utilisateur est déjà pris" });
       }
-
       if (user) {
         console.log("Nom d'utilisateur trouvé :", user.username);
         return res.json({ username: user.username });
       }
-
       res.json({ available: true });
     } catch (error) {
-      res.status(500).json({
-        error: "Une erreur s'est produite lors de la vérification de username.",
-      });
+      res.status(500).json({ error: "Une erreur s'est produite lors de la vérification de username." });
     }
   },
-
   checkEmail: async (req, res) => {
     try {
       const user = await User.findOne({ email: req.params.email });
@@ -107,38 +83,22 @@ const authController = {
       }
       res.json({ available: true });
     } catch (error) {
-      console.error(
-        "Une erreur s'est produite lors de la vérification de l'email :",
-        error
-      );
-      res.status(500).json({
-        error: "Une erreur s'est produite lors de la vérification de l'email.",
-      });
+      console.error("Une erreur s'est produite lors de la vérification de l'email :",error);
+      res.status(500).json({error: "Une erreur s'est produite lors de la vérification de l'email."});
     }
   },
-
   getUserDetails: async (req, res) => {
     try {
       // L'ID de l'utilisateur est extrait du token JWT vérifié
       const userId = req.auth.userId;
-
-      // Utilisez l'ID de l'utilisateur pour obtenir les détails de l'utilisateur depuis la base de données
+      // Utilisez l'ID de l'utilisateur pour obtenir les détails depuis la bdd
       const user = await User.findById(userId);
-
-      if (!user) {
-        return res.status(404).json({ message: "Utilisateur non trouvé" });
-      }
-
+      if (!user) { return res.status(404).json({ message: "Utilisateur non trouvé" })}
       // Renvoyer les détails de l'utilisateur en réponse
       res.status(200).json({ username: user.username });
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des détails de l'utilisateur :",
-        error
-      );
-      res.status(500).json({
-        error: "Erreur lors de la récupération des détails de l'utilisateur",
-      });
+      console.error("Erreur lors de la récupération des détails de l'utilisateur :", error);
+      res.status(500).json({error: "Erreur lors de la récupération des détails de l'utilisateur",});
     }
   },
 };

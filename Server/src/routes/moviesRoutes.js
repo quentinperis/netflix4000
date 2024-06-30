@@ -9,11 +9,8 @@ router.use(express.static("data"));
 
 // Middleware pour restreindre l'accès aux routes de films
 router.use(isAuthenticated); 
-
 router.get("/movies", movieController.getAllMovies);
-
 router.get("/:id", movieController.getMovie);
-
 router.get("*", movieController.parDefautPage);
 
 module.exports = router;

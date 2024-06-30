@@ -26,14 +26,13 @@ const router = createRouter({
   ],
 });
 
+// Fonction exécutée avant chaque navigation
 router.beforeEach(async (to, from) => {
   const authStore = useAuthStore();
-
-  // Пользователь авторизован && ❗️ Избежать бесконечного перенаправления
-  if (authStore.isLoggedIn && to.name !== "netflix") {
-    return { name: "netflix" }; // перенаправить авторизированного пользователя на страницу Netflix
+  // l'utilisateur est connecté && ❗️ Éviter les boucles de redirection infinies
+  if (authStore.isLoggedIn && to.name === "home") {
+    return { name: "netflix" }; //  Redirection de l'utilisateur connecté à la page Netflix
   }
-
 });
 
 axios.interceptors.response.use(

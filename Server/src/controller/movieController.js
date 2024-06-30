@@ -1,4 +1,7 @@
 const Movie = require("../models/Movie");
+require('dotenv').config();
+
+const BASE_URL = process.env.BASE_URL;
 
 const movieController = {
   addMovies: async (req, res) => {
@@ -41,9 +44,8 @@ const movieController = {
     try {
       const movies = await Movie.find();
       for (const movie of movies) {
-        movie.imagePath = `http://localhost:3000/images/${movie.name}.png`;
+        movie.imagePath = `${BASE_URL}/images/${movie.name}.png`;
         await movie.save();
-        // console.log(`Chemin de l'image mis à jour pour ${movie.name}`);
       }
       console.log(
         "Tous les chemins d'images ont été mis à jour avec succès :)"
@@ -60,16 +62,15 @@ const movieController = {
     try {
       const videos = await Movie.find();
       for (const video of videos) {
-        video.videoPath = `http://localhost:3000/videos/${video.name}.mp4`;
+        video.videoPath = `${BASE_URL}/videos/${video.name}.mp4`;
         await video.save();
-        // console.log(`Chemin de la video mis à jour pour ${video.name}`);
       }
       console.log(
         "Tous les chemins d'a video ont été mis à jour avec succès :)"
       );
     } catch (error) {
       console.error(
-        "Erreur lors de la mise à jour des chemins dla video :",
+        "Erreur lors de la mise à jour des chemins de la video :",
         error
       );
     }

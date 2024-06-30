@@ -3,21 +3,18 @@ import Home from "@/components/homePageComponents/Home.vue";
 import Reconnection from "@/components/modalsAuthComponents/Reconnection.vue";
 import SignUp from "@/components/modalsAuthComponents/SignUp.vue";
 import SignIn from "@/components/modalsAuthComponents/SignIn.vue";
-
 import { onMounted } from "vue";
-
 import { useModalsStore } from "@/stores/modals";
 
 const modalStore = useModalsStore();
-
 onMounted(() => {
   window.scrollTo(0, 0);
 });
 </script>
 
 <template>
-  <div class="container">
-    <div class="back">
+  <main class="container">
+    <section class="back">
       <div class="overlay">
         <Home class="modal" v-if="modalStore.showInput && !modalStore.reconnection" />
         <Reconnection v-if="modalStore.reconnection" />
@@ -26,9 +23,8 @@ onMounted(() => {
       </div>
       <img class="background-image" src="/image/background-netflix.jpg" alt="netflix" />
       <div class="shadow"></div>
-    </div>
-
-  </div>
+    </section>
+  </main>
 </template>
 
 <style scoped>

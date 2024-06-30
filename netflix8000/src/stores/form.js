@@ -1,7 +1,5 @@
-
-// form.js
 import { defineStore } from "pinia";
-import axios from "axios";
+import { instance as axios } from "@/api/axios";
 
 export const useFormStore = defineStore({
   id: "form",
@@ -17,6 +15,7 @@ export const useFormStore = defineStore({
     responseMessageUsername: "",
     responseMessageEmail: "",
   }),
+
   getters: {
     passwordInvalid(state) {
       const passwordRegex =
@@ -58,11 +57,10 @@ export const useFormStore = defineStore({
       const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
       return (
-        !regexpEmail.test(state.email) || // Vérifie si l'email est valide
-        !state.emailTouched || 
-        // Vérifie si l'email a été touché
-        state.responseMessageEmail === "Cet email est déjà pris" || // Vérifie le premier message d'erreur
-        state.responseMessageEmail === "Veuillez entrer une adresse email valide." // Vérifie le second message d'erreur
+        !regexpEmail.test(state.email) ||
+        !state.emailTouched ||
+        state.responseMessageEmail === "This email is already taken." ||
+        state.responseMessageEmail === "An error occurred while checking the email."
       );
     }, 
   },
@@ -89,16 +87,14 @@ export const useFormStore = defineStore({
     async checkUsernameAvailability() {
       if (this.username.trim() !== "") {
         try {
-          const response = await axios.get(
-            `http://localhost:3000/auth/check-username/${this.username}`
-          );
+          const response = await axios.get(`/auth/check-username/${this.username}`);
           this.usernameAvailable = response.data.available;
-          this.responseMessageUsername = "Disponible";
+          this.responseMessageUsername = "Available";
         } catch (error) {
           this.responseMessageUsername =
             error.response && error.response.status === 400
-              ? "Ce nom d'utilisateur est déjà pris"
-              : "Une erreur s'est produite lors de la vérification du nom d'utilisateur.";
+            ? "This username is already taken."
+            : "An error occurred while checking the username.";
         }
       } else {
         this.responseMessageUsername = "";
@@ -107,19 +103,18 @@ export const useFormStore = defineStore({
     async checkEmailAvailability() {
       if (this.email.trim() !== "") {
         try {
-          const response = await axios.get(
-            `http://localhost:3000/auth/check-email/${this.email}`
-          );
+          const response = await axios.get(`/auth/check-email/${this.email}`);
           this.emailUnavailable = !response.data.available;
-          this.responseMessageEmail = ""; // Effacez le message avant de vérifier la disponibilité
-          // if (!this.emailInvalid) {
-          //   this.responseMessageEmail = "Disponible";
-          // }
+          if (!response.data.available) {
+            this.responseMessageEmail = "This email is already taken.";
+          } else {
+            this.responseMessageEmail = "";
+          }
         } catch (error) {
           this.responseMessageEmail =
             error.response && error.response.status === 400
-              ? "Cet email est déjà pris"
-              : "Une erreur s'est produite lors de la vérification de l'email.";
+              ? "This email is already taken."
+              : "An error occurred while checking the email.";
         }
       } else {
         this.responseMessageEmail = "";

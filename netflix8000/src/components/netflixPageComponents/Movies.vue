@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { instance as axios } from "@/api/axios"; 
+import { instance as axios } from "@/api/axios";
 import ModalMovie from "@/components/netflixPageComponents/ModalMovie.vue";
 import { Carousel, Navigation, Pagination, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
@@ -19,9 +19,8 @@ const carouselSettings = {
 const categories = computed(() => {
   const uniqueCategories = new Set();
   movies.value.forEach((m) => {
-    if (m.genre && m.genre.one) uniqueCategories.add(m.genre.one);
-    if (m.genre && m.genre.two) uniqueCategories.add(m.genre.two);
-    if (m.genre && m.genre.three) uniqueCategories.add(m.genre.three);
+    m.genre.forEach((g) => uniqueCategories.add(g));
+// nouveau modèle de données avec un tableau de genres
   });
   return Array.from(uniqueCategories);
 });
@@ -29,11 +28,8 @@ const categories = computed(() => {
 // Filtrer les films par catégorie
 const filteredMovies = (category) => {
   return movies.value.filter((m) => {
-    return (
-      m.genre.one === category ||
-      m.genre.two === category ||
-      m.genre.three === category
-    );
+    return m.genre.includes(category);
+// nouveau modèle de données avec un tableau de genres
   });
 };
 
@@ -63,15 +59,13 @@ onMounted(async () => {
   try {
     const res = await axios.get("/movies");
     if (res.status !== 200) return;
-    res.data.forEach((m) => {
-      movies.value.push({
-        id: m._id,
-        imagePath: m.imagePath,
-        genre: m.genre,
-      });
-    });
+    movies.value = res.data.map((m) => ({
+      id: m._id,
+      imagePath: m.imagePath,
+      genre: m.genre, 
+    }));
   } catch (error) {
-    console.error(error);
+    console.error("Une erreur s'est produite lors de la récupération des films :", error);
   }
 });
 </script>
@@ -84,33 +78,22 @@ onMounted(async () => {
 
       <!-- Carrousel avec navigation -->
       <div class="carousel-wrapper">
-        <Carousel
-          v-bind="settings"
-          :settings="carouselSettings"
-          :wrap-around="true"
-          :items-to-show="6"
-          :transition="500"
-          :ref="`carousel_${category}`"
-        >
+        <Carousel v-bind="settings" :settings="carouselSettings" :wrap-around="true" :items-to-show="6"
+          :transition="500" :ref="`carousel_${category}`">
           <!-- Parcourir les films filtrés par catégorie -->
           <Slide v-for="m in filteredMovies(category)" :key="m.id">
             <div class="carousel__item">
-              <img
-                :src="m.imagePath"
-                :alt="m.name"
-                @click="openModal(m)"
-                class="movie__image"
-              />
+              <img :src="m.imagePath" :alt="m.name" @click="openModal(m)" class="movie__image" />
             </div>
           </Slide>
 
           <!-- Navigation -->
           <template #addons>
-            <Navigation/>
+            <Navigation />
             <Pagination />
           </template>
 
-<!--   
+          <!--   
           <template #prev="{ prev }">
             <button @click="prev()" class="carousel__prev">Précédent</button>
           </template>
@@ -133,9 +116,11 @@ main {
   background-color: hsl(0, 0%, 1%);
   padding: 1px 20px;
 }
+
 .container {
   padding-bottom: 2em;
 }
+
 h2 {
   margin-bottom: 20px;
   color: rgb(254, 254, 254);
@@ -150,9 +135,12 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  > img {
-    width: 215px; /* Images à pleine largeur */
-    height: 121px; /* Maintient le ratio d'aspect */
+
+  >img {
+    width: 215px;
+    /* Images à pleine largeur */
+    height: 121px;
+    /* Maintient le ratio d'aspect */
     border-radius: 8px;
     cursor: pointer;
   }
@@ -177,7 +165,8 @@ h2 {
 @media screen and (max-width: 480px) {
   .carousel__item {
     margin: 0 5px;
-    > img {
+
+    >img {
       width: 215px;
       height: 121px;
       max-width: 90vw;
@@ -198,9 +187,11 @@ h2 {
   .category__title {
     margin-bottom: -60px;
   }
+
   .carousel__item {
     margin: 0 5px;
-    > img {
+
+    >img {
       width: 122px;
       height: 60px;
       max-width: 80vw;
@@ -213,7 +204,8 @@ h2 {
 @media screen and (min-width: 769px) {
   .carousel__item {
     margin: 0 5px;
-    > img {
+
+    >img {
       width: 215px;
       height: 121px;
       max-width: 100%;
@@ -226,40 +218,54 @@ h2 {
 
 /* Personnalisation des boutons de navigation */
 .carousel__navigation-button {
-  background-color: var(--vc-nav-background); /* Couleur de fond */
-  color: var(--vc-nav-color); /* Couleur de l'icône */
-  width: var(--vc-nav-width); /* Largeur */
-  height: var(--vc-nav-height); /* Hauteur */
-  border-radius: var(--vc-nav-border-radius); /* Rayon des bords */
+  background-color: var(--vc-nav-background);
+  /* Couleur de fond */
+  color: var(--vc-nav-color);
+  /* Couleur de l'icône */
+  width: var(--vc-nav-width);
+  /* Largeur */
+  height: var(--vc-nav-height);
+  /* Hauteur */
+  border-radius: var(--vc-nav-border-radius);
+  /* Rayon des bords */
   transition: color 0.3s, background-color 0.3s;
 }
 
 .carousel__navigation-button:hover {
-  background-color: var(--vc-nav-background-hover); /* Couleur de fond au survol */
-  color: var(--vc-nav-color-hover); /* Couleur de l'icône au survol */
+  background-color: var(--vc-nav-background-hover);
+  /* Couleur de fond au survol */
+  color: var(--vc-nav-color-hover);
+  /* Couleur de l'icône au survol */
 }
 
 /* Personnalisation des points de pagination */
 .carousel__pagination-button {
-  background-color: var(--vc-pgn-background-color); /* Couleur du point */
-  width: var(--vc-pgn-width); /* Largeur du point */
-  height: var(--vc-pgn-height); /* Hauteur du point */
-  margin: var(--vc-pgn-margin); /* Marge du point */
-  border-radius: var(--vc-pgn-border-radius); /* Rayon des bords du point */
+  background-color: var(--vc-pgn-background-color);
+  /* Couleur du point */
+  width: var(--vc-pgn-width);
+  /* Largeur du point */
+  height: var(--vc-pgn-height);
+  /* Hauteur du point */
+  margin: var(--vc-pgn-margin);
+  /* Marge du point */
+  border-radius: var(--vc-pgn-border-radius);
+  /* Rayon des bords du point */
   transition: background-color 0.3s;
 }
 
 svg .carousel__pagination-button--active {
-  background-color: var(--vc-pgn-active-color); /* Couleur du point actif */
+  background-color: var(--vc-pgn-active-color);
+  /* Couleur du point actif */
 }
 
 /* Personnalisation de la couleur des icônes (si des SVGs sont utilisés) */
 .carousel__icon {
-  fill: red; /* Couleur par défaut des icônes */
+  fill: red;
+  /* Couleur par défaut des icônes */
 }
 
 .carousel__icon:hover {
-  fill: var(--vc-clr-secondary); /* Couleur des icônes au survol */
+  fill: var(--vc-clr-secondary);
+  /* Couleur des icônes au survol */
 }
-
 </style>

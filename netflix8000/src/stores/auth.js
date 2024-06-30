@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import { instance as axios } from "@/api/axios";
 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -30,17 +30,12 @@ export const useAuthStore = defineStore({
 
         try {
           // Côté serveur pour obtenir les détails de l'utilisateur
-          const response = await axios.get(
-            "http://localhost:3000/auth/user-details"
-          );
+          const response = await axios.get("/auth/user-details");
           const userData = response.data;
           this.isLoggedIn = true;
           this.username = userData.username;
         } catch (error) {
-          console.error(
-            "Erreur lors de la récupération des détails de l'utilisateur :",
-            error
-          );
+          console.error("Error retrieving user details :", error);
           // Déconnecter l'utilisateur en cas d'erreur
           this.isLoggedIn = false;
           this.username = "";

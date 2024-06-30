@@ -41,5 +41,7 @@
 5. **Front recuperer les info de user**
 
 - `npm install jwt-decode`
+- Vite utilise Rollup sous-jacentement, et nous pouvons utiliser le plugin @rollup/plugin-replace pour remplacer les valeurs des variables d'environnement lors de la construction de l'application.
+- `npm install --save-dev @rollup/plugin-replace` 
 
 
