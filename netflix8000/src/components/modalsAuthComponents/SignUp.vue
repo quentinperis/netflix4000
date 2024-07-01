@@ -41,7 +41,7 @@ watch(
     }
   }
 );
-// Méthode de soumission du formulaire
+// soumission du formulaire
 const signUp = async () => {
   try {
     const payload = {
@@ -60,6 +60,7 @@ const signUp = async () => {
     }
   } catch (error) {
     console.error("Erreur lors de l'inscription :", error);
+    modalStore.errorMessage = "Une erreur s'est produite. Veuillez réessayer.";
   }
 };
 
@@ -67,10 +68,7 @@ const signUp = async () => {
 
 <template>
   <div class="modal">
-    <div class="modal-header">
-      <h2>Sign Up</h2>
-    </div>
-
+    <div class="modal-header"><h2>Sign Up</h2></div>
     <form @submit.prevent="signUp">
       <div class="container">
         <label for="username"></label>
@@ -80,7 +78,6 @@ const signUp = async () => {
           }">
           {{ formStore.responseMessageUsername }}
         </span>
-
         <span :class="{ invalid: formStore.usernameInvalid }" v-if="formStore.usernameInvalid">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="16" height="16" viewBox="0 0 16 16" role="img"
             data-icon="CircleXSmall" aria-hidden="true" class="default-ltr-cache-0 e1vkmu651">
@@ -94,7 +91,6 @@ const signUp = async () => {
           @input="formStore.setUsername($event.target.value)" @blur="formStore.checkUsernameAvailability" type="text"
           required />
       </div>
-
       <div class="container">
         <label for="email"></label>
         <span :class="{ invalid: formStore.emailInvalid }" v-if="formStore.emailInvalid">
@@ -108,7 +104,6 @@ const signUp = async () => {
         </span>
         <input v-model="formStore.email" id="email" placeholder="Email Adress" type="email" required />
       </div>
-
       <div class="container">
         <label for="password"></label>
         <span :class="{ invalid: formStore.passwordInvalid }"
@@ -122,7 +117,6 @@ const signUp = async () => {
           Please enter a password containing AT LEAST 1 number, 1 special
           character, an uppercase letter, a lowercase letter and 8 characters.
         </span>
-
         <span v-if="!formStore.passwordInvalid && formStore.passwordTouched" class="success-message">
           Good Doggo.
         </span>
@@ -134,19 +128,11 @@ const signUp = async () => {
         Sign Up
       </button>
     </form>
-    <div class="newto">
-      <p>
-        Already a user ?
-        <a @click="handleSignIn">sign In</a>
-      </p>
-    </div>
-    <br />
+    <div class="newto"><p>Already a user <a @click="handleSignIn">sign In</a></p></div><br />
     <span class="text-recaptcha">This page is protected by Google reCAPTCHA to ensure you're not a bot.
     </span>
     <span v-if="moreSpan" @click="toggleSpan" class="clickable">Learn more.</span>
-    <span v-else>
-      <br />
-      <br />
+    <span v-else><br /><br />
       The information collected by Google reCAPTCHA is subject to the Google
       <a href="https://policies.google.com/privacy" target="_blank" class="clickable">Privacy Policy</a>
       and

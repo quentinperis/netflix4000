@@ -18,11 +18,7 @@ onMounted(() => {
 
 <template>
   <div class="back">
-    <img
-      class="background-image"
-      src="/image/4317036.webp"
-      alt="joker Image"
-    />
+    <img class="background-image" src="/image/4317036.webp" alt="joker Image" />
     <div class="content-wrapper">
       <div id="content">
         <h2>Watch Joker Now</h2>
@@ -58,12 +54,14 @@ onMounted(() => {
   width: auto;
   background-color: hsl(0, 0%, 5%);
 }
+
 .background-image {
   width: 100%;
   height: 100dvh;
   object-fit: cover;
   z-index: -1;
 }
+
 .shadow {
   z-index: 1;
   top: 0;
@@ -71,11 +69,9 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   background: rgb(0, 0, 0, 0.5);
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(0, 0, 0.1%) 35%
-  );
+  background: linear-gradient(180deg,
+      transparent,
+      rgba(0, 0, 0.1%) 35%);
 }
 
 .content-wrapper {
@@ -93,7 +89,7 @@ onMounted(() => {
   padding: 0 10%;
   margin: 10% 40% 0 0;
 
-  > button {
+  >button {
     color: white;
     background-color: red;
     padding: 12px 27px;
@@ -145,20 +141,22 @@ p {
   cursor: pointer;
   transition: transform 200ms ease;
 }
+
 .video-close:active {
   transform: translateY(3px);
 }
 
 @media screen and (max-width: 1280px) {
   .content-wrapper {
-    > h2 {
+    >h2 {
       font-size: 6rem;
     }
-    > p {
+
+    >p {
       font-size: 1rem;
     }
   }
 }
-@media screen and (max-width: 960px) {
-}
+
+@media screen and (max-width: 960px) {}
 </style>

@@ -45,7 +45,6 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
         </RouterLink>
       </div>
     </div>
-
     <template v-if="showAuthButtons">
       <template v-if="authStore.isLoggedIn">
         <div class="user-dashboard">
@@ -53,7 +52,6 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
           <button class="btn" @click="handleLogout">Logout</button>
         </div>
       </template>
-
       <template v-else>
         <div class="dashboard-sign-in">
           <button id="signin-button" class="btn" @click="handleSignIn"

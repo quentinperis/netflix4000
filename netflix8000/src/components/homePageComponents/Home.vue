@@ -7,20 +7,20 @@ import Footer from "@/components/Footer.vue";
 
 <template>
   <div class="container">
-    <main>
+    <header>
       <div class="top">
         <h1>Unlimited movies, TV shows and more.</h1>
         <h2>Watch anywhere. Cancel at any time.</h2>
         <InputEmail />
       </div>
-      <div class="mid"></div>
-    </main>
-    <div id="more">
+      <section class="mid"></section>
+    </header>
+    <section id="more">
       <h1>More Reasons to Join</h1>
       <div id="container">
         <SvgHome />
       </div>
-    </div>
+    </section>
     <hr>
     <Faq />
     <hr>
@@ -41,7 +41,7 @@ hr {
   flex-direction: column;
 }
 
-main {
+header {
   position: relative;
   top: 0;
   width: 100%;

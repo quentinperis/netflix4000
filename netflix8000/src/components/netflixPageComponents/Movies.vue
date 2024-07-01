@@ -20,7 +20,7 @@ const categories = computed(() => {
   const uniqueCategories = new Set();
   movies.value.forEach((m) => {
     m.genre.forEach((g) => uniqueCategories.add(g));
-// nouveau modèle de données avec un tableau de genres
+    // nouveau modèle de données avec un tableau de genres
   });
   return Array.from(uniqueCategories);
 });
@@ -29,7 +29,7 @@ const categories = computed(() => {
 const filteredMovies = (category) => {
   return movies.value.filter((m) => {
     return m.genre.includes(category);
-// nouveau modèle de données avec un tableau de genres
+    // nouveau modèle de données avec un tableau de genres
   });
 };
 
@@ -62,7 +62,7 @@ onMounted(async () => {
     movies.value = res.data.map((m) => ({
       id: m._id,
       imagePath: m.imagePath,
-      genre: m.genre, 
+      genre: m.genre,
     }));
   } catch (error) {
     console.error("Une erreur s'est produite lors de la récupération des films :", error);
@@ -86,22 +86,11 @@ onMounted(async () => {
               <img :src="m.imagePath" :alt="m.name" @click="openModal(m)" class="movie__image" />
             </div>
           </Slide>
-
           <!-- Navigation -->
           <template #addons>
             <Navigation />
             <Pagination />
           </template>
-
-          <!--   
-          <template #prev="{ prev }">
-            <button @click="prev()" class="carousel__prev">Précédent</button>
-          </template>
-
-     
-          <template #next="{ next }">
-            <button @click="next()" class="carousel__next">Suivant</button>
-          </template> -->
         </Carousel>
       </div>
     </div>

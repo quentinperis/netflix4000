@@ -22,7 +22,7 @@ const authController = {
           .status(401)
           .json({ message: "Utilisateur ou mot de passe incorrect" });
       }
-      const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "1800s",});
+      const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "5s",});
       res.status(200).json({ token, username: user.username });
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
