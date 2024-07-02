@@ -40,7 +40,7 @@ app.use(cors({
   origin: 'https://netflix-front-gxv920u03-natabouds-projects.vercel.app'
 }));
 
-// Cela autorise les requêtes CORS (Cross-Origin Resource Sharing), ce qui permet à serveur d'accepter les requêtes provenant de domaines différents. C'est particulièrement utile si on a une application frontend et une API backend 
+// Cela autorise les requêtes CORS (Cross-Origin Resource Sharing), ce qui permet à serveur d'accepter les requêtes provenant de domaines différents. C'est particulièrement utile si on a une application frontend et une API backend commit
 
 app.use(bodyParser.json()); // Cela permet à l'application Express de comprendre les corps de requête au format JSON.
 
