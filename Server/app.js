@@ -36,7 +36,7 @@ db.once("open", async () => {
 
 // Autoriser les requêtes CORS avant l'utilisation des routes !!!
 app.use(cors({
-  origin: 'https://netflix-front-gxv920u03-natabouds-projects.vercel.app/' // Remplacez par l'URL de votre frontend
+  origin: 'http://netflix-front-gxv920u03-natabouds-projects.vercel.app/' // Remplacez par l'URL de votre frontend
 }));
 
 // Cela autorise les requêtes CORS (Cross-Origin Resource Sharing), ce qui permet à serveur d'accepter les requêtes provenant de domaines différents. C'est particulièrement utile si on a une application frontend et une API backend 
