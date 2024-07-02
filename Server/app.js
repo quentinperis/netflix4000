@@ -25,6 +25,7 @@ db.once("open", () => {
 });
 
 db.once("open", async () => {
+
   await Promise.all([
     // Mise à jour les chemins d'images et des videos après la connexion à MongoDB
     movieController.updateMoviesPath(),
@@ -35,7 +36,9 @@ db.once("open", async () => {
 //-------------------MIDDLEWARE----------------------//
 
 // Autoriser les requêtes CORS avant l'utilisation des routes !!!
-// app.use(cors()); 
+app.use(cors({
+  origin: 'http://netflix-front-gxv920u03-natabouds-projects.vercel.app'
+}));
 
 // Cela autorise les requêtes CORS (Cross-Origin Resource Sharing), ce qui permet à serveur d'accepter les requêtes provenant de domaines différents. C'est particulièrement utile si on a une application frontend et une API backend 
 
