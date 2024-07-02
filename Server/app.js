@@ -47,6 +47,6 @@ app.use(bodyParser.json()); // Cela permet à l'application Express de comprendr
 app.use("/auth", authRouter); // Routes d'authentification
 app.use("/", movieRouter); // Routes des films
 
-app.listen(PORT, () => {
-  console.log(`Le server en écoute sur le port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Le serveur écoute sur le port ${PORT}`);
 });
