@@ -64,7 +64,6 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
   </div>
 </template>
 
-
 <style scoped>
 .overlay {
   position: absolute;
@@ -78,11 +77,11 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
 }
 
 .logo {
-  height: 51px;
-  width: 150px;
+  width: 150px; /* Ajustez la largeur pour maintenir le ratio d'aspect */
+  height: auto; /* La hauteur sera ajustée automatiquement */
   z-index: 3;
   cursor: pointer;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .btn {
@@ -109,21 +108,19 @@ const showAuthButtons = computed(() => route.name !== 'notFound');
   padding: 10px 30px 10px;
 }
 
-
 @media screen and (max-width: 1280px) {
   .overlay {
-  padding: 1rem 5%;
-}
+    padding: 1rem 5%;
+  }
 }
 
 @media (max-width: 768px) {
   .logo {
-    height: 31px;
-    width: 100px;
+    width: 100px; /* Ajustez la largeur pour maintenir le ratio d'aspect */
+    height: auto; /* La hauteur sera ajustée automatiquement */
   }
   .overlay {
-  padding: 1rem 5%;
-}
-
+    padding: 1rem 5%;
+  }
 }
 </style>

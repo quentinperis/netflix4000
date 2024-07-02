@@ -21,7 +21,8 @@ onMounted(() => {
         <SignIn v-if="modalStore.showSignIn && !modalStore.reconnection" />
         <SignUp v-if="modalStore.showSignUp && !modalStore.reconnection" />
       </div>
-      <img class="background-image" src="/image/background-netflix.jpg" alt="netflix" />
+      <!-- Ajout des attributs width et height -->
+      <img class="background-image" src="/image/background-netflix.jpg" alt="netflix" width="1920" height="1080" />
       <div class="shadow"></div>
     </section>
   </main>
@@ -39,7 +40,6 @@ onMounted(() => {
   width: 100%;
   position: relative;
   flex: 1;
-  /* Take up available space */
   display: flex;
   flex-direction: column;
 }
