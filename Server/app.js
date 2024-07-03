@@ -5,8 +5,10 @@ const cors = require('cors');
 require("dotenv").config(); 
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
-const uriMongoDb = process.env.MONGODB_URI;
+const mongoURI = process.env.MONGODB_URI;
+
 
 // Importation du contrôleur movieController
 const movieController = require("./src/controller/movieController");
@@ -17,7 +19,7 @@ const movieRouter = require("./src/routes/moviesRoutes");
 
 //-------------------CONNECTION BDD----------------------//
 
-mongoose.connect(uriMongoDb);
+mongoose.connect(mongoURI);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Erreur de connexion à MongoBD"));
 db.once("open", () => {
