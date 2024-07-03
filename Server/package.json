@@ -2,9 +2,9 @@
   "name": "netflix-clone",
   "version": "1.0.0",
   "description": "clone netflix",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
