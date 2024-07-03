@@ -1,14 +1,4 @@
 {
-  "name": "netflix-clone",
-  "version": "1.0.0",
-  "description": "clone netflix",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js"
-  },
-   "engines": {
-    "node": ">=14.0.0"
-  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
