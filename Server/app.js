@@ -42,7 +42,7 @@ app.use(cors());
 
 // Cela autorise les requêtes CORS (Cross-Origin Resource Sharing), ce qui permet à serveur d'accepter les requêtes provenant de domaines différents. C'est particulièrement utile si on a une application frontend et une API backend commit
 
-app.use(bodyParser.json()); // Cela permet à l'application Express de comprendre les corps de requête au format JSON.
+app.use(bodyParser.json()); // Cela permet à l'application Express de comprendre les corps de requête au format JSON. commit
 
 app.use("/auth", authRouter); // Routes d'authentification
 app.use("/", movieRouter); // Routes des films
