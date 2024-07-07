@@ -106,7 +106,7 @@ function toggleSpan() {
         {{ modalStore.errorMessage }}
       </span>
       <Checkbox class="check-box-recaptcha" v-model="recaptchaChecked" />
-      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignUp || !recaptchaChecked">
+      <button class="btn" type="submit" :disabled="formStore.submitDisabledSignIn || !recaptchaChecked">
         Sign In
       </button>
     </form>
